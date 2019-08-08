@@ -169,19 +169,6 @@ public class MemberDaoImpl implements MemberDao {
 		return mem;
 */
 
-	/**
-	 * 바이트 배열을 HEX 문자열로 변환한다.
-	 * @param byte[] data
-	 * @return
-	 */
-	public static String byteToHexString(byte[] data) {
-		StringBuilder sb = new StringBuilder();
-		for(byte b : data) {
-			sb.append(Integer.toString((b & 0xff) + 0x100, 16).substring(1));
-		}
-		return sb.toString();
-	}
-
 	/** 매개변수로 받은 id가 중복된 ID인지 여부를 리턴하는 메소드
 	 * @param String id
 	 * @return 중복된 아이디면 false, 사용가능 아이디면 true 리턴
@@ -218,7 +205,6 @@ public class MemberDaoImpl implements MemberDao {
 		
 		return isExisting;
 	}
-
 
 	/**
 	 * 회원들의 리스트를 전부 가져오는 메소드
@@ -272,8 +258,6 @@ public class MemberDaoImpl implements MemberDao {
 		
 		return list;
 	}
-
-	
 	
 	/**
 	 * 리스트에 뿌려진 회원의 정보를 상세하게 얻어오기 위한 메소드 
@@ -321,4 +305,19 @@ public class MemberDaoImpl implements MemberDao {
 		
 		return dto;
 	}
+
+
+	/**
+	 * 바이트 배열을 HEX 문자열로 변환한다.
+	 * @param byte[] data
+	 * @return
+	 */
+	public static String byteToHexString(byte[] data) {
+		StringBuilder sb = new StringBuilder();
+		for(byte b : data) {
+			sb.append(Integer.toString((b & 0xff) + 0x100, 16).substring(1));
+		}
+		return sb.toString();
+	}
+
 }

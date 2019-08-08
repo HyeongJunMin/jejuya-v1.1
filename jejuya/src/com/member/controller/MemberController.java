@@ -104,7 +104,7 @@ public class MemberController extends HttpServlet{
 					if( pw.equals(dto.getPw()) ) {						
 						//일치하는 경우 로그인 성공
 						req.getSession().setAttribute("user", dto);
-						resp.sendRedirect("/jejuya/views/index.jsp");
+						resp.sendRedirect("/jejuya/main");
 						return;
 					}else {
 						//일치하지 않으면 실패
@@ -128,7 +128,7 @@ public class MemberController extends HttpServlet{
 			    	//addMember 메소드를 통해 회원가입을 성공한 경우 세션에 계정정보를 저장하고 메인페이지로 이동
 			    	req.getSession().setAttribute("user", dto);
 			    	System.out.println("[MemberController] do regi : " + dto.toString());
-					resp.sendRedirect("/jejuya/views/index.jsp");
+					resp.sendRedirect("/jejuya/main");
 					return;
 			    }else {
 			    	//addMember 메소드를 통해 회원가입을 실패한 경우 회원가입 창으로 이동

@@ -1,5 +1,7 @@
 package com.member.service;
 
+import java.util.List;
+
 import com.member.dto.MemberDto;
 
 public interface MemberService {
@@ -9,4 +11,8 @@ public interface MemberService {
 	public MemberDto getOneMember(String id);
 	
 	public boolean isExistingId(String id);
+	
+	public List<MemberDto> getMemberList();
+	
+	public MemberDto getMemberDetail(String id);
 }

@@ -4,7 +4,7 @@
 
 $(function(){
 	$("#btnSignupInSignupModal").prop("disabled",true);
-	
+	$("#chkAllOk").hide();
 	var idOk = false;
 	var pw1Ok = false;
 	var pw2Ok = false;
@@ -17,29 +17,45 @@ $(function(){
 	$("#inputIdInSignup").keyup(function(){
 		var inputTxt = $("#inputIdInSignup").val()+'';
 		
-		$("#inputEmailInSignup").val( isNotDupId(inputTxt) );
-
 		var chkOnlyEngNum = /^[a-zA-Z0-9_-]{5,15}$/;
 
-		if( chkOnlyEngNum.test( inputTxt ) ){
+		if( chkOnlyEngNum.test( inputTxt ) || inputTxt.length > 4){
 			//정규식 조건을 통과한 경우
 			$("#signupWarn").text( '　' );	
-			//Ajax 활용 ID 중복체크, 중복이 아니면? true = 사용가능 ID
-			if( isNotDupId(inputTxt) == 'true' ){
-				idOk = true;
-				$("#signupWarn").text( '　' );			
-				isOk = allOk( idOk, pw1Ok, pw2Ok, nameOk, emailOk, birthOk );
-				if( isOk == true ){
-					$("#btnSignupInSignupModal").prop("disabled",false);
-				}
-				$("#chkAllOk").text(idOk + ', ' + pw1Ok + ', ' + pw2Ok + ', ' + nameOk + ', ' + emailOk + ', ' + birthOk);
-			}else{
-				//중복된 ID인 경우
-				idOk = false;
-				$("#signupWarn").text( '중복된 ID입니다. 다른 ID를 입력해 주세요.' );
-				$("#btnSignupInSignupModal").prop("disabled",true);
-			}
+			//Ajax 활용 ID 중복체크, 중복이 아니면? true = 사용가능 ID			
+			var varIsNotDupId = false;
 			
+			$.ajax({
+				type: "GET"
+				, url: "/jejuya/member?command=getOneId"
+				, datatype: "json"
+				, data: { "inputId" : inputTxt }
+				, success: function( data ){
+					//alert('succeed : ' + data + ', 들어온값길이: ' + data.length );
+
+					if( data === 'true' ){
+						//컨트롤러에서 넘어온 결과가 true인 경우 사용 가능한 아이디로 판단
+						//alert('ok data 트루라고 했다');
+						varIsNotDupId = true;
+						idOk = true;
+						$("#signupWarn").text( '　' );			
+						isOk = allOk( idOk, pw1Ok, pw2Ok, nameOk, emailOk, birthOk );
+						if( isOk == true ){
+							$("#btnSignupInSignupModal").prop("disabled",false);
+						}
+						$("#chkAllOk").text(idOk + ', ' + pw1Ok + ', ' + pw2Ok + ', ' + nameOk + ', ' + emailOk + ', ' + birthOk);
+					}else{
+						//중복된 ID인 경우
+						idOk = false;
+						$("#chkAllOk").text(idOk + ', ' + pw1Ok + ', ' + pw2Ok + ', ' + nameOk + ', ' + emailOk + ', ' + birthOk);
+						$("#signupWarn").text( '중복된 ID입니다. 다른 ID를 입력해 주세요.' );
+						$("#btnSignupInSignupModal").prop("disabled",true);
+					}
+					
+				}, error: function( error ){
+					alert('error : ' + error);
+				}
+			});					
 		}else{
 			//조건에 맞지 않는 경우
 			idOk = false;
@@ -134,8 +150,9 @@ function allOk( ok1, ok2, ok3, ok4, ok5, ok6 ){
 	}
 }
 
+/*
 //ID를 입력받아서 ID중복여부를 컨트롤러에 Ajax로요청
-function isNotDupId( inputId ){
+function aisNotDupId( inputId ){
 	
 	$.ajax({
 		type: "GET"
@@ -143,8 +160,9 @@ function isNotDupId( inputId ){
 		, datatype: "json"
 		, data: { "inputId" : inputId }
 		, success: function( data ){
-			//alert('succeed : ' + data );
-			if( data.trim() === 'true' ){
+			alert('succeed : ' + data + ', 들어온값길이: ' + data.length );
+
+			if( data === true ){
 				//컨트롤러에서 넘어온 결과가 true인 경우 사용 가능한 아이디로 판단
 				return true;
 			}else{
@@ -154,12 +172,5 @@ function isNotDupId( inputId ){
 			alert('error : ' + error);
 		}
 	});
-	
-	
-	
-	if( inputId == 'dd'){
-		return true;
-	}else{
-		return false;
-	}
 }
+*/

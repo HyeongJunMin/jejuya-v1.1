@@ -1,5 +1,7 @@
 package com.member.service.impl;
 
+import java.util.List;
+
 import com.member.dao.impl.MemberDaoImpl;
 import com.member.dto.MemberDto;
 import com.member.service.MemberService;
@@ -35,6 +37,20 @@ public class MemberServiceImpl implements MemberService{
 	public boolean isExistingId(String id) {
 		// TODO Auto-generated method stub
 		return dao.isExistingId(id);
+	}
+
+	
+	@Override
+	public List<MemberDto> getMemberList() {
+		// TODO Auto-generated method stub
+		return dao.getMemberList();
+	}
+
+	
+	@Override
+	public MemberDto getMemberDetail(String id) {
+		// TODO Auto-generated method stub
+		return dao.getMemberDetail(id);
 	}		
 	
 	

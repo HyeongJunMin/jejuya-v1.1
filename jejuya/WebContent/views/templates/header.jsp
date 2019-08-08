@@ -2,7 +2,12 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-
+<%
+	String loginIdentifierInHeader = "로그인";
+	if( request.getParameter("") != null){
+		
+	}
+%>
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
@@ -25,8 +30,9 @@
            <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="#signup">나의여행</a>
           </li>
-             <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="/jejuya/member">로그인</a>
+          <li class="nav-item">
+          	<!-- 디폴트 값 : 로그인, 세션에 로그인한 아이디 정보가 있으면 로그아웃 -->
+          	<a class="nav-link js-scroll-trigger" href="/jejuya/member"><%=loginIdentifierInHeader %></a>
           </li>
         </ul>
       </div>
