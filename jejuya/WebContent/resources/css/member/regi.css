@@ -1,0 +1,11 @@
+@charset "UTF-8";
+
+.center{
+margin:auto;
+width : 6-%
+border:3px solid 8ac007;
+padding: 10px;
+
+}table{
+border-collapse:collapse;
+}
