@@ -169,6 +169,53 @@ public class MemberDaoImpl implements MemberDao {
 		return mem;
 */
 
+	/**매개변수로 받은 name을 MEMBER_JEJU DB에서 검색하고, MemberDto로 리턴
+	 * @param inputName
+	 * @return
+	 */
+	public MemberDto getOneMemberByName(String inputName) {
+		MemberDto dto = null;
+		
+		String sql = " SELECT * FROM MEMBER_JEJU WHERE NAME='" + inputName + "' ";
+		
+		Connection conn = null;
+		ResultSet rs = null;
+		PreparedStatement psmt = null;
+		
+		try {
+			conn = DBConnection.getConnection();
+			
+			psmt = conn.prepareStatement(sql);
+			
+			rs = psmt.executeQuery();
+			
+			int del = 0;
+						
+			while( rs.next() ) {
+				int i = 1;
+				String id = rs.getString(i++);
+				int seq = rs.getInt(i++);
+				String pw = rs.getString(i++);
+				String name = rs.getString(i++);
+				String email = rs.getString(i++);
+				String birth = rs.getString(i++);	
+				del = rs.getInt(i++);
+				
+				if(del == 1) {//삭제된 계정이면 null 리턴
+					return null;
+				}
+				
+				dto = new MemberDto(id, seq, pw, name, email, birth);
+			}					
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+		
+		return dto;
+	}
+	
 	/** 매개변수로 받은 id가 중복된 ID인지 여부를 리턴하는 메소드
 	 * @param String id
 	 * @return 중복된 아이디면 false, 사용가능 아이디면 true 리턴
@@ -306,7 +353,38 @@ public class MemberDaoImpl implements MemberDao {
 		return dto;
 	}
 
+	
 
+	/**비밀번호를 수정하는 메소드. 대상은 매개변수로 받은 id, 새 비밀번호는 매개변수로 받은 newPw
+	 * @param id
+	 * @param newPw
+	 * @return
+	 */
+	public int updatePw(String id, String newPw) {
+		int updateDone = -1;
+		
+		String sql = " UPDATE MEMBER_JEJU SET PW=? WHERE ID=? ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		
+		try {
+			conn = DBConnection.getConnection();			
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, newPw);
+			psmt.setString(2, id);
+			
+			updateDone = psmt.executeUpdate();			
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+		
+		return updateDone;
+	}
+	
+	
 	/**
 	 * 바이트 배열을 HEX 문자열로 변환한다.
 	 * @param byte[] data

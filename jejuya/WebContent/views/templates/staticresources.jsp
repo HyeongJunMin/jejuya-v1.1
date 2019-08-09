@@ -27,9 +27,8 @@
 <script src="/jejuya/resources/vendor/jquery-easing/jquery.easing.min.js"></script>
 
 <!-- Custom scripts for this template -->
-
-<script src="/jejuya/resources/js/main/grayscale.min.js"></script>
-<script src="/jejuya/resources/js/main/grayscale.js"></script>
+<!-- <script src="/jejuya/resources/js/main/grayscale.min.js"></script> -->
+<!-- <script src="/jejuya/resources/js/main/grayscale.js"></script> -->
 
 
 

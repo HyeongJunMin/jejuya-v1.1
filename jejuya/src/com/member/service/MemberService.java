@@ -15,4 +15,8 @@ public interface MemberService {
 	public List<MemberDto> getMemberList();
 	
 	public MemberDto getMemberDetail(String id);
+	
+	public MemberDto getOneMemberByName(String inputName);
+
+	public int updatePw(String id, String newPw);
 }

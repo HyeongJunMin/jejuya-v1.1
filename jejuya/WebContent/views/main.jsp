@@ -2,14 +2,13 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-
-<script type="text/javascript" src="../resources/js/main/main.js"></script>
-
 <!-- common <head> include -->
 <jsp:include page="./templates/staticresources.jsp"></jsp:include>
 
 <body id="page-top">
 
+
+<!-- 한 세션에 로그인 한 유저 정보 : MemberDto request.getSession().getAttribute("currUser") -->
 <!-- common header include -->
 <jsp:include page="./templates/header.jsp"></jsp:include>
 

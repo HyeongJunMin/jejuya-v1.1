@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Random;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.member.dto.MemberDto;
 import com.member.service.MemberService;
 import com.member.service.impl.MemberServiceImpl;
+
+import common.util.JejuyaMailling;
 
 @WebServlet("/member")
 public class MemberController extends HttpServlet{
@@ -53,6 +56,14 @@ public class MemberController extends HttpServlet{
 				//Ajax에 중복 여부 리턴
 				PrintWriter pw = resp.getWriter();
 				pw.print(isNotDupId);
+			}else if( command.equals("dologout") == true ) {
+				//로그아웃 기능
+				if( req.getSession().getAttribute("currUser") != null){
+					req.getSession().removeAttribute("currUser");
+				}
+				PrintWriter pw = resp.getWriter();
+				pw.println("<script type=\"text/javascript\">history.back();</script>");
+				pw.flush();
 			}
 		}
 	}
@@ -60,6 +71,11 @@ public class MemberController extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		System.out.println("[MemberController] do post");
+		
+		req.setCharacterEncoding("UTF-8");
+		resp.setContentType("text/html;charset=UTF-8");
+		
+		MemberService memberService = MemberServiceImpl.getInstance();		
 		
 		if( req.getParameter("command") == null ) {
 			//command커맨드가 널인 경우 로그인인덱스 페이지로 이동	
@@ -104,6 +120,8 @@ public class MemberController extends HttpServlet{
 					if( pw.equals(dto.getPw()) ) {						
 						//일치하는 경우 로그인 성공
 						req.getSession().setAttribute("user", dto);
+						req.getSession().setAttribute("currUser", dto);
+						
 						resp.sendRedirect("/jejuya/main");
 						return;
 					}else {
@@ -127,6 +145,7 @@ public class MemberController extends HttpServlet{
 			    if( isDone == true ) {
 			    	//addMember 메소드를 통해 회원가입을 성공한 경우 세션에 계정정보를 저장하고 메인페이지로 이동
 			    	req.getSession().setAttribute("user", dto);
+			    	req.getSession().setAttribute("currUser", dto);
 			    	System.out.println("[MemberController] do regi : " + dto.toString());
 					resp.sendRedirect("/jejuya/main");
 					return;
@@ -135,6 +154,108 @@ public class MemberController extends HttpServlet{
 			    	resp.sendRedirect("/jejuya/views/member/regi.jsp");
 					return;
 			    }
+			}else if( command.equals("doconfirmid") ) {
+				//findMember.jsp 뷰에서 이름과 이메일을 입력했을 때, 해당하는 정보가 DB에 있는지 여부를 리턴
+				
+				String inputName = req.getParameter("inputName");
+				String inputEmail = req.getParameter("inputEmail");
+				
+				//service를 통해 이름으로 멤버 검색
+				MemberDto dto = memberService.getOneMemberByName(inputName);
+				
+				//DB검색 결과값을 Ajax 호출한 위치로 리턴할 문자열
+				String returnStr = "false";
+				
+				if( dto != null ) {
+					//이름으로 계정정보를 찾은 경우
+					if( inputEmail.equals( dto.getEmail() ) ) {
+						//유저가 입력한 이메일과 DB에서 찾은 계정의 이메일 정보가 일치하는 경우 true 리턴
+						returnStr = "true";
+					}					
+				}
+				
+				PrintWriter pw = resp.getWriter();
+				pw.print(returnStr);
+				pw.flush();
+				
+			}else if( command.equals("dofindid") ) {
+				//findMember.jsp 뷰에서 doconfirmid를 거쳐서 올바른 이름과 이메일을 입력했을 때, 해당하는 이메일에 ID정보를 발송
+				
+				String userEmail = req.getParameter("findIdInputEmailTxt");
+				String inputName = req.getParameter("findIdInputNameTxt");
+				
+				//service를 통해 이름으로 멤버 검색
+				MemberDto dto = memberService.getOneMemberByName(inputName);
+				
+				//System.out.println("user email : " + userEmail);
+				//ID를 포함한 HTML내용을 유저가 입력한 email에 보냄
+				JejuyaMailling.sendMail( JejuyaMailling.getFindIdSampleHtmlContent( dto.getId() ), userEmail );
+				
+				PrintWriter pw = resp.getWriter();
+				pw.print("<script>alert('입력하신 이메일로 아이디 발송이 완료되었습니다.'); history.back();</script>");
+				pw.flush();
+			}else if( command.equals("doconfirmpw") ) {
+				//findMember.jsp 뷰에서 ID와 이메일을 입력했을 때, 해당하는 정보가 DB에 있는지 여부를 리턴
+				
+				String inputId = req.getParameter("inputId");
+				String inputEmail = req.getParameter("inputEmail");
+				
+				//service를 통해 ID로 멤버 검색
+				MemberDto dto = memberService.getOneMember( inputId );
+				
+				//DB검색 결과값을 Ajax 호출한 위치로 리턴할 문자열
+				String returnStr = "false";
+				
+				if( dto != null ) {
+					//이름으로 계정정보를 찾은 경우
+					if( inputEmail.equals( dto.getEmail() ) ) {
+						//유저가 입력한 이메일과 DB에서 찾은 계정의 이메일 정보가 일치하는 경우 true 리턴
+						returnStr = "true";
+					}					
+				}
+				
+				PrintWriter pw = resp.getWriter();
+				pw.print(returnStr);
+				pw.flush();
+				
+			}else if( command.equals("dofindpw") ) {
+				//findMember.jsp 뷰에서 doconfirmpw를 거쳐서 올바른 이름과 이메일을 입력했을 때, 해당하는 이메일에 임시PW정보를 발송
+								
+				String userId = req.getParameter("findPwInputIdTxt");
+				String userEmail = req.getParameter("findPwInputEmailTxt");
+				
+				
+				//service를 통해 ID로 멤버 검색
+				MemberDto dto = memberService.getOneMember( userId );
+				
+				//임시비밀번호 10자리 생성(랜덤값)
+				String tempPw = randomValue(10);
+				String tempPwForUser = tempPw;
+				
+				//System.out.println("tempPW : " + tempPw);
+				
+				//임시 비밀번호 해시알고리즘을 거쳐서 암호화
+				MessageDigest md;
+				try {
+					md = MessageDigest.getInstance("SHA-256");
+					md.update(tempPw.getBytes());
+					tempPw = byteToHexString(md.digest());
+					System.out.println("input PW : " + tempPw);
+				} catch (NoSuchAlgorithmException e) {
+					e.printStackTrace();
+				}		
+								
+				//DB에 해당 회원정보 비밀번호를 암호화된 임시비밀번호로 수정 
+				memberService.updatePw(userId, tempPw);
+				
+				//System.out.println("update Done");
+				
+				//System.out.println("user email : " + userEmail);
+				//임시PW를 포함한 HTML내용을 유저가 입력한 email에 보냄
+				JejuyaMailling.sendMail( JejuyaMailling.getFindPwSampleHtmlContent(tempPwForUser), userEmail );				
+				PrintWriter pw = resp.getWriter();
+				pw.print("<script>alert('입력하신 이메일로 임시 비밀번호 발송이 완료되었습니다.'); history.back();</script>");
+				pw.flush();
 			}
 		}
 	}
@@ -151,4 +272,31 @@ public class MemberController extends HttpServlet{
 		}
 		return sb.toString();
 	}
+	
+	
+	/**매개변수로 받은 정수길이 만큼 임시 비밀번호를 생성해서 리턴하는 메소드
+	 * 소문자+숫자 혼합 
+	 * @param cnt
+	 * @return
+	 */
+	public static String randomValue(int cnt) {
+
+		StringBuffer strPwd = new StringBuffer();
+
+		char str[] = new char[1];
+
+		// 소문자, 숫자형
+
+		Random rnd = new Random();
+		for (int i = 0; i < cnt; i++) {
+			if (rnd.nextBoolean()) {
+				strPwd.append((char) ((int) (rnd.nextInt(26)) + 97));
+			} else {
+				strPwd.append((rnd.nextInt(10)));
+			}
+		}
+
+		return strPwd.toString();
+	}
+
 }
