@@ -6,8 +6,8 @@
 	width: 70%;
 	min-width: 992px;
 	max-width: 992px;
-	height: 70%;
-	min-height: 700px;
+	height: 90%;
+	min-height: 800px;
 	background-color: #000000;
 	margin: 0 auto;
 }
@@ -29,7 +29,7 @@
 /* 타임라인에 스케쥴을 추가하는 부분 */
 .scheAdder {
 	width: 300px;
-	height: 250px;
+	height: 400px;
 	background-color: #ffffff;
 	margin: 5px;
 	
@@ -42,7 +42,7 @@
 /* 지도와 각 관음숙의 정보가 표시되는 부분 */
 .mapAboutEachSights {
 	width: 250px;
-	height: 300px;
+	height: 620px;
 	background-color: #ffffff;
 	margin: 5px;
 	
@@ -53,7 +53,7 @@
 /* 유저가 선택한 타임라인을 보여주는 부분 */
 .addedScheTimeline {
 	width: 400px;
-	height: 300px;
+	height: 620px;
 	background-color: #ffffff;
 	margin: 5px;
 	
@@ -64,13 +64,13 @@
 /* 관음숙 랭킹을 보여주는 부분 */
 .sightsRankDiagram {
 	width: 500px;
-	height: 300px;
+	height: 100px;
 	background-color: #ffffff;
 	margin: 5px;
 	position: absolute;
 	
 	margin-left: 320px;
-	margin-top: 310px;
+	margin-top: 630px;	
 }
 
 /* datepicker  */

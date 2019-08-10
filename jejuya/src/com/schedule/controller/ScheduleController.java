@@ -25,30 +25,27 @@ public class ScheduleController extends HttpServlet{
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 	
-		
+		System.out.println("sdfoisdjfoij");
 		
 		String command=req.getParameter("command");
 	
-	
-		ScheduleService service=ScheduleServiceImpl.getInstance();
+		ScheduleService service = ScheduleServiceImpl.getInstance();
 		
-		if(command.equals("tourism")) {
-	
-			List<SightsDto> list0=service.getSightslist(0);//관광지
-			List<SightsDto> list1=service.getSightslist(1);//음식점
-			List<SightsDto> list2=service.getSightslist(2);//숙소
-			
-			
-			
-		   req.setAttribute("list0", list0);//관광지 리스트 보내기
-		   req.setAttribute("list1", list1);//음식점 리스트 보내기
-		   req.setAttribute("list2", list2);//숙소 리스트 보내기
-		
-		   int count=service.pagenum(list0.size());
-		   req.setAttribute("count",count);
-		   req.getRequestDispatcher("/view/schedule/scheduleadd.jsp").forward(req, resp);
-			 		   
-		}else if( command.equals("tourismAjaxTblTriblist") ) {
+		if (command.equals("tourism")) {
+
+			List<SightsDto> list0 = service.getSightslist(0);// 관광지
+			List<SightsDto> list1 = service.getSightslist(1);// 음식점
+			List<SightsDto> list2 = service.getSightslist(2);// 숙소
+
+			req.setAttribute("list0", list0);// 관광지 리스트 보내기
+			req.setAttribute("list1", list1);// 음식점 리스트 보내기
+			req.setAttribute("list2", list2);// 숙소 리스트 보내기
+
+			int count = service.pagenum(list0.size());
+			req.setAttribute("count", count);
+			req.getRequestDispatcher("/views/schedule/scheduleadd.jsp").forward(req, resp);
+
+		} else if (command.equals("tourismAjaxTblTriblist") ) {
 			resp.setContentType("text/html; charset=utf-8");
 			String pg=req.getParameter("pg");
 			int category=Integer.parseInt(req.getParameter("category"));
