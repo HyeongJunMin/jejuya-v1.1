@@ -1,0 +1,79 @@
+@charset "UTF-8";
+
+/* scheduleadd의 모든 요소를 감싸는 div 태그 */
+.mainWrapScheduleAdd {
+	/* 최소 너비 네비게이션바와 일치하게끔 설정 */
+	width: 70%;
+	min-width: 992px;
+	max-width: 992px;
+	height: 70%;
+	min-height: 700px;
+	background-color: #000000;
+	margin: 0 auto;
+}
+
+/* 여행일정 시작일, 종료일 등 선택하는 부분 */
+.setScheduleOption {
+	width: 300px;
+	max-width: 300px;
+	min-width: 300px;
+	height: 350px;
+	background-color: #ffffff;
+	
+	margin: 5px;
+	position: absolute;
+	
+	padding: 5px;
+}
+
+/* 타임라인에 스케쥴을 추가하는 부분 */
+.scheAdder {
+	width: 300px;
+	height: 250px;
+	background-color: #ffffff;
+	margin: 5px;
+	
+	margin-top: 370px;
+	position: absolute;
+	
+	padding: 5px;
+}
+
+/* 지도와 각 관음숙의 정보가 표시되는 부분 */
+.mapAboutEachSights {
+	width: 250px;
+	height: 300px;
+	background-color: #ffffff;
+	margin: 5px;
+	
+	margin-left: 320px;
+	position: absolute;	
+}
+
+/* 유저가 선택한 타임라인을 보여주는 부분 */
+.addedScheTimeline {
+	width: 400px;
+	height: 300px;
+	background-color: #ffffff;
+	margin: 5px;
+	
+	margin-left: 580px;
+	position: absolute;
+}
+
+/* 관음숙 랭킹을 보여주는 부분 */
+.sightsRankDiagram {
+	width: 500px;
+	height: 300px;
+	background-color: #ffffff;
+	margin: 5px;
+	position: absolute;
+	
+	margin-left: 320px;
+	margin-top: 310px;
+}
+
+/* datepicker  */
+#ui-datepicker-div { 
+    background-color: #ffffff; 
+} 
