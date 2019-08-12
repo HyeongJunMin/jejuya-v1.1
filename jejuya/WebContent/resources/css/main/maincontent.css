@@ -1,0 +1,32 @@
+@charset "UTF-8";
+
+/* 캐러셀 영역 설정 */
+#recipeCarousel{
+	margin: 10px;
+	padding: 20px;
+}
+
+/* 이미지 캐러셀 크기 설정 */
+.img-fluid{
+	max-height: 180px;
+}
+
+/* 캐러셀 이미지 내부 캡션 영역 */
+.innerCarouselCaption{
+	float: left;
+	background-color: rgba(0,0,0,0.8);
+}
+
+/* 캐러셀 아이템 css 설정 */
+.item_section {
+	
+	position: relative;
+	width: 240px;
+	height: 310px;
+	margin-left: 27px;
+	background: #fff;
+	-webkit-box-shadow: 3px 4px 5px 0 rgba(2, 2, 2, .2);
+	box-shadow: 3px 4px 5px 0 rgba(2, 2, 2, .2);
+	text-align: center;
+	padding: 10px;
+}
