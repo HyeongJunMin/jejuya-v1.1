@@ -9,9 +9,10 @@
 <script src="/jejuya/resources/vendor/jquery/jquery.min.js"></script>
 <script src="/jejuya/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-<!-- CDN -->
+<!-- Fonts CDN -->
 <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+<link rel='stylesheet prefetch'	href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,200,300,700'>
 
 <!-- Bootstrap core CSS, JS -->
 <link href="/jejuya/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -42,4 +43,6 @@ Bootstrap, jQuery CDN
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet"></link>
  -->
+ <!-- main tab메뉴 관련 리소스-->
+
 </head>

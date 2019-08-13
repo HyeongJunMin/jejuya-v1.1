@@ -51,6 +51,7 @@
     <h3>관광지</h3>
     <div id="recipeCarousel" class="carousel slide w-100" data-ride="carousel">
         <div class="carousel-inner w-100" role="listbox">
+            
             <div class="carousel-item row no-gutters active">
                 <div class="col-3 float-left">
                		<img class="img-fluid" src="https://api.visitjeju.net/photomng/thumbnailpath/201804/30/e1c2f9e4-bf4c-488c-884c-5674f8d8b119.jpg">
@@ -65,6 +66,7 @@
                 	<img class="img-fluid" src="https://api.visitjeju.net/photomng/thumbnailpath/201804/30/7b9e075d-fcd5-4eb6-83e9-e55cf799c2ba.jpg">
                 </div>
             </div>
+            
             <div class="carousel-item row no-gutters">
                 <div class="col-3 float-left">
                 	<img class="img-fluid" src="https://api.visitjeju.net/photomng/thumbnailpath/201804/30/4788623b-fe05-4b21-a9ef-2406c8eadb23.jpg">

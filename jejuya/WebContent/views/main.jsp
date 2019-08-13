@@ -14,7 +14,9 @@
 
 <!-- main content include -->
 <%-- <jsp:include page="./templates/projects.jsp"></jsp:include> --%>
+<jsp:include page="./main/mainsitemap.jsp"></jsp:include>
 <jsp:include page="./main/maincontent.jsp"></jsp:include>
+
 
 <!-- main signup content include -->
 <%-- <jsp:include page="./templates/signup.jsp"></jsp:include> --%>

@@ -57,7 +57,7 @@ public class ScheduleDaoImpl implements ScheduleDao {
 				String address = rs.getString(i++);
 				String homepage = rs.getString(i++);
 
-				SightsDto dto = new SightsDto(seq, title, category, theme, address, homepage);
+				SightsDto dto = new SightsDto(homepage, seq, seq, title, category, theme, address, homepage, homepage, seq, seq, seq);
 
 				// System.out.println("getSightslist"+dto.toString());
 
@@ -127,7 +127,7 @@ public class ScheduleDaoImpl implements ScheduleDao {
 				String homepage = rs.getString(i++);
 				// System.out.println("rs get cols ok");
 
-				SightsDto dto = new SightsDto(seq, title, category + "", theme, address, homepage);
+				SightsDto dto = new SightsDto(homepage, seq, category, title, category + "", theme, address, homepage, homepage, category, category, category);
 
 				// System.out.println("getPajingtowrismlist"+dto.toString());
 				list.add(dto);
@@ -217,7 +217,7 @@ public class ScheduleDaoImpl implements ScheduleDao {
 				int seq=rs.getInt(2);
 				int addschedule=rs.getInt(3);
 				
-				dto=new SightsDto(seq, title, null, theme, null, null);				
+				dto=new SightsDto(title, seq, addschedule, title, null, theme, null, null, title, addschedule, addschedule, addschedule);				
 				
 				list.add(dto);
 				System.out.println("4/6 getLangkingchart");

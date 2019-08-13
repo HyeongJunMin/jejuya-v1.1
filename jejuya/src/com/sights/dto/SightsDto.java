@@ -4,60 +4,83 @@ import java.io.Serializable;
 
 public class SightsDto implements Serializable {
 	
+		private static final long serialVersionUID = 1L;
 		// 기본정보
-		private int seq;
-				
 		private String title;	// 관광지명
-		private String category;// 관광지종류
+		
+		private int seq;
+		
+		private int category;// 관광지종류
 		private String theme; 	// 자연, 문화관광, 레저 등..
+		private String filename;	// 대표이미지
 		private String address;	// 주소	
+	
 		private String phone;
 		private String homepage;	// 홈페이지 주소	
 		private String content;	// 상세정보
-		private String imageName;	// 대표이미지
+		
 		
 		private int addSchedule;	// 일정담기 -> 랭킹
 		private int del;
 		private int readcount;
 		
-		
-		public SightsDto() { }
-		
-		public SightsDto(int seq, String title, String address, String homepage) {
-			super();
-			this.seq = seq;
-			this.title = title;
-			this.address = address;
-			this.homepage = homepage;
+		public SightsDto() {
 		}
 		
-		public SightsDto(int seq, String title, String category, String theme, String address, String homepage) {
+		public SightsDto(String title, int seq, int category, String theme, String filename, String address,
+				String phone, String homepage, String content, int addSchedule, int del, int readcount) {
 			super();
-			this.seq = seq;
 			this.title = title;
+			this.seq = seq;
 			this.category = category;
 			this.theme = theme;
+			this.filename = filename;
 			this.address = address;
+			this.phone = phone;
 			this.homepage = homepage;
+			this.content = content;
+			this.addSchedule = addSchedule;
+			this.del = del;
+			this.readcount = readcount;
 		}
 		
-		public int getSeq() {
-			return seq;
+		
+
+		public SightsDto(int category, String theme) {
+			super();
+			this.category = category;
+			this.theme = theme;
 		}
-		public void setSeq(int seq) {
-			this.seq = seq;
-		}
+
 		public String getTitle() {
 			return title;
 		}
 		public void setTitle(String title) {
 			this.title = title;
 		}
+		public int getSeq() {
+			return seq;
+		}
+		public void setSeq(int seq) {
+			this.seq = seq;
+		}
+		public int getCategory() {
+			return category;
+		}
+		public void setCategory(int category) {
+			this.category = category;
+		}
 		public String getTheme() {
 			return theme;
 		}
 		public void setTheme(String theme) {
 			this.theme = theme;
+		}
+		public String getFilename() {
+			return filename;
+		}
+		public void setFilename(String filename) {
+			this.filename = filename;
 		}
 		public String getAddress() {
 			return address;
@@ -83,12 +106,6 @@ public class SightsDto implements Serializable {
 		public void setContent(String content) {
 			this.content = content;
 		}
-		public String getImageName() {
-			return imageName;
-		}
-		public void setImageName(String imageName) {
-			this.imageName = imageName;
-		}
 		public int getAddSchedule() {
 			return addSchedule;
 		}
@@ -107,39 +124,17 @@ public class SightsDto implements Serializable {
 		public void setReadcount(int readcount) {
 			this.readcount = readcount;
 		}
-		
-		
-		public String getCategory() {
-			return category;
-		}
-
-		
-		public void setCategory(String category) {
-			this.category = category;
-		}
-		public SightsDto(int seq, String title, String category, String theme, String address, String phone,
-				String homepage, String content, String imageName, int addSchedule, int del, int readcount) {
-			super();
-			this.seq = seq;
-			this.title = title;
-			this.category = category;
-			this.theme = theme;
-			this.address = address;
-			this.phone = phone;
-			this.homepage = homepage;
-			this.content = content;
-			this.imageName = imageName;
-			this.addSchedule = addSchedule;
-			this.del = del;
-			this.readcount = readcount;
-		}
 		@Override
 		public String toString() {
-			return "SightsDto [seq=" + seq + ", title=" + title + ", category=" + category + ", theme=" + theme
-					+ ", address=" + address + ", phone=" + phone + ", homepage=" + homepage + ", content=" + content
-					+ ", imageName=" + imageName + ", addSchedule=" + addSchedule + ", del=" + del + ", readcount="
+			return "SightsDto [title=" + title + ", seq=" + seq + ", category=" + category + ", theme=" + theme
+					+ ", filename=" + filename + ", address=" + address + ", phone=" + phone + ", homepage=" + homepage
+					+ ", content=" + content + ", addSchedule=" + addSchedule + ", del=" + del + ", readcount="
 					+ readcount + "]";
-		}	
+		}
+		
+		
+		
+		
 		
 		
 

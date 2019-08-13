@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @SuppressWarnings("serial")
-@WebServlet("/main")
+@WebServlet("/m")
 public class CommonController extends HttpServlet{
 
 	@Override
