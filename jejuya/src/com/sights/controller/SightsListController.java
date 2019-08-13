@@ -12,11 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 import com.sights.dto.SightPagingDto;
 import com.sights.dto.SightSortCondition;
 import com.sights.dto.SightsDto;
-import com.sights.service.SightsService;
-import com.sights.service.impl.SightsServiceImpl;
+import com.sights.service.SightsListService;
+import com.sights.service.impl.SightsListServiceImpl;
 
-@WebServlet("/SightsController")
-public class SightsController extends HttpServlet {
+@WebServlet("/SightsListController")
+public class SightsListController extends HttpServlet {
 
 	
 	private static final long serialVersionUID = 1L;
@@ -29,7 +29,7 @@ public class SightsController extends HttpServlet {
 //		System.out.println(command + "왔음");
 		
 		
-		SightsService service = SightsServiceImpl.getInstance();
+		SightsListService service = SightsListServiceImpl.getInstance();
 		
 		// 사진 눌렀을때 command값 SightDetail 사진의 title값으로 Sights테이블 DTO 리턴
 		if(command.equals("SightDetail")) {
@@ -84,7 +84,7 @@ public class SightsController extends HttpServlet {
 		}
 		
 		if(command.equals("addSchedule")) {
-			System.out.println("일정등록순 여기는 들어옴 ?");
+			
 			String strcategory = req.getParameter("category");
 			int category = Integer.parseInt(strcategory);
 			
@@ -103,7 +103,7 @@ public class SightsController extends HttpServlet {
 		}
 		
 		if(command.equals("readcount")) {
-			System.out.println("조회순 여기는 들어옴?");
+			
 			String strcategory = req.getParameter("category");
 			int category = Integer.parseInt(strcategory);
 			
@@ -163,8 +163,15 @@ public class SightsController extends HttpServlet {
 			System.out.println(pagecount);
 			req.setAttribute("pagecount", pagecount);
 			
+			//리뷰DTO 받기
+			
+			
+			
 			req.getRequestDispatcher("/views/sights/sightlist.jsp").forward(req, resp);
 		}
+		
+		
+		
 		
 	}
 

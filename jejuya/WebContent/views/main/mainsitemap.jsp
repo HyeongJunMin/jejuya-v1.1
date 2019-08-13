@@ -1,7 +1,17 @@
+<%@page import="com.sights.dto.SightsDto"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+
+<%
+	List<SightsDto> mainSiteMapList = new ArrayList<>();
+	
+	
+
+%>
 
 <script type="text/javascript" src="/jejuya/resources/js/main/mainsitemap.js"></script>
 <link href="/jejuya/resources/css/main/mainsitemap.css" rel="stylesheet">
@@ -23,31 +33,34 @@
                 	<div class="titleSiteMapItem">
                 		<h3>제주도 추천 여행지</h3>
                     </div>
-                    <div class="cmp1SiteMapItem">
-                    	<img alt="" src="https://api.visitjeju.net/photomng/thumbnailpath/201804/30/e1c2f9e4-bf4c-488c-884c-5674f8d8b119.jpg">
-                    	<div class="cmp1InnerSiteMapItem">asdfsadfasdf</div>
-                    </div>
-                    <div class="cmp2SiteMapItem">
-                    </div>
-                    <div class="cmp3SiteMapItem">
-                    </div>
-                    <div class="cmp4SiteMapItem">
-                    </div>
-                    <div class="cmp5SiteMapItem">
-                    </div>
-                    <div class="cmp6SiteMapItem">
-                    </div>                    
+                    <%
+                    	for(int i = 1 ; i < 7 ; i++ ){
+                    		%>
+                    			<div class="cmp<%=i %>SiteMapItem">
+                    				<img alt="" src="https://api.visitjeju.net/photomng/thumbnailpath/201804/30/e1c2f9e4-bf4c-488c-884c-5674f8d8b119.jpg">
+                    				<div class="cmp<%=i %>InnerSiteMapItem innerSiteMapItem"><h3>123123</h3></div>
+                    				<div class="cmp<%=i %>BorderSiteMapItem borderSiteMapItem"></div>
+                    			</div>
+                    		<%
+                    	}
+                    %>     
                 </div>
                 <div role="tabpanel" class="tab-pane" id="announceSiteMapItem">
                     
+                    <div class="cmp1AnnounceSiteMapItem">
+                    	<h2>준비 중입니다.</h2>
+                    </div>
                     
                 </div>
                 <div role="tabpanel" class="tab-pane" id="shareScheSiteMapItem">
-                    
+                    <div class="cmp1ShareSiteMapItem">
+                    	<h2>준비 중입니다.</h2>
+                    </div>
                 </div>
-                <div role="tabpanel" class="tab-pane" id="tranpSiteMapItem">
-                    
-                    
+                <div role="tabpanel" class="tab-pane" id="SiteMapItem">
+                    <div class="cmp1TranspSiteMapItem">
+                    	<h2>준비 중입니다.</h2>
+                    </div>                    
                 </div>
             </div>
 		</div>

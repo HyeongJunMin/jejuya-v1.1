@@ -6,7 +6,7 @@ import com.sights.dto.SightPagingDto;
 import com.sights.dto.SightSortCondition;
 import com.sights.dto.SightsDto;
 
-public interface SightsService {
+public interface SightsListService {
 	
 	public SightsDto getOneSightDetail(String title);
 	

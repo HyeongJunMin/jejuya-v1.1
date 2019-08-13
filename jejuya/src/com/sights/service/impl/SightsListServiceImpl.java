@@ -2,24 +2,24 @@ package com.sights.service.impl;
 
 import java.util.List;
 
-import com.sights.dao.SightsDao;
-import com.sights.dao.impl.SightsDaoImpl;
+import com.sights.dao.SightsListDao;
+import com.sights.dao.impl.SightsListDaoImpl;
 import com.sights.dto.SightPagingDto;
 import com.sights.dto.SightSortCondition;
 import com.sights.dto.SightsDto;
-import com.sights.service.SightsService;
+import com.sights.service.SightsListService;
 
-public class SightsServiceImpl implements SightsService{
+public class SightsListServiceImpl implements SightsListService{
 	
-	SightsDao dao = SightsDaoImpl.getInstance();
+	SightsListDao dao = SightsListDaoImpl.getInstance();
 	
-	private static SightsService single = null;
+	private static SightsListService single = null;
 	
-	private SightsServiceImpl() {}
+	private SightsListServiceImpl() {}
 	
-	public static SightsService getInstance() {
+	public static SightsListService getInstance() {
 		if(single == null) {
-			single = new SightsServiceImpl();
+			single = new SightsListServiceImpl();
 		}
 		return single;
 	}		

@@ -1,13 +1,15 @@
 package com.sights.dao;
 
+
 import java.util.List;
 
 import com.sights.dto.SightPagingDto;
 import com.sights.dto.SightSortCondition;
 import com.sights.dto.SightsDto;
 
-public interface SightsDao {
-
+public interface SightsListDao {
+	
+	
 	
 	public SightsDto getOneSightDetail(String title);
 	
@@ -28,5 +30,4 @@ public interface SightsDao {
 	public List<SightsDto> getScheduleSortSightlist(SightSortCondition cond, SightPagingDto pageDto);
 	
 	public int getPageNumCount(SightSortCondition cond);
-
 }

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.sights.dao.SightsDao;
+import com.sights.dao.SightsListDao;
 import com.sights.dto.SightPagingDto;
 import com.sights.dto.SightSortCondition;
 import com.sights.dto.SightsDto;
@@ -16,14 +16,15 @@ import com.sights.dto.SightsDto;
 import common.db.DBClose;
 import common.db.DBConnection;
 
-public class SightsDaoImpl implements SightsDao, Serializable {
+
+public class SightsListDaoImpl implements SightsListDao, Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private static SightsDaoImpl dao = null;
+	private static SightsListDaoImpl dao = null;
 	
 	
-	private SightsDaoImpl() {
+	private SightsListDaoImpl() {
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 		} catch (ClassNotFoundException e) {
@@ -33,9 +34,9 @@ public class SightsDaoImpl implements SightsDao, Serializable {
 	}
 	
 	
-	public static SightsDaoImpl getInstance() {
+	public static SightsListDaoImpl getInstance() {
 		if(dao == null) {
-			dao = new SightsDaoImpl();
+			dao = new SightsListDaoImpl();
 		}
 		return dao;
 	}
@@ -408,7 +409,7 @@ public class SightsDaoImpl implements SightsDao, Serializable {
 	 * @return
 	 */
 	public List<SightsDto> getScheduleSortSightlist(SightSortCondition cond){
-		System.out.println(cond.toString());
+		
 		//테마가 all인지 아닌지 여부를 판단해서 psmt에 colString 추가하기 위한 변수
 		boolean themeConditionAdded = false;
 		
@@ -436,8 +437,6 @@ public class SightsDaoImpl implements SightsDao, Serializable {
 		ResultSet rs = null;
 		
 		List<SightsDto> list = new LinkedList<SightsDto>();
-		
-		//sql=" SELECT * FROM SIGHTS WHERE CATEGORY=? ORDER BY ADDSCHEDULE DESC ";
 		
 		try {
 			//psmt 조건을 순차적으로 지정하기 위한 변수
@@ -575,13 +574,21 @@ public class SightsDaoImpl implements SightsDao, Serializable {
 //				+ " " + sortCondition + " ) "
 //				+ " ) WHERE ( (RNUM >= " + pageDto.getStartRnum() + " ) AND (RNUM <= " + pageDto.getEndRnum() + " ) ) ";
 		
-		String sql = " SELECT RNUM, TITLE, SEQ, CATEGORY, THEME, FILENAME, ADDRESS, PHONE, HOMEPAGE, CONTENT, ADDSCHEDULE, DEL, READCOUNT "
+//		String sql = " SELECT RNUM, TITLE, SEQ, CATEGORY, THEME, FILENAME, ADDRESS, PHONE, HOMEPAGE, CONTENT, ADDSCHEDULE, DEL, READCOUNT "
+//				+ " FROM (  "
+//				+ " SELECT ROWNUM AS RNUM, TITLE, SEQ, CATEGORY, THEME, FILENAME, ADDRESS, PHONE, HOMEPAGE, CONTENT, ADDSCHEDULE, DEL, READCOUNT "
+//				+ " FROM ( SELECT TITLE, SEQ, CATEGORY, THEME, FILENAME, ADDRESS, PHONE, HOMEPAGE, CONTENT, ADDSCHEDULE, DEL, READCOUNT "
+//				+ " FROM SIGHTS WHERE ( CATEGORY = ? ) " + themeCondition + " "
+//				+ " " + sortCondition + " ) "
+//				+ " ) WHERE ( (RNUM >= " + pageDto.getStartRnum() + " ) AND (RNUM <= " + pageDto.getEndRnum() + " ) ) ";
+		
+		String sql = " SELECT A.RNUM, A.TITLE, A.SEQ, A.CATEGORY, A.THEME, A.FILENAME, A.ADDRESS, A.PHONE, A.HOMEPAGE, A.CONTENT, A.ADDSCHEDULE, A.DEL, A.READCOUNT, NVL(B.SCORE,0) "
 				+ " FROM (  "
 				+ " SELECT ROWNUM AS RNUM, TITLE, SEQ, CATEGORY, THEME, FILENAME, ADDRESS, PHONE, HOMEPAGE, CONTENT, ADDSCHEDULE, DEL, READCOUNT "
 				+ " FROM ( SELECT TITLE, SEQ, CATEGORY, THEME, FILENAME, ADDRESS, PHONE, HOMEPAGE, CONTENT, ADDSCHEDULE, DEL, READCOUNT "
 				+ " FROM SIGHTS WHERE ( CATEGORY = ? ) " + themeCondition + " "
-				+ " " + sortCondition + " ) "
-				+ " ) WHERE ( (RNUM >= " + pageDto.getStartRnum() + " ) AND (RNUM <= " + pageDto.getEndRnum() + " ) ) ";
+				+ " " + sortCondition + " ) ) A , (SELECT TITLE, AVG(SCORE) AS SCORE FROM SIGHT_REVIEW GROUP BY TITLE) B "
+				+ "  WHERE A.TITLE = B.TITLE(+) AND ( (RNUM >= " + pageDto.getStartRnum() + " ) AND (RNUM <= " + pageDto.getEndRnum() + " ) ) ";
 		
 		
 		Connection conn = null;
@@ -610,6 +617,24 @@ public class SightsDaoImpl implements SightsDao, Serializable {
 			
 			rs = psmt.executeQuery();
 			
+//			while(rs.next()) {
+//				int i = 1;
+//				rs.getInt(i++);
+//				SightsDto dto = new SightsDto(rs.getString(i++), 
+//												rs.getInt(i++), 
+//												rs.getInt(i++), 
+//												rs.getString(i++), 
+//												rs.getString(i++), 
+//												rs.getString(i++), 
+//												rs.getString(i++), 
+//												rs.getString(i++), 
+//												rs.getString(i++), 
+//												rs.getInt(i++), 
+//												rs.getInt(i++), 
+//												rs.getInt(i++) );
+//				list.add(dto);				
+//			}	
+			
 			while(rs.next()) {
 				int i = 1;
 				rs.getInt(i++);
@@ -624,7 +649,8 @@ public class SightsDaoImpl implements SightsDao, Serializable {
 												rs.getString(i++), 
 												rs.getInt(i++), 
 												rs.getInt(i++), 
-												rs.getInt(i++) );
+												rs.getInt(i++),
+												rs.getDouble(i++) );
 				list.add(dto);				
 			}	
 			
@@ -638,5 +664,6 @@ public class SightsDaoImpl implements SightsDao, Serializable {
 		}
 		return list;
 	}	
-		
+	
+	
 }

@@ -2,14 +2,15 @@
 
 .mainSiteMapWrap {
 	margin-top: 30px;
+	padding-top: 80px;
 	width: 100%;
-	height: 700px;
+	height: 900px;
 	background-color: #ffffff;
 }
 
 .mainSiteMapContent{
-	padding-top: 100px;
-	width:70%;
+	padding-top: 60px;
+	width:900px;
 }
 
 /* 탭 메뉴 사이즈 조절 */
@@ -37,6 +38,11 @@ ul.nav a.active {
 .tab-pane{
 	padding: 10px;
 }
+/* 탭 콘텐츠 내부 제목 폰트 설정 */
+.tab-content h3{
+	font-weight: 900;
+}
+
 /* 전체 탭 설정 끝 */
 
 
@@ -49,6 +55,7 @@ ul.nav a.active {
 	top: 0px;
 	left: 0px;
 	padding: 10px;
+	margin: 30px;
 }
 .cmp1SiteMapItem{
 	width: 500px;
@@ -62,8 +69,34 @@ ul.nav a.active {
 	width: 500px;
 	height: 305px;
 }
-.cmp1InnerSiteMapItem{
+.cmp1InnerSiteMapItem h3{
+	position: absolute;
+	top: 0px;
+	color: white;
+	padding-top: 123px;
+	text-align:center;
+
+	width: 500px;
+	height: 305px;
+	z-index: 11;
+	background-color:rgba(2,2,2,0.1);
+	cursor:pointer
+}
+.borderSiteMapItem{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	color: white;
+	padding: 5px;
 	
+	text-align:left;
+
+	width: 500px;
+	height: 305px;
+	background-color:rgba(2,2,2,0.4);
+	border: solid 1px;	
+	border-color: #EEB403;
+	z-index: 10;
 }
 
 .cmp2SiteMapItem{
@@ -74,6 +107,28 @@ ul.nav a.active {
 	top: -300px;
 	left: 252px;
 }
+.cmp2SiteMapItem img{
+	width: 305px;
+	height: 150px;
+}
+.cmp2InnerSiteMapItem h3{
+	position: absolute;
+	top: 0px;
+	color: white;
+	padding-top: 60px;
+	text-align:center;
+
+	width: 305px;
+	height: 150px;
+	z-index: 11;
+	background-color:rgba(2,2,2,0.1);
+	cursor:pointer
+}
+.cmp2BorderSiteMapItem{
+	width: 305px;
+	height: 150px;
+}
+
 .cmp3SiteMapItem{
 	width: 305px;
 	height: 150px;
@@ -82,6 +137,28 @@ ul.nav a.active {
 	top: -295px;
 	left: 252px;
 }
+.cmp3SiteMapItem img{
+	width: 305px;
+	height: 150px;
+}
+.cmp3InnerSiteMapItem h3{
+	position: absolute;
+	top: 0px;
+	color: white;
+	padding-top: 60px;
+	text-align:center;
+
+	width: 305px;
+	height: 150px;
+	z-index: 11;
+	background-color:rgba(2,2,2,0.1);
+	cursor:pointer
+}
+.cmp3BorderSiteMapItem{
+	width: 305px;
+	height: 150px;
+}
+
 .cmp4SiteMapItem{
 	width: 270px;
 	height: 150px;
@@ -90,6 +167,28 @@ ul.nav a.active {
 	top: -290px;
 	left: -270px;
 }
+.cmp4SiteMapItem img{
+	width: 270px;
+	height: 150px;
+}
+.cmp4InnerSiteMapItem h3{
+	position: absolute;
+	top: 0px;
+	color: white;
+	padding-top: 60px;
+	text-align:center;
+
+	width: 270px;
+	height: 150px;
+	z-index: 11;
+	background-color:rgba(2,2,2,0.1);
+	cursor:pointer
+}
+.cmp4BorderSiteMapItem{
+	width: 270px;
+	height: 150px;
+}
+
 .cmp5SiteMapItem{
 	width: 270px;
 	height: 150px;
@@ -98,6 +197,28 @@ ul.nav a.active {
 	top: -440px;
 	left: 5px;
 }
+.cmp5SiteMapItem img{
+	width: 270px;
+	height: 150px;
+}
+.cmp5InnerSiteMapItem h3{
+	position: absolute;
+	top: 0px;
+	color: white;
+	padding-top: 60px;
+	text-align:center;
+
+	width: 270px;
+	height: 150px;
+	z-index: 11;
+	background-color:rgba(2,2,2,0.1);
+	cursor:pointer
+}
+.cmp5BorderSiteMapItem{
+	width: 270px;
+	height: 150px;
+}
+
 .cmp6SiteMapItem{
 	width: 260px;
 	height: 150px;
@@ -106,5 +227,25 @@ ul.nav a.active {
 	top: -590px;
 	left: 275px;
 }
+.cmp6SiteMapItem img{
+	width: 260px;
+	height: 150px;
+}
+.cmp6InnerSiteMapItem h3{
+	position: absolute;
+	top: 0px;
+	color: white;
+	padding-top: 60px;
+	text-align:center;
 
+	width: 260px;
+	height: 150px;
+	z-index: 11;
+	background-color:rgba(2,2,2,0.1);
+	cursor:pointer
+}
+.cmp6BorderSiteMapItem{
+	width: 260px;
+	height: 150px;
+}
 /* 첫 번째 탭 레이아웃 설정 끝 */

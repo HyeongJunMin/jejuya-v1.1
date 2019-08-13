@@ -9,4 +9,8 @@ $(function(){
 	$(".item_section").mouseout(function(){
 		$(this).css('background-color', 'rgba(22, 22, 22, 0.6)');
 	});
+	
+	$(".cmp1BorderSiteMapItem").click(function(){
+		alert('dfsdf');
+	});
 });
