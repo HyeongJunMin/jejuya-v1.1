@@ -27,6 +27,15 @@ public class SightsDto implements Serializable {
 		private double score;
 		
 		public SightsDto() {
+		}		
+
+		public SightsDto(String title, int category, String theme, int addSchedule, int readcount) {
+			super();
+			this.title = title;
+			this.category = category;
+			this.theme = theme;
+			this.addSchedule = addSchedule;
+			this.readcount = readcount;
 		}
 		
 		public SightsDto(String title, int seq, int category, String theme, String filename, String address,
@@ -44,7 +53,7 @@ public class SightsDto implements Serializable {
 			this.addSchedule = addSchedule;
 			this.del = del;
 			this.readcount = readcount;
-		}		
+		}
 
 		public SightsDto(String title, int seq, int category, String theme, String filename, String address,
 				String phone, String homepage, String content, int addSchedule, int del, int readcount, double score) {

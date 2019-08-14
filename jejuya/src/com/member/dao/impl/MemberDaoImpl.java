@@ -109,12 +109,13 @@ public class MemberDaoImpl implements MemberDao {
 				String email = rs.getString(i++);
 				String birth = rs.getString(i++);	
 				del = rs.getInt(i++);
+				int isAdmin = rs.getInt(i++);
 				
 				if(del == 1) {//삭제된 계정이면 null 리턴
 					return null;
 				}
 				
-				dto = new MemberDto(id, seq, pw, name, email, birth);
+				dto = new MemberDto(id, seq, pw, name, email, birth, del, isAdmin);
 			}					
 			
 		} catch (Exception e) {

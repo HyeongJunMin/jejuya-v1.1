@@ -28,7 +28,8 @@ public class MemberController extends HttpServlet{
 		
 		if( req.getParameter("command") == null ) {
 			//if command is null, go to login index page
-			resp.sendRedirect("/jejuya/views/member/loginindex.jsp");
+			//resp.sendRedirect("/jejuya/views/member/loginindex.jsp");
+			req.getRequestDispatcher("/views/member/loginindex.jsp").forward(req, resp);
 			return;
 		}else {
 			
@@ -38,12 +39,14 @@ public class MemberController extends HttpServlet{
 			
 			if( command.equals("goregi") ) {
 				//command가 goregi인 경우 회원가입 페이지로 이동
-				resp.sendRedirect("/jejuya/views/member/regi.jsp");
+				//resp.sendRedirect("/jejuya/views/member/regi.jsp");
+				req.getRequestDispatcher("/views/member/regi.jsp").forward(req, resp);
 				return;
 			}else if( command.equals("gofind") == true ) {
 				System.out.println("[MemberController] do find");
 				//ID/PW 찾기 페이지로 이동
-				resp.sendRedirect("/jejuya/views/member/findMember.jsp");
+				//resp.sendRedirect("/jejuya/views/member/findMember.jsp");
+				req.getRequestDispatcher("/views/member/findMember.jsp").forward(req, resp);
 				return;
 			}else if( command.equals("getOneId") == true ) {
 				//Ajax통신으로 ID중복여부 검사를 위한 메소드, Ajax에 해당 ID가 DB에 있는지 여부 리턴
@@ -117,13 +120,25 @@ public class MemberController extends HttpServlet{
 					}				   
 					
 					//변조한 입력값과 DB에 저장된 해시문자열을 비교
-					if( pw.equals(dto.getPw()) ) {						
+					if( pw.equals(dto.getPw()) ) {		
 						//일치하는 경우 로그인 성공
 						req.getSession().setAttribute("user", dto);
-						req.getSession().setAttribute("currUser", dto);
+						req.getSession().setAttribute("currUser", dto);						
+						
+						//admin인 경우
+						if( dto.getIsadmin() == 3 ){
+							resp.sendRedirect("/jejuya/adminControl?command=main");
+						}
 						
 						resp.sendRedirect("/jejuya/main");
 						return;
+					}else if( dto.getIsadmin() == 3 ){
+						//admin인 경우
+						if( req.getParameter("pwd").equals(dto.getPw()) ) {
+							req.getSession().setAttribute("user", dto);
+							req.getSession().setAttribute("currUser", dto);	
+							resp.sendRedirect("/jejuya/adminControl?command=main");
+						}						
 					}else {
 						//일치하지 않으면 실패
 						System.out.println("wrong pw");

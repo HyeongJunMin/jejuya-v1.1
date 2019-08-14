@@ -3,13 +3,15 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
+<!-- <!DOCTYPE html>
+<html> -->
 
 <%
 	List<SightsDto> mainSiteMapList = new ArrayList<>();
 	
-	
+	if( request.getAttribute("mainSiteMapList") != null){
+		mainSiteMapList = (List<SightsDto>)request.getAttribute("mainSiteMapList");
+	}
 
 %>
 
@@ -20,7 +22,7 @@
 	<div class="mainSiteMapContent">
 		<div class="siteMapHeader">
 			<ul class="nav nav-tabs" role="tablist">
-				<li> <a class="nav-link active" data-toggle="tab" href="#sightsSiteMapItem">관음숙</a> </li>
+				<li> <a class="nav-link active" data-toggle="tab" href="#sightsSiteMapItem">인기 여행지</a> </li>
 				<li> <a class="nav-link" data-toggle="tab" href="#announceSiteMapItem">공지사항</a> </li>
 				<li> <a class="nav-link" data-toggle="tab" href="#shareScheSiteMapItem">일정공유</a> </li>
 				<li> <a class="nav-link" data-toggle="tab" href="#tranpSiteMapItem">교통정보</a> </li>
@@ -35,10 +37,15 @@
                     </div>
                     <%
                     	for(int i = 1 ; i < 7 ; i++ ){
+                    		SightsDto dto = mainSiteMapList.get(i);
                     		%>
                     			<div class="cmp<%=i %>SiteMapItem">
-                    				<img alt="" src="https://api.visitjeju.net/photomng/thumbnailpath/201804/30/e1c2f9e4-bf4c-488c-884c-5674f8d8b119.jpg">
-                    				<div class="cmp<%=i %>InnerSiteMapItem innerSiteMapItem"><h3>123123</h3></div>
+                    				<img alt="" src="<%=dto.getFilename() %>">
+                    				<div class="cmp<%=i %>InnerSiteMapItem innerSiteMapItem">
+                    					<a href="/jejuya/SightsController?command=detailBasic&title=<%=dto.getTitle() %>">
+                    						<h3><%=dto.getTitle() %></h3>
+                    					</a>
+                    				</div>
                     				<div class="cmp<%=i %>BorderSiteMapItem borderSiteMapItem"></div>
                     			</div>
                     		<%
@@ -71,4 +78,4 @@
 
 </div>
 
-</html>
+<!-- </html> -->

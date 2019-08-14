@@ -28,13 +28,13 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#about">관광지</a>
+            <a class="nav-link js-scroll-trigger" href="/jejuya/SightsListController?command=sortByConditionInSightlist&category=0">관광지</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#projects">음식점</a>
+            <a class="nav-link js-scroll-trigger" href="/jejuya/SightsListController?command=sortByConditionInSightlist&category=1">음식점</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#signup">숙박</a>
+            <a class="nav-link js-scroll-trigger" href="/jejuya/SightsListController?command=sortByConditionInSightlist&category=2">숙박</a>
           </li>
            <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="#signup">나의여행</a>

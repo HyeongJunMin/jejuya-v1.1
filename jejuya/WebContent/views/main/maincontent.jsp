@@ -1,10 +1,12 @@
+<%@page import="java.util.HashMap"%>
+<%@page import="java.util.Map"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.sights.dto.SightsDto"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
+<!-- <!DOCTYPE html>
+<html> -->
 
 <script type="text/javascript" src="/jejuya/resources/js/main/maincontent.js"></script>
 <link href="/jejuya/resources/css/main/maincontent.css" rel="stylesheet">
@@ -13,10 +15,12 @@
 
 
 <%
-	List<SightsDto> mainListCate0 = new ArrayList<>();
-	if( request.getAttribute("mainListCate0") != null){
-		mainListCate0 = (List<SightsDto>)request.getAttribute("mainListCate0");
+	List<SightsDto> mainListAllCate = new ArrayList<>();
+
+	if( request.getAttribute("mainListAllCate") != null){
+		mainListAllCate = (List<SightsDto>)request.getAttribute("mainListAllCate");
 	}
+	
 %>
 <div class="container text-center my-3">
 	
@@ -29,7 +33,7 @@
         <%
         	
         	for(int i = 0 ; i < 4 ; i++){
-        		SightsDto dto = mainListCate0.get(i);
+        		SightsDto dto = mainListAllCate.get(i);
         		//첫 번째 carousel-item에만 active 클래스 부여, 한 화면에는 요소 4개씩만 표현
          		%>
          			<!-- 메인화면에 뿌려줄 관광지 정보 -->
@@ -38,7 +42,7 @@
 							<dt class="item_top">
 								<span class="mainItemTitle"><%=dto.getTitle() %></span> 
 								<!-- 받아온 DB정보에서 seq번호로 디테일화면으로 넘어가기 -->
-								<a href="/jejuya/SightsController?command=SightDetail&title=dto.getTitle() ">
+								<a href="/jejuya/SightsController?command=detailBasic&title=<%=dto.getTitle() %> ">
 									<img height="130px" width="100%" alt="dto.getFilename()"
 									class="img-fluid" src="<%=dto.getFilename() %>">
 								</a>	
@@ -61,7 +65,7 @@
         	 	<%
         	
 		        	for(int i = 4 ; i < 8 ; i++){
-		        		SightsDto dto = mainListCate0.get(i);
+		        		SightsDto dto = mainListAllCate.get(i);
 		        		//첫 번째 carousel-item에만 active 클래스 부여, 한 화면에는 요소 4개씩만 표현
 		         		%>
 		         			<!-- 메인화면에 뿌려줄 관광지 정보 -->
@@ -70,7 +74,7 @@
 									<dt class="item_top">
 										<span class="mainItemTitle"><%=dto.getTitle() %></span> 
 										<!-- 받아온 DB정보에서 seq번호로 디테일화면으로 넘어가기 -->
-										<a href="/jejuya/SightsController?command=SightDetail&title=dto.getTitle() ">
+										<a href="/jejuya/SightsController?command=detailBasic&title=<%=dto.getTitle() %> ">
 											<img height="130px" width="100%" alt="dto.getFilename()"
 											class="img-fluid" src="<%=dto.getFilename() %>">
 										</a>					
@@ -100,10 +104,12 @@
     </div>    
 </div>
 
+
+
 <div class="mainContentBgImg">
 </div>
 
 <br><br><br><br><br><br><br><br><br><br><br>
 
 
-</html>
+<!-- </html> -->

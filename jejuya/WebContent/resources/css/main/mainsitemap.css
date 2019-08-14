@@ -9,8 +9,14 @@
 }
 
 .mainSiteMapContent{
+	margin:auto;
+	padding: 100px;
 	padding-top: 60px;
-	width:900px;
+	width:1140px;
+	height: 845px;
+
+	position: relative;
+	top:-25px;
 }
 
 /* 탭 메뉴 사이즈 조절 */
@@ -20,7 +26,8 @@
 /* 탭 메뉴 폰트 */
 .nav-tabs a{
 	/* color: #FFC312; */
-	color: rgba(238,179,0, 0.99);
+	font-weight: 600;
+	color: rgba(28,22,22, 0.99);
 }
 /* 탭 메뉴 하버 이벤트 */
 .nav-tabs > li > a:hover{
@@ -40,7 +47,8 @@ ul.nav a.active {
 }
 /* 탭 콘텐츠 내부 제목 폰트 설정 */
 .tab-content h3{
-	font-weight: 900;
+	font-weight: 400;
+	font-family: 'Nunito';
 }
 
 /* 전체 탭 설정 끝 */

@@ -83,4 +83,10 @@ public class SightsListServiceImpl implements SightsListService{
 		// TODO Auto-generated method stub
 		return dao.getPageNumCount(cond);
 	}
+
+	@Override
+	public List<SightsDto> getPopularSightlist(SightSortCondition cond, SightPagingDto pageDto) {
+		// TODO Auto-generated method stub
+		return dao.getPopularSightlist(cond, pageDto);
+	}	
 }

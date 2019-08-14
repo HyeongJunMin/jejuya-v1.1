@@ -30,4 +30,6 @@ public interface SightsListDao {
 	public List<SightsDto> getScheduleSortSightlist(SightSortCondition cond, SightPagingDto pageDto);
 	
 	public int getPageNumCount(SightSortCondition cond);
+	
+	public List<SightsDto> getPopularSightlist(SightSortCondition cond, SightPagingDto pageDto);
 }

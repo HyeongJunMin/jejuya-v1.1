@@ -90,8 +90,6 @@ public class SightsListDaoImpl implements SightsListDao, Serializable {
 		
 	}
 	
-	
-
 	/**
 	 * 매개변수로 받은 카테고리 번호를 가지고 DB에서 해당 카테고리 번호를 찾아서 리스트로 리턴 해주는 메소드
 	 */
@@ -538,9 +536,7 @@ public class SightsListDaoImpl implements SightsListDao, Serializable {
 	 * @return
 	 */
 	public List<SightsDto> getScheduleSortSightlist(SightSortCondition cond, SightPagingDto pageDto){
-		
-		
-		
+				
 		//정렬기준(order by)을 결정하는 변수
 		String sortCondition = "";
 		if( cond.getSortSel().equals("addschedule") ) {
@@ -666,4 +662,72 @@ public class SightsListDaoImpl implements SightsListDao, Serializable {
 	}	
 	
 	
+	/**모든 카테고리의 sight를 리턴하는 메소드. 정렬기준은 cond의 SortSel만 활용
+	 * @param pageDto
+	 * @return
+	 */
+	public List<SightsDto> getPopularSightlist(SightSortCondition cond, SightPagingDto pageDto) {
+		//정렬기준(order by)을 결정하는 변수
+				String sortCondition = "";
+				if( cond.getSortSel().equals("addschedule") ) {
+					sortCondition = " ORDER BY ADDSCHEDULE DESC, SEQ DESC ";
+				}else if( cond.getSortSel().equals("readcount") ) {
+					sortCondition = " ORDER BY READCOUNT DESC, SEQ DESC ";
+				}else {
+					sortCondition = " ORDER BY SEQ DESC ";
+				}				
+				
+				String sql = " SELECT A.RNUM, A.TITLE, A.SEQ, A.CATEGORY, A.THEME, A.FILENAME, A.ADDRESS, A.PHONE, A.HOMEPAGE, A.CONTENT, A.ADDSCHEDULE, A.DEL, A.READCOUNT, NVL(B.SCORE,0) "
+						+ " FROM (  "
+						+ " SELECT ROWNUM AS RNUM, TITLE, SEQ, CATEGORY, THEME, FILENAME, ADDRESS, PHONE, HOMEPAGE, CONTENT, ADDSCHEDULE, DEL, READCOUNT "
+						+ " FROM ( SELECT TITLE, SEQ, CATEGORY, THEME, FILENAME, ADDRESS, PHONE, HOMEPAGE, CONTENT, ADDSCHEDULE, DEL, READCOUNT "
+						+ " FROM SIGHTS "
+						+ " " + sortCondition + " ) ) A , (SELECT TITLE, AVG(SCORE) AS SCORE FROM SIGHT_REVIEW GROUP BY TITLE) B "
+						+ "  WHERE A.TITLE = B.TITLE(+) AND ( (RNUM >= " + pageDto.getStartRnum() + " ) AND (RNUM <= " + pageDto.getEndRnum() + " ) ) ";
+				
+				
+				Connection conn = null;
+				PreparedStatement psmt = null;
+				ResultSet rs = null;
+				
+				List<SightsDto> list = new LinkedList<SightsDto>();
+				
+				try {
+					//psmt 조건을 순차적으로 지정하기 위한 변수
+					int colPointer = 1;
+					conn = DBConnection.getConnection();
+					
+					psmt = conn.prepareStatement(sql);
+						
+					rs = psmt.executeQuery();
+					
+					while(rs.next()) {
+						int i = 1;
+						rs.getInt(i++);
+						SightsDto dto = new SightsDto(rs.getString(i++), 
+														rs.getInt(i++), 
+														rs.getInt(i++), 
+														rs.getString(i++), 
+														rs.getString(i++), 
+														rs.getString(i++), 
+														rs.getString(i++), 
+														rs.getString(i++), 
+														rs.getString(i++), 
+														rs.getInt(i++), 
+														rs.getInt(i++), 
+														rs.getInt(i++),
+														rs.getDouble(i++) );
+						list.add(dto);				
+					}	
+					
+					System.out.println("[SightsDaoImpl] list return done. ");
+					
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} finally {
+					DBClose.close(conn, psmt, rs);
+				}
+				return list;
+	}
 }
