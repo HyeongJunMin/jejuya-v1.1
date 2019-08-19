@@ -50,7 +50,7 @@ ul.tabs li.current{
    border-radius: 5px;
 }
 
-li.side_menu_main_bbs, li.side_menu_main_user{
+li.side_menu_main_bbs, li.side_menu_main_user, li.side_menu_main_notice{
     padding: 10px;
 /*     padding-bottom: 10px; */
     margin-bottom: 0;
@@ -68,7 +68,7 @@ ul.tab-link{
 }
 
 
-ul.side_menu_sub_tabs_bbs, ul.side_menu_sub_tabs_user{
+ul.side_menu_sub_tabs_bbs, ul.side_menu_sub_tabs_user, ul.side_menu_sub_tabs_notice{
 	padding-top: 5px;
 	padding-left: 20px;
 	padding-bottom: 10px;

@@ -128,6 +128,7 @@ public class MemberController extends HttpServlet{
 						//admin인 경우
 						if( dto.getIsadmin() == 3 ){
 							resp.sendRedirect("/jejuya/adminControl?command=main");
+							return;
 						}
 						
 						resp.sendRedirect("/jejuya/main");

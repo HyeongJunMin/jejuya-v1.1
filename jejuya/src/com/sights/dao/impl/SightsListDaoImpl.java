@@ -466,7 +466,7 @@ public class SightsListDaoImpl implements SightsListDao, Serializable {
 				list.add(dto);				
 			}	
 			
-			System.out.println("[SightsDaoImpl] list return done. 3 params getScheduleSortSightlist.");
+			//System.out.println("[SightsDaoImpl] list return done. 3 params getScheduleSortSightlist.");
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -608,8 +608,8 @@ public class SightsListDaoImpl implements SightsListDao, Serializable {
 				psmt.setString( colPointer++, cond.getTheme() );
 			}						
 			
-			System.out.println("sort condition : " + cond);
-			System.out.println("query in dao : " + sql);
+			//System.out.println("sort condition : " + cond);
+			//System.out.println("query in dao : " + sql);
 			
 			rs = psmt.executeQuery();
 			
@@ -650,7 +650,7 @@ public class SightsListDaoImpl implements SightsListDao, Serializable {
 				list.add(dto);				
 			}	
 			
-			System.out.println("[SightsDaoImpl] list return done. ");
+			//System.out.println("[SightsDaoImpl] list return done. ");
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -720,7 +720,7 @@ public class SightsListDaoImpl implements SightsListDao, Serializable {
 						list.add(dto);				
 					}	
 					
-					System.out.println("[SightsDaoImpl] list return done. ");
+					//System.out.println("[SightsDaoImpl] list return done. ");
 					
 				} catch (Exception e) {
 					// TODO Auto-generated catch block

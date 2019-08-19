@@ -102,7 +102,7 @@ ul.nav a.active {
 	width: 500px;
 	height: 305px;
 	background-color:rgba(2,2,2,0.4);
-	border: solid 1px;	
+	border: solid 2px;	
 	border-color: #EEB403;
 	z-index: 10;
 }
@@ -243,9 +243,10 @@ ul.nav a.active {
 	position: absolute;
 	top: 0px;
 	color: white;
-	padding-top: 60px;
+	padding-top: 65px;
 	text-align:center;
 
+	font-size: 20px;
 	width: 260px;
 	height: 150px;
 	z-index: 11;
@@ -257,3 +258,48 @@ ul.nav a.active {
 	height: 150px;
 }
 /* 첫 번째 탭 레이아웃 설정 끝 */
+
+/* 두 번째 탭 공지사항 테이블 레이아웃 및 디자인 설정 */
+.cmp1AnnounceSiteMapItem h2{
+	margin: 20px;
+	padding: 10px;
+}
+
+#mainNoticeTbl{
+	text-align:center;
+
+}
+
+.mainNoticeTblRow{
+	max-height: 8px;
+}
+
+.modal-content{
+	margin: 0 auto;
+	padding: 10px;
+	position: fixed;
+
+	width:800px;
+	top: 100px;
+	left: 500px;
+}
+.pagination li a{
+	float:left;
+	padding:5px;
+	margin:1px;
+	min-width:30px;
+	max-width:60px;
+	height: 30px;
+	color:#000;
+	font:bold 12px tahoma;
+	border:1px solid #eee;
+	text-align:center;
+	text-decoration:none;
+	cursor:pointer
+}
+.pagination li a:hover, .pagination li a:focus{
+	color:#000000;
+	border:1px solid #efb812;
+	background-color:#F1C233;
+}
+/* 두 번째 탭 공지사항 테이블 레이아웃 및 디자인 설정 끝*/

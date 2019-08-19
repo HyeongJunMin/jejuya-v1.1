@@ -4,6 +4,8 @@
 
 
 <%
+	String contextPath = request.getContextPath();	
+
 	//isSearchedResult attr이 존재하면 회원관리 버튼을 선택하고 회원관리 검색결과를 보여주고 req에서 attr 제거
 	boolean isSearchedResult = false;
 	if (request.getAttribute("isSearchedResult") != null) {
@@ -16,26 +18,13 @@
 <head>
 <meta charset="UTF-8">
 <link type="text/css" rel="stylesheet" href="/jejuya/resources/css/admin/admin.css">
-<script type="text/javascript"
-	src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script type="text/javascript"
-	src="/jejuya/resources/js/admin/admin.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="/jejuya/resources/js/admin/admin.js"></script>
 <style type="text/css">
 iframe{
 	border: 0px;
 	margin-top: 40px;
 	margin-left: 70px;
-	align-content: center;
-}
-li.side_menu_main_bbs, li.side_menu_main_user{
-    padding: 10px;
-/*     padding-bottom: 10px; */
-    margin-bottom: 0;
-    margin-right: 20px;
-    margin-top: 18px; 
-	background-color: #323b59;
-	color: #fff;
-	cursor: pointer;
 	align-content: center;
 }
 
@@ -44,16 +33,6 @@ ul.tab-link{
 	
 }
 
-
-ul.side_menu_sub_tabs_bbs, ul.side_menu_sub_tabs_user{
-	padding-top: 5px;
-	padding-left: 20px;
-	padding-bottom: 10px;
-	margin-left: 40px;
-	margin-top: -20px;
-	background-color: #c6cfe1;
-	cursor: pointer;
-}
 
 </style>
 <title>admin.jsp</title>
@@ -94,7 +73,18 @@ ul.side_menu_sub_tabs_bbs, ul.side_menu_sub_tabs_user{
 					<ul class="side_menu_sub_tabs_user">
 						<li class="tab-link" data-tab="tab-2">회원 정보 확인</li>
 					</ul>
+					
+				<!-- 공지 관련 내용 -->
+				<div>
+					<ul class="side_menu">
+						<li class="side_menu_main_notice">공지 관리</li>
+					</ul>
+					<ul class="side_menu_sub_tabs_notice">
+						<li class="tab-link" data-tab="tab-5">공지 목록</li>
+					</ul>
+				</div>
 			</div> 
+			
 
 			
 			
@@ -111,6 +101,8 @@ ul.side_menu_sub_tabs_bbs, ul.side_menu_sub_tabs_user{
 				<ul class="tabs">
 					<li class="tab-link current" data-tab="tab-1">게시판 관리</li> 			<!-- current : 현재 선택된ㄴ 탭 -->
 					<li class="tab-link" data-tab="tab-2">회원 관리</li>
+					<!-- 공지 관련 내용 -->
+					<li class="tab-link" data-tab="tab-5">공지 관리</li>
 				</ul>
 				<div class="mainmenuBbs">
 					<div id="tab-1" class="tab-content current">
@@ -122,11 +114,14 @@ ul.side_menu_sub_tabs_bbs, ul.side_menu_sub_tabs_user{
 					</div>
 					<div id="tab-3" class="tab-content">
 <!-- 						<iframe src="http://zum.com/#!/home"></iframe> -->
-						<iframe src="./views/admin/addSightsAdmin.jsp" width="1000" height="1500"></iframe>
-						
+						<iframe src="./views/admin/addSightsAdmin.jsp" width="1000" height="1500"></iframe>						
 					</div>
 					<div id="tab-4" class="tab-content">
 <!-- 						<iframe src="/project/adminControl?command=userlist" width="1000" height="800"></iframe> -->
+					</div>
+					<!-- 공지 관련 내용 -->
+					<div id="tab-5" class="tab-content">
+ 						<iframe src="<%=contextPath %>/notice?command=showlistAdmin" width="1000" height="800"></iframe>
 					</div>
 			</div>
 		</div>
@@ -173,6 +168,8 @@ ul.side_menu_sub_tabs_bbs, ul.side_menu_sub_tabs_user{
 
 			$('.side_menu_sub_tabs_bbs').hide();
 			$('.side_menu_sub_tabs_user').hide();
+			/* 공지 관련 내용 */
+			$('.side_menu_sub_tabs_notice').hide();
 
 			$(".side_menu_main_bbs").click(function() { // 게시판 관리
 
@@ -192,6 +189,18 @@ ul.side_menu_sub_tabs_bbs, ul.side_menu_sub_tabs_user{
 					i = 1;
 				} else {
 					$('.side_menu_sub_tabs_user').hide();
+					i = 0;
+				}
+			});
+			
+			/* 공지 관련 내용 */
+			$(".side_menu_main_notice").click(function() { // 공지 관리
+
+				if (i == 0) {
+					$('.side_menu_sub_tabs_notice').show();
+					i = 1;
+				} else {
+					$('.side_menu_sub_tabs_notice').hide();
 					i = 0;
 				}
 			});

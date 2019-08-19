@@ -1,7 +1,8 @@
+<%@page import="com.member.dto.MemberDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	//컨텐스트 패스 저장
+	//컨텍스트 패스 저장
 	String contextPath = request.getContextPath();
 %>
 <!DOCTYPE html>
@@ -30,7 +31,7 @@
 			<tr>
 				<td>작성자</td>
 				<td>
-					<input type="text" id="author" name="author">
+					<input type="text" id="author" name="author" value="<%=((MemberDto)request.getSession().getAttribute("currUser")).getId() %>" readonly="readonly">
 				</td>
 			</tr>
 			<tr>
@@ -43,6 +44,8 @@
 				<td>내용</td>
 				<td>
 					<textarea id="inputContent" name="inputContent" rows="15" cols="50"></textarea>
+					<input type="hidden" id="filePointer" value="1">
+					<input type="hidden" id="filename1" name="filename1" value="">
 				</td>
 			</tr>
 			<tr>

@@ -9,6 +9,17 @@ public interface NoticeDao {
 		
 	public boolean insertNewNotice(NoticeDto dto);
 	
-	public List<NoticeDto> getAllNoticeList(NoticePagingDto dto);
+	public boolean updateNotice(NoticeDto dto);
 	
+	public boolean deleteNotice(int seq);
+	
+	public boolean deleteMultipleNotice(String[] seqs);
+	
+	public List<NoticeDto> getAllNoticeList(NoticePagingDto pagingDto);
+	
+	public int getNoticeDBSize();
+	
+	public NoticeDto getOneNoticeDetail(int seq);
+	 
 }
+
