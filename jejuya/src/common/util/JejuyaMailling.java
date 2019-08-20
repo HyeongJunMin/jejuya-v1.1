@@ -118,6 +118,62 @@ public class JejuyaMailling {
 		}
 	}
 
+	
+	
+	/**메일발송 메소드. String html을 발송한다. 송신 : 5739859@naver.com 수신 : String dest, ID:sel==0 PW:sel==1
+	 * @param html
+	 * @param dest
+	 * @param s
+	 */
+	public static void sendMail(String html, String dest, int sel) {
+		String host = "smtp.naver.com";
+		final String user = "5739859";
+		final String password = "wpwndi1!";
+
+		String to = dest;
+
+		// Get the session object
+		Properties props = new Properties();
+		props.put("mail.smtp.host", host);
+		props.put("mail.smtp.auth", "true");
+
+		Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(user, password);
+			}
+		});
+
+		// Compose the message
+		try {
+
+			MimeMessage message = new MimeMessage(session);
+			message.setFrom(new InternetAddress(user));
+			message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+
+			// Content html
+			message.setContent(html, "text/html;charset=UTF-8");
+			
+			// Subject
+			if( sel == 0 ) {
+				message.setSubject("JEJUYA 아이디를 알려 드립니다.");
+			}else {
+				message.setSubject("JEJUYA 임시 비밀번호를 알려 드립니다.");
+			}
+			
+			
+
+			// Text
+			// message.setText(html);
+
+			// send the message
+			Transport.send(message);
+
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
 	/**
 	 * 메일발송 메소드. String html을 발송한다. 송신 : String host 송신 호스트는 SMTP 설정이 완료되어야만 발송이 가능
 	 * 수신 : String dest

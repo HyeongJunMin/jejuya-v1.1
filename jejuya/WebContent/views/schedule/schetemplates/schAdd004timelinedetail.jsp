@@ -266,11 +266,7 @@ $("#addtrip").click(function ()  {
 			//alert("통신실패"+error);
 		}, complete:function(xhr,status){
 			//alert("통신 종료!");
-	    }
-
-	
-	
-	
+	    }	
 });
 
 });

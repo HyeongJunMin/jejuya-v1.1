@@ -46,7 +46,7 @@ public class MemberController extends HttpServlet{
 				System.out.println("[MemberController] do find");
 				//ID/PW 찾기 페이지로 이동
 				//resp.sendRedirect("/jejuya/views/member/findMember.jsp");
-				req.getRequestDispatcher("/views/member/findMember.jsp").forward(req, resp);
+				req.getRequestDispatcher("/views/member/findMember3.jsp").forward(req, resp);
 				return;
 			}else if( command.equals("getOneId") == true ) {
 				//Ajax통신으로 ID중복여부 검사를 위한 메소드, Ajax에 해당 ID가 DB에 있는지 여부 리턴
@@ -222,7 +222,7 @@ public class MemberController extends HttpServlet{
 				
 				//System.out.println("user email : " + userEmail);
 				//ID를 포함한 HTML내용을 유저가 입력한 email에 보냄
-				JejuyaMailling.sendMail( JejuyaMailling.getFindIdSampleHtmlContent( dto.getId() ), userEmail );
+				JejuyaMailling.sendMail( JejuyaMailling.getFindIdSampleHtmlContent( dto.getId() ), userEmail, 0 );
 				
 				PrintWriter pw = resp.getWriter();
 				pw.print("<script>alert('입력하신 이메일로 아이디 발송이 완료되었습니다.'); history.back();</script>");
@@ -285,7 +285,7 @@ public class MemberController extends HttpServlet{
 				
 				//System.out.println("user email : " + userEmail);
 				//임시PW를 포함한 HTML내용을 유저가 입력한 email에 보냄
-				JejuyaMailling.sendMail( JejuyaMailling.getFindPwSampleHtmlContent(tempPwForUser), userEmail );				
+				JejuyaMailling.sendMail( JejuyaMailling.getFindPwSampleHtmlContent(tempPwForUser), userEmail , 1);				
 				PrintWriter pw = resp.getWriter();
 				pw.print("<script>alert('입력하신 이메일로 임시 비밀번호 발송이 완료되었습니다.'); history.back();</script>");
 				pw.flush();

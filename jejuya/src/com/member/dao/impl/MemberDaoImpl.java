@@ -178,7 +178,7 @@ public class MemberDaoImpl implements MemberDao {
 		MemberDto dto = null;
 		
 		String sql = " SELECT * FROM MEMBER_JEJU WHERE NAME='" + inputName + "' ";
-		
+		System.out.println("이름찾았다!!!" + inputName);
 		Connection conn = null;
 		ResultSet rs = null;
 		PreparedStatement psmt = null;
@@ -213,7 +213,7 @@ public class MemberDaoImpl implements MemberDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
-		
+		System.out.println("끝냈다!!! " + dto.toString());
 		return dto;
 	}
 	

@@ -26,9 +26,14 @@
 		<filter-name>setCharacterEncodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	
 	<error-page>
     	<error-code>404</error-code>
-    	<location>/WEB-INF/views/404.jsp</location>
+    	<location>/views/error/error.jsp</location>
+    </error-page>
+    <error-page>
+    <error-code>500</error-code>
+    	<location>/views/error/error.jsp</location>
     </error-page>
 
 </web-app>

@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page errorPage="error.jsp" %>
 <%@ page isErrorPage="true" %>
+<%
+    response.setStatus(HttpServletResponse.SC_OK);
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,6 +11,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-404 404 404
+404!!!
+<script type="text/javascript">
+	location.href="/jejuya/main";
+</script>
 </body>
 </html>
