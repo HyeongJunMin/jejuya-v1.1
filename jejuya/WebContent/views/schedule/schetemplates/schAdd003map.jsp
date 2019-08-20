@@ -45,7 +45,8 @@
 $("#searchload").click(function () {
 	var location=document.getElementById("keyword").value;
 	
-	 window.location.href ="http://map.daum.net/?sX=523953&sY=1014010&sName=제주공항&eX=523953&eY=1084098&eName="+location;
+	 //window.location.href ="http://map.daum.net/?sX=523953&sY=1014010&sName=제주공항&eX=523953&eY=1084098&eName="+location;
+	 window.open("http://map.daum.net/?sX=523953&sY=1014010&sName=제주공항&eX=523953&eY=1084098&eName="+location);
 });
 
 

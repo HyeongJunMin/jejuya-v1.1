@@ -570,11 +570,7 @@ public class SightsListDaoImpl implements SightsListDao, Serializable {
 				+ " WHERE (CATEGORY = ?)" + themeCondition  + " " + searchStrCondition +  ") AA, "
 				+ " ( SELECT TITLE, AVG(SCORE) AS SCORE11 FROM SIGHT_REVIEW GROUP BY TITLE	) BB WHERE AA.TITLE = BB.TITLE(+) "+ sortCondition + ") ) "
 				+ " WHERE ( (RNUM >=  " + pageDto.getStartRnum() + "  ) AND (RNUM <=  " + pageDto.getEndRnum() + "  ) ) ";
-		  
-		 	 		
-		 	 
-		 	 
-				 	
+		 	
 		 
 		System.out.println(sql);
 		Connection conn = null;

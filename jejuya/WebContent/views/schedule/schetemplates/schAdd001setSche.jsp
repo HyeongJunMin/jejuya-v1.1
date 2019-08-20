@@ -137,21 +137,10 @@ $("#maketrip").click(function () {
        alert("공개여부를 선택 하세요");
        return false;
    }else if( open  ){
-     
-      // location.href="/jejuya/ScheduleController?command=addtrip&title=";	
-    
-     //일정 만들기 버튼을 눌렀을 시 모든 기능이 disabled와 readonly로 바뀐다. 
-/*   
-     $(".setScheduleOption input").attr("readonly","readonly");
-     $("input[name='open']").attr('disabled',true);
-     $("#sectionselec").attr("disabled",'true');
-     $("#withselec").attr("disabled",'true');
-     $("#memberselec").attr("disabled",'true');
-     $("#firstday").datepicker('option','disabled',true);
-     $("#lastday").datepicker('option','disabled',true);
-     */
-       return true;
-   }
+	   //수정!!!!!!!!!!!!!!!!!!!!!!!1
+	    $("#addtripchange").val('1');  
+      return true;      
+  }
 
 
 

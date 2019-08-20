@@ -58,8 +58,9 @@
 	<input type="hidden" value="1" id="parentseq" name="parentseq">
 </form>
 <script type="text/javascript">
-
+//수정!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 var returnofcontroller = "1";
+var checktimeline=1;
 //일정 추가 버튼을 눌렀을 때 발생하는 함수 입니다
 $("#addtrip").click(function () {
 	
@@ -204,6 +205,8 @@ function addtrip(e) {
 
 	$("#maketrip").click(function() {
 
+		//수정!!!!!!!!!!!!!!!!!!!!
+		if( checktimeline==1){
 				//alert($("#triptime").val());	
 
 				//몇개의 day일정인지 구해줌
@@ -226,7 +229,8 @@ function addtrip(e) {
 					//day1빼고 모두 숨김
 					
 				}
+		}
 
-			});
+	});
 </script>
 </html>

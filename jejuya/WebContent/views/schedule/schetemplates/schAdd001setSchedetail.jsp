@@ -118,10 +118,7 @@ var totalTripDate = 1;
 $(document).ready(function () {
 	document.getElementById("addtrip").style.visibility="hidden";
 	document.getElementById("addbtn").style.visibility="hidden";
-	  $("input[type='checkbox']").css('display','none');
-
-		
-
+	  $("#triplist input[type='checkbox']").css('display','none');
 });
 
 $("#del").click(function () {
@@ -133,6 +130,9 @@ $("#del").click(function () {
 $("#updatetrip").click(function () {
 	document.getElementById("addtrip").style.visibility="visible";
 	document.getElementById("addbtn").style.visibility="visible";
+	//베일 비활성화
+	$("#timelineDetailVeil").hide();
+	
 	  $("input[type='checkbox']").css('display','inline');
 	
 	

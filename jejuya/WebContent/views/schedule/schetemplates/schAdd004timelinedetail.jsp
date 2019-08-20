@@ -10,6 +10,8 @@ ScheduleDto dto=(ScheduleDto)request.getAttribute("dto");
 List<ScheduledetailDto> list=(List)request.getAttribute("list");
 String seq=request.getParameter("seq");
 %>
+<div id="timelineDetailVeil">
+</div>
 <form class="timeline_box"  target="_blank">
 <input type="hidden" name="command" value="addtimelinebox">
 	<table class="timelinetable" >
@@ -72,25 +74,25 @@ var seq=$("#seq").val();
 //alert($("#listsize").val());
 ////var listsize = $("#listsize").val();
 var listsize = parseInt( $("#listsize").val() );
-var dest=new Array();
-var schedate= new Array();
-var listtime=new Array();
+var dest = new Array();
+var schedate = new Array();
+var listtime = new Array();
 //alert(listsize);
 
 //목적지
-for(var i=0;i<listsize;i++){
-	dest[i]=$("#listdest").children().eq(i).val();
+for( i = 0 ; i < listsize ; i++){
+	dest[i]=$("#listdest").children().eq(i).val().trim();
 	//console.log('목적지' + i + dest[i]);
 } 
 //해당날
-for(var i=0;i<listsize;i++){
-	schedate[i]=$("#listschedate").children().eq(i).val();
+for( i = 0 ; i < listsize ; i++){
+	schedate[i]=$("#listschedate").children().eq(i).val().trim();
 	//console.log('날짜' + i + schedate[i]);
-	alert( 'schedate : ' + schedate[i] + ',  int : ' + parseInt(schedate[i]));
+	//alert( 'index:' + i + ', schedate : ' + schedate[i] + ',  int : ' + parseInt(schedate[i]));
 } 
 //시간
-for(var i=0;i<listsize;i++){
-	listtime[i] =$("#listtime").children().eq(i).val();
+for( i = 0 ; i < listsize ; i++){
+	listtime[i] =$("#listtime").children().eq(i).val().trim();
 	//console.log('시간' + i + listtime[i]);
 } 
 
@@ -104,39 +106,61 @@ var ppp = 0;
 //그 day 수 만큼 테이블 생성
 for( i = 1 ; i <= days ; i++){
 	for( j = 5 ; j < 24 ; j++ ){
-		var day = ((i < 10) ? "0" + i : i);
-		var time = ((j < 10) ? "0" + j : j);
+		//문자열 비교를 위해 +''
+		var day = ((i < 10) ? "0" + i : i + '');
+		var time = ((j < 10) ? "0" + j : j + '');
+		
+		//console.log('day(js):[' + day + '] , time(js):[' + time + ']  , 날짜:[' + schedate[ppp] + '], 시간:[' + listtime[ppp] + ']');
+		
 		$(".timelinetable").append(
 				"<tr class="+day+"><th>" + time + ":00"
 						+ "</th>" + "<td id="+day+":"+time+":00></td></tr>");
-
+	
 		$("." + day).hide();
 		
 		//day가 schedate[ppp]와 일치하고, time이 listtime[ppp]와 일치하면 체크박스추가, ppp+ 
-		if( ( day === schedate[ppp]) && ( time === listtime[ppp] ) ){
-			console.log('포인터 : ' + ppp);
-			document.getElementById(day+":"+time+":00").innerHTML=dest[ppp];
-    		
-			var td=document.getElementById(day+":"+time+":00");
-			var checkbox=document.createElement("input");
-			checkbox.type="checkbox";
-
-            checkbox.id="del[]";
-			checkbox.name="del[]";
-			checkbox.value=day+":"+time+":00";
-			td.appendChild(checkbox);
+		if( ( day === schedate[ppp] ) && ( time === listtime[ppp] ) ){
+			var eleId = day+":"+time+":00";
+			
+			//console.log('포인터 : ' + ppp + ',  eleId : ' + eleId);
+			
+			var td = document.getElementById(day+":"+time+":00");
+			var checkbox = document.createElement("input");
+			
+			//checkbox.type="checkbox";
+            //checkbox.id="del[]";
+			//checkbox.name="del[]";
+			//checkbox.value=day+":"+time+":00";
+			checkbox.setAttribute('type', 'checkbox');
+			checkbox.setAttribute('class', 'timelinechkbox');
+			checkbox.setAttribute('name', 'chkBoxDel');
+			checkbox.setAttribute( 'value', (day + ':' + time + ':00') );
+			
+			//td에 관광지 타이틀 추가
+			document.getElementById( eleId ).append( dest[ppp] );
+			
+			//td에 체크박스 추가
+			document.getElementById( eleId ).append( checkbox );
 			
 			checkbox.onclick=function(){
 			    text=document.createTextNode("");
 			    var id=$(this).val();
-			    alert(id);
-			    document.getElementById(id).innerHTML="";    
+			    //alert(id);
+			    var result = confirm('일정을 삭제하시겠습니까?');
+			    if( result ){
+			    	document.getElementById(id).innerHTML="";	
+			    }			      
+			    //alert( document.getElementById('01:08:00').innerHTML.split('>')[1] );
 			}
 			//다음 순서를 가리키도록 ++
 			ppp++;
 		}
 	}
 }
+//1일차 show
+$(".01").show();
+//checkbox show
+$(".timelinechkbox").show();
 
 /* for (i = 1; i <= days; i++) {
 	for (j = 5; j < 24; j++) {

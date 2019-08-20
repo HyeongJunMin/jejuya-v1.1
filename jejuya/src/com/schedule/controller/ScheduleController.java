@@ -372,11 +372,20 @@ public class ScheduleController extends HttpServlet{
 			
 			 if(bb) {
 			//	 System.out.println("정상적으로 삭제 되었습니다");
-					req.getRequestDispatcher("/views/schedule/scheduleaddlist.jsp").forward(req, resp);
+					//req.getRequestDispatcher("/views/schedule/scheduleaddlist.jsp").forward(req, resp);
+				 //req.getRequestDispatcher("/jejuya/ScheduleController?command=addlist&pajing=1").forward(req, resp);
+				 resp.sendRedirect("/jejuya/ScheduleController?command=addlist&pajing=1");
+				 return;
 			 }else {
 			//	 System.out.println("정상적으로 삭제 되지않았습니다");
-				 req.getRequestDispatcher("/views/schedule/scheduleaddlist.jsp").forward(req, resp);
+				 //req.getRequestDispatcher("/views/schedule/scheduleaddlist.jsp").forward(req, resp);
+				 //req.getRequestDispatcher("/jejuya/ScheduleController?command=addlist&pajing=1").forward(req, resp);
+				 resp.sendRedirect("/jejuya/ScheduleController?command=addlist&pajing=1");
+				 return;
 			 }
+			 
+			 //req.getRequestDispatcher("/jejuya/ScheduleController?command=addlist&pajing=1").forward(req, resp);
+			 
 			
 		}else if(command.equals("search")) {
 			System.out.println("search");

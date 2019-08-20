@@ -79,7 +79,8 @@ public pageDto page(int total, int pg) {
 			//System.out.println("sightdto"+sight.toString()); 값들어옴
 	%>
 	<tr>
-		<th><input type="checkbox" name="addck[]" value='<%=sight.getTitle()%>'></th>
+<!-- 	//수정!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+		<th><input type="checkbox" name="addck[]" onclick="checkboxcheck(this)" value='<%=sight.getTitle()%>'></th>
 		<th><font size="2" id="coment"><%=sight.getTitle()%></font></th>
 	</tr>
 	<%
@@ -95,7 +96,7 @@ public pageDto page(int total, int pg) {
 					<%
 						for (int i = 1; i <= pagedto.getPagignum(); i++) {
 					%>
-					<button type="button"  class="btn btn-light" onclick="pagingBtnClick(<%=i%>)"><%=i%></button>
+						<button type="button"  class="btn btn-light" onclick="pagingBtnClick(<%=i%>)"> <%=i%> </button>
 					<%
 						}
 					%>
@@ -103,13 +104,33 @@ public pageDto page(int total, int pg) {
 	</tr>
 
 	<tr>
-		<th colspan="2"><button type="button" onclick="add()"
-			class="btn btn-outline-secondary"	id="addbtn">추가</button></th>
+		<th colspan="2"><button type="button" onclick="add()" class="btn btn-outline-secondary"	id="addbtn">추가</button></th>
 	</tr>
 
 </table>
 
 <script type="text/javascript">
+//수정!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+function checkboxcheck(e){	
+	//수정!!!!!!!!!!!!!!!!!!!!!
+	var maketripcheck=document.getElementById("addtripchange").value;
+	if(maketripcheck==0){
+		alert("먼저 일정을 작성 해 주세요");
+		document.getElementById("addtripchange").focus();
+		var obj = document.getElementsByName("addck[]");
+	    for(var i=0; i<obj.length; i++){
+	        
+	            obj[i].checked = false;
+	        
+	    }
+	}
+	var obj = document.getElementsByName("addck[]");
+    for(var i=0; i<obj.length; i++){
+        if(obj[i] != e){
+            obj[i].checked = false;
+        }
+    }
+}
 
 //관광 음식 호텔 의 버튼을 눌렀을 때 해당 카테고리의 리스트를 가져오는 함수 입니다 
 //e에 각 카테고리 숫자를 넣어 함수를 호출하여 ajax를 통하여 새로고침을 하지 않으면서
@@ -194,6 +215,11 @@ function add() {
  var cnt=0;
  
  var choicetime=document.getElementById("choicetime").value.trim();
+//수정!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ if(choicetime==0){
+ 	alert("시간을 입력 해 주세요");
+ 	document.getElementById("choicetime").focus();
+ }
  //alert(choicetime);
 	var currday=parseInt($("#timelineday").html().trim());
 
@@ -204,6 +230,21 @@ function add() {
 	}
 	
 //	alert(currday);
+	 
+	//수정 !!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	  
+    for(var i=0;i<len;i++){
+	    
+    	if(chk[i].checked==true){
+		checkCnt++;  
+    	
+    	}
+    }
+	if(checkCnt==0){
+		alert("장소를 선택 하여 주세요");
+	    document.getElementsByName("addck[]").focus();
+	}
+	 ////////////////////////
 	 
     for(var i=0;i<len;i++){
 	 if(chk[i].checked==true){
@@ -221,6 +262,7 @@ function add() {
 		checkbox.type="checkbox";
 		checkbox.id="delck[]";
 		
+		//수정!!!!!!!!!
 		checkbox.value=checkRow;
 	
 		td.appendChild(checkbox);

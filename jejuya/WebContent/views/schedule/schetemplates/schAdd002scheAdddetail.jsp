@@ -73,7 +73,7 @@ public pageDto page(int total, int pg) {
 			//System.out.println("sightdto"+sight.toString()); 값들어옴
 	%>
 	<tr>
-		<th><input type="checkbox" name="addck[]" value='<%=sight.getTitle()%>'></th>
+		<th><input type="checkbox" name="addck[]" onclick="checkboxcheck(this)" value='<%=sight.getTitle()%>'></th>
 		<th><font size="2" id="coment"><%=sight.getTitle()%></font></th>
 	</tr>
 	<%
@@ -104,7 +104,18 @@ public pageDto page(int total, int pg) {
 </table>
 
 <script type="text/javascript">
+function checkboxcheck(e){
+	
+	//수정!!!!!!!!!!!!!!!!!!!!!
 
+	var obj = document.getElementsByName("addck[]");
+    for(var i=0; i<obj.length; i++){
+        if(obj[i] != e){
+            obj[i].checked = false;
+        }
+    }
+
+}
 //관광 음식 호텔 의 버튼을 눌렀을 때 해당 카테고리의 리스트를 가져오는 함수 입니다 
 //e에 각 카테고리 숫자를 넣어 함수를 호출하여 ajax를 통하여 새로고침을 하지 않으면서
 //컨트롤으로 접근하여 데이터를 가져오는 함수 입니다

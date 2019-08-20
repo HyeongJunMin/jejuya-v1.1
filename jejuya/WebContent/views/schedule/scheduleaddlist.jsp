@@ -101,13 +101,10 @@
 				</p>
 			</div>
 			<div class="util_area">
-				<a href="/jejuya/ScheduleController?command=addlist&pajing=1"><b>최신
-						순/</b></a> <a
-					href="/jejuya/ScheduleController?command=addooldlist&pajing=1"><b>오래된
-						순/</b></a> <a
-					href="/jejuya/ScheduleController?command=tripbefore&pajing=1"><b>여행
-						전/</b></a> <a href="/jejuya/ScheduleController?command=tripafter&pajing=1"><b>여행
-						완료</b></a>
+				<b>최신순/</b>
+				<b>오래된순/</b>
+				><b>여행전/</b>
+				<b>여행완료</b>
 
 			</div>
 			<div class="util_area2">
@@ -161,9 +158,8 @@
 		%>
 		<div class="mylist">
 			<dl>
-				<dd class="item_del">
-					<button type="button" class="del" onclick="del(<%=dto.getSeq()%>)"
-						value="<%=dto.getSeq()%>"></button>
+				<dd class="item_del" onclick="del(<%=dto.getSeq()%>)">
+				
 				</dd>
 			</dl>
 			<a
