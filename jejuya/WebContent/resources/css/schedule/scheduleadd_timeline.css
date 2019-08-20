@@ -2,8 +2,9 @@
 
 .timeline_box {
 	/* float: left; */
-	margin-top: 1px;
-	margin-left: 1px;
+	margin-top: -15px;
+	
+	margin-left: 150px;
 	padding:5px 5px;
 }
 
@@ -15,4 +16,8 @@
 	font-weight: 400;
 	color: #ef6d00;
 	background: #1b1b1b;
+}
+.timelinetable{
+	text-align: center;
+	
 }

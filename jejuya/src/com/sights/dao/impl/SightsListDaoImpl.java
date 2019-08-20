@@ -543,50 +543,40 @@ public class SightsListDaoImpl implements SightsListDao, Serializable {
 			sortCondition = " ORDER BY ADDSCHEDULE DESC, SEQ DESC ";
 		}else if( cond.getSortSel().equals("readcount") ) {
 			sortCondition = " ORDER BY READCOUNT DESC, SEQ DESC ";
+		}else if( cond.getSortSel().equals("starcount")){
+			sortCondition = " ORDER BY SCORE1 DESC ";
 		}else {
 			sortCondition = " ORDER BY SEQ DESC ";
-		}
-		
-		
-//		String sql = " SELECT TITLE, SEQ, CATEGORY, THEME, FILENAME, ADDRESS, PHONE, HOMEPAGE, CONTENT, ADDSCHEDULE, DEL, READCOUNT "
-//				+ " FROM  "
-//				+ "( SELECT ROW_NUMBER()OVER( " + sortCondition + " ) AS RNUM, "
-//				+ " TITLE, SEQ, CATEGORY, THEME, FILENAME, ADDRESS, PHONE, HOMEPAGE, CONTENT, ADDSCHEDULE, DEL, READCOUNT "
-//				+ " FROM SIGHTS " + sortCondition + " )"
-//				+ " WHERE CATEGORY= ? ";
+		}	
 		
 		//테마가 all인지 아닌지 여부를 판단해서 psmt에 colString 추가하기 위한 변수
 		boolean themeConditionAdded = false;
 		String themeCondition = "";
 		if( cond.getTheme().trim().equals("all") == false ) {
 			themeCondition = " AND ( THEME= ? ) ";
+			System.out.println( cond.getTheme() );
 			themeConditionAdded = true;
+		}	
+		
+		String searchStrCondition = "";
+		if( cond.getSearchStr().trim().equals("all") == false) {
+			searchStrCondition = " AND ( TITLE LIKE "+ "'%" + cond.getSearchStr() + "%' ) ";
 		}
 		
-//		String sql = " SELECT RNUM, TITLE, SEQ, CATEGORY, THEME, FILENAME, ADDRESS, PHONE, HOMEPAGE, CONTENT, ADDSCHEDULE, DEL, READCOUNT "
-//				+ " FROM (  "
-//				+ " SELECT ROWNUM AS RNUM, TITLE, SEQ, CATEGORY, THEME, FILENAME, ADDRESS, PHONE, HOMEPAGE, CONTENT, ADDSCHEDULE, DEL, READCOUNT "
-//				+ " FROM ( SELECT TITLE, SEQ, CATEGORY, THEME, FILENAME, ADDRESS, PHONE, HOMEPAGE, CONTENT, ADDSCHEDULE, DEL, READCOUNT FROM SIGHTS WHERE ( CATEGORY = ? ) " + themeCondition + " "
-//				+ " " + sortCondition + " ) "
-//				+ " ) WHERE ( (RNUM >= " + pageDto.getStartRnum() + " ) AND (RNUM <= " + pageDto.getEndRnum() + " ) ) ";
-		
-//		String sql = " SELECT RNUM, TITLE, SEQ, CATEGORY, THEME, FILENAME, ADDRESS, PHONE, HOMEPAGE, CONTENT, ADDSCHEDULE, DEL, READCOUNT "
-//				+ " FROM (  "
-//				+ " SELECT ROWNUM AS RNUM, TITLE, SEQ, CATEGORY, THEME, FILENAME, ADDRESS, PHONE, HOMEPAGE, CONTENT, ADDSCHEDULE, DEL, READCOUNT "
-//				+ " FROM ( SELECT TITLE, SEQ, CATEGORY, THEME, FILENAME, ADDRESS, PHONE, HOMEPAGE, CONTENT, ADDSCHEDULE, DEL, READCOUNT "
-//				+ " FROM SIGHTS WHERE ( CATEGORY = ? ) " + themeCondition + " "
-//				+ " " + sortCondition + " ) "
-//				+ " ) WHERE ( (RNUM >= " + pageDto.getStartRnum() + " ) AND (RNUM <= " + pageDto.getEndRnum() + " ) ) ";
-		
-		String sql = " SELECT A.RNUM, A.TITLE, A.SEQ, A.CATEGORY, A.THEME, A.FILENAME, A.ADDRESS, A.PHONE, A.HOMEPAGE, A.CONTENT, A.ADDSCHEDULE, A.DEL, A.READCOUNT, NVL(B.SCORE,0) "
-				+ " FROM (  "
-				+ " SELECT ROWNUM AS RNUM, TITLE, SEQ, CATEGORY, THEME, FILENAME, ADDRESS, PHONE, HOMEPAGE, CONTENT, ADDSCHEDULE, DEL, READCOUNT "
-				+ " FROM ( SELECT TITLE, SEQ, CATEGORY, THEME, FILENAME, ADDRESS, PHONE, HOMEPAGE, CONTENT, ADDSCHEDULE, DEL, READCOUNT "
-				+ " FROM SIGHTS WHERE ( CATEGORY = ? ) " + themeCondition + " "
-				+ " " + sortCondition + " ) ) A , (SELECT TITLE, AVG(SCORE) AS SCORE FROM SIGHT_REVIEW GROUP BY TITLE) B "
-				+ "  WHERE A.TITLE = B.TITLE(+) AND ( (RNUM >= " + pageDto.getStartRnum() + " ) AND (RNUM <= " + pageDto.getEndRnum() + " ) ) ";
-		
-		
+		String sql = " SELECT  RNUM, TITLE, SEQ, CATEGORY, THEME, FILENAME, ADDRESS, PHONE, HOMEPAGE, CONTENT, ADDSCHEDULE, DEL, READCOUNT, SCORE1 "
+				+ " FROM (SELECT ROWNUM AS RNUM, SCORE1, TITLE, SEQ, CATEGORY, THEME, FILENAME, ADDRESS, PHONE, HOMEPAGE, CONTENT, ADDSCHEDULE, DEL, READCOUNT "
+				+ " FROM (SELECT NVL(BB.SCORE11, 0) AS SCORE1, AA.TITLE, AA.SEQ, AA.CATEGORY, AA.THEME, AA.FILENAME, AA.ADDRESS, AA.PHONE, AA.HOMEPAGE, AA.CONTENT, AA.ADDSCHEDULE, AA.DEL, AA.READCOUNT "
+				+ " FROM ( SELECT TITLE, SEQ, CATEGORY, THEME, FILENAME, ADDRESS, PHONE, HOMEPAGE, CONTENT, ADDSCHEDULE, DEL, READCOUNT FROM SIGHTS "
+				+ " WHERE (CATEGORY = ?)" + themeCondition  + " " + searchStrCondition +  ") AA, "
+				+ " ( SELECT TITLE, AVG(SCORE) AS SCORE11 FROM SIGHT_REVIEW GROUP BY TITLE	) BB WHERE AA.TITLE = BB.TITLE(+) "+ sortCondition + ") ) "
+				+ " WHERE ( (RNUM >=  " + pageDto.getStartRnum() + "  ) AND (RNUM <=  " + pageDto.getEndRnum() + "  ) ) ";
+		  
+		 	 		
+		 	 
+		 	 
+				 	
+		 
+		System.out.println(sql);
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
@@ -606,30 +596,14 @@ public class SightsListDaoImpl implements SightsListDao, Serializable {
 			//쿼리에 theme 설정
 			if( themeConditionAdded == true ) {
 				psmt.setString( colPointer++, cond.getTheme() );
-			}						
+			}
 			
-			//System.out.println("sort condition : " + cond);
-			//System.out.println("query in dao : " + sql);
+			
+			
+			System.out.println("sort condition : " + cond);
+			System.out.println("query in dao : " + sql);
 			
 			rs = psmt.executeQuery();
-			
-//			while(rs.next()) {
-//				int i = 1;
-//				rs.getInt(i++);
-//				SightsDto dto = new SightsDto(rs.getString(i++), 
-//												rs.getInt(i++), 
-//												rs.getInt(i++), 
-//												rs.getString(i++), 
-//												rs.getString(i++), 
-//												rs.getString(i++), 
-//												rs.getString(i++), 
-//												rs.getString(i++), 
-//												rs.getString(i++), 
-//												rs.getInt(i++), 
-//												rs.getInt(i++), 
-//												rs.getInt(i++) );
-//				list.add(dto);				
-//			}	
 			
 			while(rs.next()) {
 				int i = 1;
@@ -650,10 +624,10 @@ public class SightsListDaoImpl implements SightsListDao, Serializable {
 				list.add(dto);				
 			}	
 			
-			//System.out.println("[SightsDaoImpl] list return done. ");
+			System.out.println("[SightsDaoImpl] list return done. ");
 			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		} finally {
 			DBClose.close(conn, psmt, rs);

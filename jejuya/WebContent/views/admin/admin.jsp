@@ -141,6 +141,17 @@
 				$("#" + tab_id).addClass('current');
 			});
 			
+			//공지 관련 내용 좌측 사이드메뉴 클릭 이벤트
+			$('ul.side_menu_sub_tabs_notice li').click(function() {
+				var tab_id = $(this).attr('data-tab');
+
+				$('ul.side_menu_sub_tabs_notice li').removeClass('current');
+				$('.tab-content').removeClass('current');
+
+				$(this).addClass('current');
+				$("#" + tab_id).addClass('current');
+			});
+			
 
 			var i = 0;
 

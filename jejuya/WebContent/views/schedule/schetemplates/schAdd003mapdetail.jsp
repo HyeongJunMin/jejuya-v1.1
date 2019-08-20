@@ -11,28 +11,16 @@
 				<div>
 					<form onsubmit="searchPlaces(); return false;">
 						키워드 : <input type="text" value="제주도 맛집" id="keyword" size="15">
-						<button type="submit" class="btn btn-info" id="keywordbtn">검색하기</button>
-					 
+						<button class="btn btn-primary" type="submit">검색하기</button>
 					</form>
 				</div>
-				
 			</div>
-
 			<hr>
 			<ul id="placesList"></ul>
 			<div id="pagination"></div>
-			  
 		</div>
-		 	    
-               <button type="button" id="searchload" class="btn btn-info">길 찾기</button>
 	</div>
-	           
-
-    
-    
-    
 </div>
-
 
 <!-- appkey value 설정 필요. 카카오맵 API include. --> 
 <script type="text/javascript"
@@ -41,28 +29,6 @@
 
 <!-- 카카오맵 설정 -->
 <script>
-
-$("#searchload").click(function () {
-	var location=document.getElementById("keyword").value;
-	
-	 window.location.href ="http://map.daum.net/?sX=523953&sY=1014010&sName=제주공항&eX=523953&eY=1084098&eName="+location;
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	
 // 마커를 담을 배열입니다
 var markers = [];

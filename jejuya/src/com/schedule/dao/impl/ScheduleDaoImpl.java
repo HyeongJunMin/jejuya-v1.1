@@ -7,12 +7,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.schedule.dao.ScheduleDao;
+import com.schedule.dto.ScheduleDto;
+import com.schedule.dto.ScheduledetailDto;
 import com.sights.dto.SightsDto;
 
 import common.db.DBClose;
 import common.db.DBConnection;
 import common.util.pageDto;
 
+/**
+ * @author bit
+ *
+ */
 public class ScheduleDaoImpl implements ScheduleDao {
 
 	private static ScheduleDaoImpl Scheduledao = new ScheduleDaoImpl();
@@ -24,6 +30,331 @@ public class ScheduleDaoImpl implements ScheduleDao {
 	public static ScheduleDaoImpl getInstance() {
 
 		return Scheduledao;
+	}
+
+	
+	
+	
+	
+	public List<ScheduleDto> getsearchSchedulelist(String title) {
+
+		String sql = " SELECT SEQ, ID, TITLE, SDATE, EDATE, TOTALDAYS," + " MEMBER, COMPANION, SECTION, OPEN, WDATE "
+				+ " FROM SCHEDULES " + " WHERE TITLE LIKE "+"'%"+title+"%'" + "ORDER BY WDATE  DESC " ;
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+
+		List<ScheduleDto> list = new ArrayList<ScheduleDto>();
+
+		try {
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);
+		
+			rs = psmt.executeQuery();
+
+			while (rs.next()) {
+				int seq = rs.getInt(1);
+				String id_ = rs.getString(2);
+				String title_ = rs.getString(3);
+				String sdate = rs.getString(4);
+				String edate = rs.getString(5);
+				String totaldays = rs.getString(6);
+				String member = rs.getString(7);
+				String companion = rs.getString(8);
+				String section = rs.getString(9);
+				int open = rs.getInt(10);
+				String wdate = rs.getString(11);
+
+				ScheduleDto dto = new ScheduleDto(seq, id_, title_, sdate, edate, Integer.parseInt(totaldays), wdate,
+						Integer.parseInt(member), companion, section, open);
+				list.add(dto);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, psmt, rs);
+		}
+
+		return list;
+	}
+	
+	/**해당 시퀀스를 가진 정보 삭제
+	 * @param seq  
+	 */
+	public boolean deltrip(int seq) {
+		String sql=" DELETE  FROM SCHEDULES WHERE SEQ=? ";
+		
+		
+		Connection conn=null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		
+
+		int count =0;
+		try {
+			conn=DBConnection.getConnection();
+			psmt=conn.prepareStatement(sql);
+			psmt.setInt(1, seq);
+			
+			count=psmt.executeUpdate();
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			DBClose.close(conn, psmt, rs);
+		}
+		return count>0?true:false;
+	}
+
+	
+	
+	
+	/**해당 여행 리스트에서 세부 일정 삭제
+	 * @param seq
+	 */
+	public boolean delDetailtrip(int seq) {
+		String sql=" DELETE  FROM DETAIL_SCHEDULES WHERE PATENT_SEQ=? ";
+		
+		
+		Connection conn=null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		int count =0;
+		
+		try {
+			conn=DBConnection.getConnection();
+			psmt=conn.prepareStatement(sql);
+			psmt.setInt(1, seq);
+			
+			count=psmt.executeUpdate();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			DBClose.close(conn, psmt, rs);
+		}
+		return count>0?true:false;
+	}
+	
+	/**일정을 수정하는 함수 
+	 *
+	 */
+	public boolean update(ScheduleDto dto, int seq) { 
+		String sql=" UPDATE SCHEDULES SET  ID= ?, TITLE=? , SDATE= ?, EDATE = ?, TOTALDAYS = ? , "
+				+ " MEMBER = ? , COMPANION= ?, SECTION= ?, OPEN= ? "
+				+ " WHERE SEQ= ? ";
+		
+		int count=0;
+		Connection conn=null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+				
+		try {
+			conn=DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, dto.getId());
+			psmt.setString(2, dto.getTitle());
+			psmt.setString(3, dto.getSdate());
+			psmt.setString(4, dto.getEdate());
+			psmt.setInt(5, dto.getTotaldays());
+			psmt.setInt(6, dto.getMember());
+			psmt.setString(7, dto.getCompanion());
+			psmt.setString(8,dto.getSection());
+			psmt.setInt(9, dto.getOpen());
+			psmt.setInt(10, seq);
+			
+			count=psmt.executeUpdate();
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			DBClose.close(conn, psmt, rs);
+		}
+		//return cust;
+		return count>0? true:false;
+	}
+	
+	
+	
+ /** 시퀀스 넘버를 통해 나의 해당 여행 디테일을 보여주는 함수 입니다.
+ * @param seq  파라메터로 받은 시퀀스 넘버 (즉 리스트를 클릭하면 시퀀스 넘버가 파라메터로 컨트롤러로 접근)
+ * @return
+ */
+public ScheduleDto getDetail(int seq) {
+		String sql = " SELECT SEQ, ID, TITLE, SDATE, EDATE, TOTALDAYS," + " MEMBER, COMPANION, SECTION, OPEN, WDATE "
+				+ " FROM SCHEDULES " + " WHERE SEQ=? ";
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+
+		
+		 ScheduleDto dto= null;
+		try {
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, seq);
+			rs = psmt.executeQuery();
+
+			while(rs.next()) {
+				int seq_ = rs.getInt(1);
+				String id_ = rs.getString(2);
+				String title = rs.getString(3);
+				String sdate = rs.getString(4);
+				String edate = rs.getString(5);
+				String totaldays = rs.getString(6);
+				String member = rs.getString(7);
+				String companion = rs.getString(8);
+				String section = rs.getString(9);
+				int open = rs.getInt(10);
+				String wdate = rs.getString(11);
+
+			   dto=new ScheduleDto(seq, id_, title, sdate, edate, Integer.parseInt(totaldays), wdate,
+						Integer.parseInt(member), companion, section, open);
+			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, psmt, rs);
+		}
+
+		return dto;
+	}
+
+
+
+   /**시퀀스 넘버를 이용하여 해당 유저의 여행 디테일 일정을 알아내는 함수 입니다.
+ *
+ */
+public List<ScheduledetailDto> getsheduleDetail(int seq) {
+       
+	String sql=" SELECT PATENT_SEQ, SCHEDATE,STIME,DEST FROM DETAIL_SCHEDULES "
+       		+ " WHERE PATENT_SEQ=? ";
+       
+       Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+
+		List<ScheduledetailDto> list=new ArrayList<ScheduledetailDto>();
+        
+		try {
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, seq);
+			rs = psmt.executeQuery();
+
+		
+			while(rs.next()) { 
+				int parentseq=rs.getInt(1);
+			    String schedate=rs.getString(2);
+			    String stime=rs.getString(3);
+			    String dest=rs.getString(4);
+			    
+			    ScheduledetailDto dto=new ScheduledetailDto(schedate,stime,dest,parentseq);
+			    list.add(dto);
+			}    
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, psmt, rs);
+		}
+
+		return list;
+	   
+   }
+
+	/**
+	 * addschedule 랭킹을 보기 위한 함수입니다
+	 *
+	 */
+	public List<SightsDto> getLanking(int category) {
+		String sql = "SELECT TITLE, READCOUNT,ADDSCHEDULE FROM (SELECT TITLE, READCOUNT,ADDSCHEDULE, ROW_NUMBER() "
+				+ " OVER(ORDER BY ADDSCHEDULE DESC )AS RNUM FROM SIGHTS  WHERE CATEGORY=? ) "
+				+ " WHERE RNUM BETWEEN 1 AND 5 ";
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+
+		List<SightsDto> list = new ArrayList<SightsDto>();
+
+		try {
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, category);
+			rs = psmt.executeQuery();
+			System.out.println("ddss");
+			while (rs.next()) {
+				String title = rs.getString(1);
+				int readcount = rs.getInt(2);
+				int addschedule = rs.getInt(3);
+
+				SightsDto dto = new SightsDto(title, addschedule, readcount);
+
+				list.add(dto);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, psmt, rs);
+		}
+
+		return list;
+	}
+
+	/**
+	 * 유저가 현재까지 짠 모든 제주여행의 리스트를 보여주는 함수 입니다
+	 *
+	 */
+	public List<ScheduleDto> getmySchedulelist(String id) {
+
+		String sql = " SELECT SEQ, ID, TITLE, SDATE, EDATE, TOTALDAYS," + " MEMBER, COMPANION, SECTION, OPEN, WDATE "
+				+ " FROM SCHEDULES " + " WHERE ID=?  ORDER BY WDATE  DESC " ;
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+
+		List<ScheduleDto> list = new ArrayList<ScheduleDto>();
+
+		try {
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, id);
+			rs = psmt.executeQuery();
+
+			while (rs.next()) {
+				int seq = rs.getInt(1);
+				String id_ = rs.getString(2);
+				String title = rs.getString(3);
+				String sdate = rs.getString(4);
+				String edate = rs.getString(5);
+				String totaldays = rs.getString(6);
+				String member = rs.getString(7);
+				String companion = rs.getString(8);
+				String section = rs.getString(9);
+				int open = rs.getInt(10);
+				String wdate = rs.getString(11);
+
+				ScheduleDto dto = new ScheduleDto(seq, id_, title, sdate, edate, Integer.parseInt(totaldays), wdate,
+						Integer.parseInt(member), companion, section, open);
+				list.add(dto);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, psmt, rs);
+		}
+
+		return list;
 	}
 
 	/**
@@ -52,12 +383,12 @@ public class ScheduleDaoImpl implements ScheduleDao {
 
 				int seq = rs.getInt(i++);
 				String title = rs.getString(i++);
-				String category = rs.getString(i++);
+				int category = rs.getInt(i++);
 				String theme = rs.getString(i++);
 				String address = rs.getString(i++);
 				String homepage = rs.getString(i++);
 
-				SightsDto dto = new SightsDto(homepage, seq, seq, title, category, theme, address, homepage, homepage, seq, seq, seq);
+				SightsDto dto = new SightsDto(seq, title, category, theme, address, homepage);
 
 				// System.out.println("getSightslist"+dto.toString());
 
@@ -127,7 +458,7 @@ public class ScheduleDaoImpl implements ScheduleDao {
 				String homepage = rs.getString(i++);
 				// System.out.println("rs get cols ok");
 
-				SightsDto dto = new SightsDto(homepage, seq, category, title, category + "", theme, address, homepage, homepage, category, category, category);
+				SightsDto dto = new SightsDto(seq, title, category, theme, address, homepage);
 
 				// System.out.println("getPajingtowrismlist"+dto.toString());
 				list.add(dto);
@@ -169,8 +500,11 @@ public class ScheduleDaoImpl implements ScheduleDao {
 
 	}
 
+	/**
+	 * 페이징을 하기 위한 함수
+	 *
+	 */
 	public int pagenum(int total) {
-
 		int count = 0; // 페이지 갯수
 		int list = 10; // 한페이지에 나올 갯수
 		if (total % list != 0) {
@@ -181,56 +515,167 @@ public class ScheduleDaoImpl implements ScheduleDao {
 
 		return count;
 	}
-	
-	
-	
-	/**일정을 짤 때 구분 별 랭킹 차트를 보여주기 위한 함수
+
+	/**
+	 * 일정을 짤 때 구분 별 랭킹 차트를 보여주기 위한 함수
 	 * 
 	 */
-	public  List<SightsDto> getLangkingchart(String theme){
-		
-		String sql="SELECT TITLE,SEQ,ADDSCHEDULE ,TEME FROM SIGHTS  "
-				+ "WHERE ADDSCHEDULE IS NOT NULL AND TEME=? ORDER BY ADDSCHEDULE DESC ";
-		
-		
+	public List<SightsDto> getLangkingchart(String theme) {
+
+		String sql = "SELECT TITLE,SEQ,ADDSCHEDULE ,THEME FROM SIGHTS  "
+				+ "WHERE ADDSCHEDULE IS NOT NULL AND THEME=? ORDER BY ADDSCHEDULE DESC ";
 
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
 		List<SightsDto> list = new ArrayList<SightsDto>();
-		SightsDto dto=null;
+		SightsDto dto = null;
 		try {
-			conn=DBConnection.getConnection();
+			conn = DBConnection.getConnection();
 			System.out.println("1/6 getLangkingchart");
-			
-			psmt=conn.prepareStatement(sql);
-			
+
+			psmt = conn.prepareStatement(sql);
+
 			System.out.println("2/6 getLangkingchart");
-			
-			psmt.setString(1, theme);
-			rs=psmt.executeQuery();
-			
+
+			psmt.setString(1, "'" + theme + "'");
+			rs = psmt.executeQuery();
+
 			System.out.println("3/6 getLangkingchart");
-			
+
 			while (rs.next()) {
-				String title=rs.getString(1);
-				int seq=rs.getInt(2);
-				int addschedule=rs.getInt(3);
-				
-				dto=new SightsDto(title, seq, addschedule, title, null, theme, null, null, title, addschedule, addschedule, addschedule);				
-				
+				String title = rs.getString(1);
+				int seq = rs.getInt(2);
+				int addschedule = rs.getInt(3);
+
+				dto = new SightsDto(seq, title, null, theme, null, null);
+
 				list.add(dto);
 				System.out.println("4/6 getLangkingchart");
 				System.out.println(dto.toString());
 			}
-			
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {		
-			DBClose.close(conn, psmt, null);			
-		}	
+		} finally {
+			DBClose.close(conn, psmt, null);
+		}
 		return list;
 	}
 
+	public boolean getadddetailSchedule(List<ScheduledetailDto> list) {
+
+		ScheduledetailDto dto = new ScheduledetailDto();
+		int count = 0;
+		for (int i = 0; i < list.size(); i++) {
+			dto = list.get(i);
+
+			String sql = " INSERT INTO DETAIL_SCHEDULES (SEQ ,PATENT_SEQ, SCHEDATE,STIME, DEST) "
+					+ " VALUES(SEQ_DETAIL_SCHEDULES.NEXTVAL,? ,?,?,?) ";
+
+			Connection conn = null;
+			PreparedStatement psmt = null;
+			ResultSet rs = null;
+
+			try {
+				conn = DBConnection.getConnection();
+				psmt = conn.prepareStatement(sql);
+
+				psmt.setInt(1, dto.getParentseq());
+				psmt.setString(2, dto.getSchedate());
+				psmt.setString(3, dto.getStime());
+				psmt.setString(4, dto.getDest());
+
+				psmt.executeUpdate();
+				count = count + 1;
+				System.out.println("여행디테일");
+
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				DBClose.close(conn, psmt, null);
+			}
+
+		}
+		return count == list.size() ? true : false;
+
+	}
+
+	/**
+	 * 매개변수로 받은 dto가 갖는 일정정보를 DB에 등록한다. 일정정보는 크게 parent일정과 상세일정으로 나뉜다. 상세일정을 등록하기 위한
+	 * 정보를 List 형태로 리턴한다(parent 일정의 seq)
+	 */
+	public int getaddTrip(ScheduleDto dto) {
+		// parent 일정 등록부분
+
+		int result = -1;
+
+		String sql = " INSERT INTO SCHEDULES (SEQ, ID, TITLE, SDATE, EDATE, TOTALDAYS,"
+				+ " MEMBER, COMPANION, SECTION, OPEN, WDATE )"
+				+ " VALUES( SEQ_SCHEDULES.NEXTVAL, ? ,? ,? ,? ,?, ?,? ,?,? ,SYSDATE) ";
+
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+
+		try {
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);
+
+			int i = 1;
+			psmt.setString(i++, dto.getId());
+			psmt.setString(i++, dto.getTitle());
+			psmt.setString(i++, dto.getSdate());
+			psmt.setString(i++, dto.getEdate());
+			psmt.setInt(i++, dto.getTotaldays());
+			psmt.setInt(i++, dto.getMember());
+			psmt.setString(i++, dto.getCompanion());
+			psmt.setString(i++, dto.getSection());
+			psmt.setInt(i++, dto.getOpen());
+			// insert 쿼리 끝
+
+			psmt.executeUpdate();
+			// insert 쿼리 실행
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, psmt, null);
+		}
+
+		// parent 일정의 seq를 리턴하기위한 부분
+		try {
+
+			sql = " SELECT SEQ FROM SCHEDULES WHERE ID=? AND TITLE=? AND SDATE=? ORDER BY SEQ DESC ";
+			// 찾을값 : 1. 검색조건에 해당하는 글이 몇개 있는지 = 배열의 length. 2. 각각 등록한 일정의 SEQ = 배열의 요소
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);
+
+			int i = 1;
+			psmt.setString(i++, dto.getId());
+			psmt.setString(i++, dto.getTitle());
+			psmt.setString(i++, dto.getSdate());
+
+			rs = psmt.executeQuery();
+
+			System.out.println("dd");
+			while (rs.next()) {
+				result = rs.getInt(1);
+				System.out.println(result);
+			}
+			// 23, 24, 25
+			// result.size() == 3;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, psmt, null);
+		}
+
+		return result;
+
+	}
 }

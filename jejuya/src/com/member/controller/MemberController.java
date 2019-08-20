@@ -64,9 +64,10 @@ public class MemberController extends HttpServlet{
 				if( req.getSession().getAttribute("currUser") != null){
 					req.getSession().removeAttribute("currUser");
 				}
-				PrintWriter pw = resp.getWriter();
-				pw.println("<script type=\"text/javascript\">history.back();</script>");
-				pw.flush();
+				
+				//String prevUrl = req.getParameter("currUrl");
+				//req.getRequestDispatcher(prevUrl).forward(req, resp);
+				req.getRequestDispatcher("/main").forward(req, resp);
 			}
 		}
 	}
@@ -147,6 +148,22 @@ public class MemberController extends HttpServlet{
 						return;
 					}
 				}
+			}else if( command.equals("dologinAjax") ) {
+				//Ajax 로그인-로그아웃 관리
+				
+				
+				
+			}else if( command.equals("confirmCurrIdAjax") ) {
+				//Ajax 로그인-로그아웃 관리
+				String currId = "guest";
+				if(req.getSession().getAttribute("currUser") != null ) {
+					currId = ( (MemberDto)req.getSession().getAttribute("currUser") ).getId();
+				}
+				
+				resp.getWriter().print(currId);
+				resp.getWriter().flush();
+				resp.getWriter().close();				
+				
 			}else if( command.equals("doregi") ) {
 				//command가 doregi인 경우 회원가입 수행
 				String id = req.getParameter("id");
@@ -272,6 +289,19 @@ public class MemberController extends HttpServlet{
 				PrintWriter pw = resp.getWriter();
 				pw.print("<script>alert('입력하신 이메일로 임시 비밀번호 발송이 완료되었습니다.'); history.back();</script>");
 				pw.flush();
+			}else if( command.equals("dologout") == true ) {
+				//로그아웃 기능
+				if( req.getSession().getAttribute("currUser") != null){
+					req.getSession().removeAttribute("currUser");
+				}
+				
+				req.getRequestDispatcher("/jejuya/member").forward(req, resp);
+				
+				//String prevUrl = req.getParameter("currUrl");
+				//System.out.println("다음 url로 이동합니다 : " + prevUrl);
+				//req.getRequestDispatcher(prevUrl).forward(req, resp);
+				//resp.sendRedirect(prevUrl);
+				//return;
 			}
 		}
 	}

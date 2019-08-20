@@ -24,4 +24,5 @@ public interface SightsDetailService {
 	
 	public int avgReviewScore(String title);
 	
+	public void readCount(String title);
 }

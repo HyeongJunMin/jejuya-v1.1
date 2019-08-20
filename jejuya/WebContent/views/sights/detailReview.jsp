@@ -155,7 +155,7 @@ String filename = (dto.getFilename().trim().substring(0,4).equals("http")
 				
 							for(String file : reviewfile){
 								%>							
-								<img class="reviewImg" src="<%=request.getContextPath()%>\review\<%=file %>" style="width: 130px; height: 80px">
+								<img class="reviewImg" src="<%=request.getContextPath()%>/upload/review/<%=file %>" style="width: 130px; height: 80px">
 														
 								<div id="myModal" class="modal">									
 									<div class="modal-content">

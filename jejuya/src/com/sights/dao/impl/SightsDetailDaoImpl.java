@@ -336,22 +336,31 @@ public class SightsDetailDaoImpl implements SightsDetailDao, Serializable {
 		}		
 		return count;
 	}
+		
+	/**뷰 접근 시 readcount를 +1 해주기 위한 메소드
+	 * @param title
+	 */
+	public void readCount(String title) {
+		String sql = " UPDATE SIGHTS SET READCOUNT = READCOUNT+1 "
+					+ " WHERE TITLE=? ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		try {
+			
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, title);
+			rs = psmt.executeQuery();
+	
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, psmt, rs);
+		}
+	}
 	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

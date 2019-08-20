@@ -33,8 +33,7 @@ public class NoticeController extends HttpServlet{
 		resp.setContentType("text/html;charset=UTF-8");
 		
 		if( req.getParameter("command") == null ) {
-			resp.getWriter().print("<script>history.back();</script>");
-			resp.getWriter().flush();
+			req.getRequestDispatcher("/jejuya/main").forward(req, resp);;
 		}else {
 			
 			//세션에 관리자 권한이 없는 경우 메인페이지로 이동
@@ -102,8 +101,7 @@ public class NoticeController extends HttpServlet{
 		resp.setContentType("text/html;charset=UTF-8");
 		
 		if( req.getParameter("command") == null ) {
-			resp.getWriter().print("<script>history.back();</script>");
-			resp.getWriter().flush();
+			req.getRequestDispatcher("/jejuya/main").forward(req, resp);
 		}else {
 			String command = req.getParameter("command");
 			

@@ -19,13 +19,12 @@
 
 	if( request.getAttribute("mainListAllCate") != null){
 		mainListAllCate = (List<SightsDto>)request.getAttribute("mainListAllCate");
-	}
-	
+	}	
 %>
 <div class="container text-center my-3">
 	
 	    <h2 class="carouselDescription">제주도의 아름다운 관광지</h2>
-	    <a class="carouselDescriptionLink" href="#">더보기 ></a>
+	    <a class="carouselDescriptionLink" href="/jejuya/SightsListController?command=sortByConditionInSightlist&category=0">더보기 ></a>
     
     <div id="recipeCarousel" class="carousel slide w-100" data-ride="carousel">
         <div class="carousel-inner w-100" role="listbox">

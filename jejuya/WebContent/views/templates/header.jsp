@@ -17,6 +17,7 @@
 		accountLinkUrl = "member?command=dologout";
 	}
 %>
+<script type="text/javascript" src="/jejuya/resources/js/templates/header.js"></script>
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
@@ -37,14 +38,28 @@
             <a class="nav-link js-scroll-trigger" href="/jejuya/SightsListController?command=sortByConditionInSightlist&category=2">숙박</a>
           </li>
            <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#signup">나의여행</a>
+            <a class="nav-link js-scroll-trigger" href="/jejuya/ScheduleController?command=addlist&pajing=1">나의여행</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" id="headerMemberBtn">
           	<!-- 디폴트 값 : 로그인, 세션에 로그인한 아이디 정보가 있으면 로그아웃 -->
           	<a class="nav-link js-scroll-trigger" href="/jejuya/<%=accountLinkUrl %>">
           		<%=loginIdentifierInHeader %>
           	</a>
           </li>
+          <%-- <li class="nav-item" id="headerMemberBtn">
+          	<!-- 디폴트 값 : 로그인, 세션에 로그인한 아이디 정보가 있으면 로그아웃 -->
+          	<a class="nav-link js-scroll-trigger" id="headerMemberLbl"><%=loginIdentifierInHeader %> </a>
+          	<form action="/jejuya/<%=accountLinkUrl%>" method="post" id="headerMemberFrm">
+          		<input type="hidden" id="currUrl" name="currUrl" value="<%= request.getRequestURL().substring(28) %>">
+          		<input type="hidden" id="destUrl" name="destUrl" value="/jajuya/<%=accountLinkUrl%>">
+          	</form>
+          </li> --%>
+          <!-- <li class="nav-item" id="headerLoginBtn">
+          	<a class="nav-link js-scroll-trigger" href="/jejuya/member">로그인</a>
+          </li>
+          <li class="nav-item" id="headerLogoutBtn">
+         	<a class="nav-link js-scroll-trigger" href="/jejuya/">로그아웃</a>
+          </li>   -->      
         </ul>
       </div>
     </div>

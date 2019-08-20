@@ -24,5 +24,5 @@ public interface SightsDetailDao {
 	
 	public int avgReviewScore(String title);
 	
-	
+	public void readCount(String title);
 }

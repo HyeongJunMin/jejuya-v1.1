@@ -3,8 +3,9 @@
 
 /* 카카오맵 설정 */
 #map {
-	width: 250px;
-	height: 620px;
+	margin-top: -8px;
+	width: 414px;
+	height: 550px;
 }
 /* 카카오맵 지도 위 키워드검색 부분 */
 #menu_wrap {
@@ -12,7 +13,7 @@
 	top: 0;
 	left: 0;
 	bottom: 0;
-	width: 220px;
+	width: 150px;
 	height: 100%;
 	max-height: 620px;
 	margin: 10px 0 30px 10px;
@@ -194,3 +195,4 @@
 	cursor: default;
 	color: #777;
 }
+

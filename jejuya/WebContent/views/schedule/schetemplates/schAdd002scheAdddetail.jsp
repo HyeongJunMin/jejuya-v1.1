@@ -4,8 +4,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-
-<link rel="stylesheet" href="css/bootstrap.css">
 <html>
 <%!
 public pageDto page(int total, int pg) {
@@ -32,12 +30,15 @@ public pageDto page(int total, int pg) {
 %>
 <br> <font size="2" id="coment">하단의 관광지 중 목록에 담고싶다면 클릭하세요</font>	<br>
 <input type="hidden" id="hidden" value="0">
-
 <button type="button" class="btn btn-secondary" id="category" value="0" onclick="func(0);changehidden(0);rank(0)">관광지</button>
-<button type="button" class="btn btn-secondary" id="category" value="1" onclick="func(1);changehidden(1);rank(1)">음식점</button>
-
+<button type="button" class="btn btn-secondary"  id="category" value="1" onclick="func(1);changehidden(1);rank(1)">음식점</button>
 <button type="button" class="btn btn-secondary" id="category" value="2" onclick="func(2);changehidden(2);rank(2)">숙소   </button>
-<select class="selectpicker" data-live-search="true"  id="choicetime">
+
+<br>
+
+<!-- table태그는 위치를 잡기 위한 용도로 사용됨 -->
+<table><col width="100"><col width="150"><tr><th colspan="2">
+<select id="choicetime">
 	<option value="0">시간 선택</option>
 		<% for(int i = 5 ; i < 24 ; i++){
 				out.println("<option value=\"");
@@ -45,13 +46,6 @@ public pageDto page(int total, int pg) {
 				out.println( ( (i<10)? "0"+i : i ) + ":00</option>");
 		}%>
 </select>
-<br>
-
-<!-- table태그는 위치를 잡기 위한 용도로 사용됨 -->
-<table  ><col width="100"><col width="150"><tr><th colspan="2">
-
-
-
 </th></tr></table>
 
 
@@ -65,7 +59,7 @@ public pageDto page(int total, int pg) {
 
 %>
 <!-- 관광지 선택 테이블 시작 부분 -->
-<table id="triplist" border="1"rules="none">
+<table id="triplist">
 	<col width="50">
 	<col width="250">
 	<%
@@ -95,7 +89,7 @@ public pageDto page(int total, int pg) {
 					<%
 						for (int i = 1; i <= pagedto.getPagignum(); i++) {
 					%>
-					<button type="button"  class="btn btn-light" onclick="pagingBtnClick(<%=i%>)"><%=i%></button>
+					<button type="button" class="btn btn-light" onclick="pagingBtnClick(<%=i%>)"><%=i%></button>
 					<%
 						}
 					%>
@@ -115,19 +109,6 @@ public pageDto page(int total, int pg) {
 //e에 각 카테고리 숫자를 넣어 함수를 호출하여 ajax를 통하여 새로고침을 하지 않으면서
 //컨트롤으로 접근하여 데이터를 가져오는 함수 입니다
 function func(e) {
-	if(e==0){
-		document.getElementById("keyword").value='제주도 관광 추천';
-		  document.getElementById("keywordbtn").click();
-	}else if(e==1){
-		document.getElementById("keyword").value='제주도 맛집 추천';
-		  document.getElementById("keywordbtn").click();
-	}else{
-		document.getElementById("keyword").value='제주도 숙소 추천';	
-		  document.getElementById("keywordbtn").click();
-	}
-	
-	
-	
 	//alert(e);
 	$("#triplist").html(''); //기존 테이블에 있던 정보를 일단 초기화
 	$.ajax({
@@ -213,9 +194,7 @@ function add() {
 		//alert(checkRow);
 		//alert(currday+":"+choicetime+"");
 		document.getElementById(currday+":"+choicetime+"").innerHTML = checkRow;
-	    document.getElementById("keyword").value=checkRow;
-	    //alert(document.getElementById("keyword").value);
-	    document.getElementById("keywordbtn").click();
+		
 		var td =document.getElementById(currday+":"+choicetime+"");
 		var checkbox=document.createElement("input");
 		checkbox.type="checkbox";
@@ -224,11 +203,10 @@ function add() {
 		checkbox.value=checkRow;
 	
 		td.appendChild(checkbox);
-		 chk[i].checked=false;
+		chk[i].checked=false;
 		checkbox.onclick=function(){
 		    text=document.createTextNode("");
 		    td.innerHTML="";
-		
 		}
 	 
  }

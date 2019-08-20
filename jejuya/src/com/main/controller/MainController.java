@@ -35,12 +35,41 @@ public class MainController extends HttpServlet{
 		NoticeService noticeService = NoticeServiceImpl.getInstance();
 		
 		//일정등록 많은 순으로 카테고리 별 (관음숙) 아이템 8개 받아오도록 조건 설정
-		SightSortCondition cond = new SightSortCondition(0, "all", "addschedule");
-		SightPagingDto pagingDto = new SightPagingDto(1);
-		pagingDto.setEndRnum(8);
-		List<SightsDto> mainListAllCate = sightsService.getScheduleSortSightlist(cond, pagingDto );
+//		SightSortCondition cond = new SightSortCondition(0, "all", "addschedule");
+//		SightPagingDto pagingDto = new SightPagingDto(1);
+//		pagingDto.setEndRnum(8);
 		
-		List<SightsDto> mainSiteMapList = sightsService.getPopularSightlist(cond, pagingDto );
+		
+		//get방식으로 넘어온 파라미터 recieve
+		//String strcategory = req.getParameter("category");
+		String strcategory = nvlInCnt(req, "category", "0");
+		int category = Integer.parseInt(strcategory);
+		
+		//String theme = req.getParameter("theme");
+		String theme = nvlInCnt(req, "theme", "all");
+		System.out.println("theme : " + theme);
+		
+		//String sortSel = req.getParameter("_sort_sel");
+		String sortSel = nvlInCnt(req, "_sort_sel", "all");
+		
+		//서치 텍스트 
+		String searchStr = nvlInCnt(req, "searchStr", "all");
+		System.out.println("searchStr:" + searchStr);
+		
+		//페이지넘버 지정(pageNum)
+		String strpageNum = nvlInCnt(req, "pageNum", "1");
+		int pageNum = Integer.parseInt( strpageNum );
+		SightPagingDto pagingDto = new SightPagingDto();
+		pagingDto.setStartRnum(1);
+		pagingDto.setEndRnum(15);
+		
+		SightSortCondition sortCon = new SightSortCondition(category, theme, sortSel, searchStr);
+		
+		//service에서 list 받아옴 - 모든 카테고리 인기 순
+		List<SightsDto> mainListAllCate = sightsService.getScheduleSortSightlist(sortCon,pagingDto );
+		
+		//사이트맵 리스트
+		List<SightsDto> mainSiteMapList = sightsService.getPopularSightlist(sortCon, pagingDto );
 				
 		req.setAttribute("mainListAllCate", mainListAllCate);
 		req.setAttribute("mainSiteMapList", mainSiteMapList);
@@ -63,5 +92,15 @@ public class MainController extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		System.out.println("[MainController] do post");
+	}
+	
+	/**파라미터와 대체텍스트를 입력받고, 파라미터가 널이면 대체텍스틀 리턴 아니라면 겟파라미터
+	 * @param req
+	 * @param param
+	 * @param altStr
+	 * @return
+	 */
+	public String nvlInCnt(HttpServletRequest req, String param, String altStr) {
+		return ( req.getParameter( param ) == null )? altStr : req.getParameter( param ) ;
 	}
 }

@@ -73,6 +73,9 @@ public class SightsDetailController extends HttpServlet {
 			SightsDto dto = service.getOneSightDetail(title);
 			// System.out.println(dto.toString());
 			
+			//조회 수 +1
+			service.readCount(title);
+			
 			// 리뷰평점평균
 			int count = service.avgReviewScore(title);
 			
@@ -264,7 +267,7 @@ public class SightsDetailController extends HttpServlet {
 		else if (command.equals("addReview")) {
 			System.out.println("dopost addReview");
 
-			String fupload = req.getServletContext().getRealPath("/review");
+			String fupload = req.getServletContext().getRealPath("/upload/review");
 			String yourTempDir = fupload;
 
 			int yourMaxRequestSize = 100 * 1024 * 1024; // 전송할때 사이즈 1MByte

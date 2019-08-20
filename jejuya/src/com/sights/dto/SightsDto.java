@@ -28,7 +28,21 @@ public class SightsDto implements Serializable {
 		
 		public SightsDto() {
 		}		
+		
+		
 
+		/**ScheduleDaoImpl에서 사용하는 생성자
+		 * @param title
+		 * @param addSchedule
+		 * @param readcount
+		 */
+		public SightsDto(String title, int addSchedule, int readcount) {
+			super();
+			this.title = title;
+			this.addSchedule = addSchedule;
+			this.readcount = readcount;
+		}
+		
 		public SightsDto(String title, int category, String theme, int addSchedule, int readcount) {
 			super();
 			this.title = title;
@@ -38,6 +52,23 @@ public class SightsDto implements Serializable {
 			this.readcount = readcount;
 		}
 		
+		public SightsDto(int seq, String title, String a, String theme, String b, String c) {
+			super();
+			this.seq = seq;
+			this.title = title;
+			this.theme = theme;
+		}
+
+		public SightsDto(int seq, String title, int category, String theme, String address, String homepage) {
+			super();
+			this.title = title;
+			this.seq = seq;
+			this.category = category;
+			this.theme = theme;
+			this.address = address;
+			this.homepage = homepage;
+		}
+	
 		/**admin controller에서 사용하는 생성자
 		 * @param title
 		 * @param category

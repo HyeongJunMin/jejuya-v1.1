@@ -64,5 +64,8 @@ public class SightsDetailServiceImpl implements SightsDetailService{
 		return dao.avgReviewScore(title);
 	}
 
-	
+	@Override
+	public void readCount(String title) {
+		dao.readCount(title);
+	}	
 }

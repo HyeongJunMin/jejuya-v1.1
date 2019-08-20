@@ -44,7 +44,9 @@ ul.nav a.active {
 /* 탭 내부 콘텐츠 */
 .tab-pane{
 	padding: 10px;
+	height:100px;
 }
+
 /* 탭 콘텐츠 내부 제목 폰트 설정 */
 .tab-content h2{
 	font-weight: 400;
