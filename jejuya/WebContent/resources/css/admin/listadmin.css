@@ -1,5 +1,31 @@
 @charset "UTF-8";
 
+
+
+
+th{
+	background-color: #7a87b4;
+	color: #fff;
+}
+
+input.btn, input#modifyBtn {
+    border-radius: 5px;
+    border : 0;
+    width: 100px;
+    height: 35px;
+    font-size: 14px;
+    color: #fff;
+    background: #323b59;
+}
+
+
+
+tr.listclick:hover{
+	border-collapse: collapse;
+	background-color: #abd;
+}
+
+
 table.user_list_table th, tr{
 	width: 1500px;
 	font-size: 16px;
@@ -21,7 +47,7 @@ tr.listclick:hover{
 	background-color: #abd;
 }
 
-td {
+td.list {
 	text-align: center;
 }
 td.tablesubmit{
@@ -43,14 +69,8 @@ tr.delete_member, tr.delete_bbs{
 /* Modal window */
 
 
-tr.modal_detail{
+tr.modal_detail, tr.modal_update{
 	height: 35px;
-}
-
-select{
-	width: 90px;
-	padding: .4em .4em;
-    border: 1px solid #999;
 }
 
 
@@ -76,6 +96,7 @@ div.modal-content {
   border: 1px solid #888;
   width: 80%;
 }
+
 
 /* The Close Button */
 span.close {

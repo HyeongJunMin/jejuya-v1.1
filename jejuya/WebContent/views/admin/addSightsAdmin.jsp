@@ -24,7 +24,7 @@ tr, td, th{
 	height: 35px;	
 }
 
-input.btn, input#btnUpdate, input#btnDel {
+input.btn {
     border-radius: 5px;
     border : 0;
     width: 100px;
@@ -35,8 +35,8 @@ input.btn, input#btnUpdate, input#btnDel {
 }
 
 select{
-	width: 90px;
-	padding: .5em .4em;
+	width: 7.5em;
+	padding: .55em .1em;
     border: 1px solid #999;
 }
 
@@ -46,7 +46,7 @@ select{
 </head>
 <body>
 <div align="center">
-<form action="/project/adminControl?command=addsights" method="post" enctype="multipart/form-data">
+<form action="/jejuya/adminControl?command=addsights" method="post" enctype="multipart/form-data">
 <!-- 	<input type="hidden" name="command" value="bbswrite"> -->
 	
 <h2>여행지 등록</h2>
@@ -55,53 +55,25 @@ select{
 <table border="1">
 <col width="100"><col width="600">
 <tr>	
-	<th>여행지선택</th>
+	<th>여행지</th>
 	<td>
-		<select id="category" name="category" onchange="categorySel()">
+		<select id="category" name="category" onchange="categorySel(this, 'theme')">
+		<option value="default">여행지종류</option>
 			<option value="0">관광지</option>
 			<option value="1">음식점</option>
 			<option value="2">숙소</option>
-		</select>		
+		</select>&nbsp;&nbsp;&nbsp;&nbsp;
+		<select name="theme" id="theme"  style="width: 10em; height: 2.5em;">
+			<option value="default">여행지테마</option>
+		</select>
 	</td>	
 </tr>	
 <tr>
 	<th>여행지명</th>
-	<td>
-		<input type="text" id="title" name="title" style="width: 20em; height: 2em;" onblur="titlecheck()">
+	<td>	
+		<input type="text" id="title" name="title" style="width: 20em; height: 2em;">
 		<br>
-		<span id="titlecheck" class="msg"></span>	
-	</td>
-</tr>
-<tr>	
-	<th>테마선택</th>
-	<td id="_theme0">	
-		<select name="theme">
-			<option value="nature">자연</option>
-			<option value="tour">문화관광</option>
-			<option value="leisure">레저/체험</option>
-			<option value="walk">걷기</option>
-			<option value="photo">포토스팟</option>
-		</select>
-	</td>
-	
-	<td id="_theme1">	
-		<select name="theme">
-			<option value="traditional">전통음식</option>
-			<option value="korean">한식</option>
-			<option value="western">양식</option>
-			<option value="chinese">중식</option>
-			<option value="cafe">카페</option>
-		</select>
-	</td>
-	
-	<td id="_theme2">	
-		<select name="theme" class="rooms" style="width: 10em; height: 2.5em;">
-			<option value="hotel">호텔</option>
-			<option value="resort">리조트</option>
-			<option value="pension">펜션</option>
-			<option value="inns">민박</option>
-			<option value="guest">게스트하우스</option>
-		</select>
+		<span id="titlecheck" class="msg"></span>
 	</td>
 	
 </tr>	
@@ -114,19 +86,19 @@ select{
 <tr>
 	<th>전화번호</th>
 	<td>
-		<input type="text" name="phone" style="width: 20em; height: 2em;" >	
+		<input type="text" id="phone" name="phone" style="width: 20em; height: 2em;" >	
 	</td>	
 </tr>
 <tr>
 	<th>홈페이지</th>
 	<td>
-		<input type="text" name="homepage" style="width: 30em; height: 2em;">	
+		<input type="text" id="homepage" name="homepage" style="width: 30em; height: 2em;">	
 	</td>	
 </tr>
 <tr>
 	<th>상세정보</th>
 	<td>
-		<textarea rows="20" cols="75" name="content" style="resize: none"></textarea>
+		<textarea rows="20" cols="75" id="content" name="content" style="resize: none"></textarea>
 	</td>	
 </tr>
 <tr>
@@ -138,9 +110,8 @@ select{
 </tr>
 </table>
 <br>
-<input type="submit" class="btn" value="등록">
-<input type="button" id="btnUpdate" class="btn" value="수정">
-<input type="button" id="btnDel" class="btn" value="삭제">
+<input type="submit" class="btn" value="등록" onClick="checkForm()">
+
 
 </form>
 </div>
@@ -150,54 +121,61 @@ select{
 <%-- <img src="<%=request.getContextPath()%>\upload\udo.jpg"> --%>
 
 <script type="text/javascript">
-$(function () {
-	$("#_theme0").show(); $("#_theme1").hide(); $("#_theme2").hide();
-});
+//
+// $(function () {
+// 	$("#_theme0").show(); $("#_theme1").hide(); $("#_theme2").hide();
+// });
 
-$(".list").click(function () {
+
+function categorySel(category, targetId) {
+	var val = category.options[category.selectedIndex].value;	// 선택된 카테고리의 번호 	광광지0. 음식점1, 숙소2
+	var targetE = document.getElementById(targetId);
+// 	alert(val);
+	removeAll(targetE);
 	
-});
-
-function categorySel() {
-	// 카테고리 선택이 바뀌면 그 값을 가져온다
-	var num = document.getElementById("category");
-	var valNum = num.options[num.selectedIndex].value;
-//	alert(valNum);
-
-	switch(valNum){
-	case '0': $("#_theme0").show(); $("#_theme1").hide(); $("#_theme2").hide(); break;
-	case '1': $("#_theme0").hide(); $("#_theme1").show(); $("#_theme2").hide(); break;
-	case '2': $("#_theme0").hide(); $("#_theme1").hide(); $("#_theme2").show(); break;
-	default : break;
+	if(val == '0'){
+		addOption('자연', targetE);
+		addOption('문화관광', targetE);
+		addOption('레저/체험', targetE);
+		addOption('걷기', targetE);
+		addOption('포토스팟', targetE);
+	}
+	
+	else if(val == '1'){
+		addOption('전통음식', targetE);
+		addOption('한식', targetE);
+		addOption('양식', targetE);
+		addOption('중식', targetE);
+		addOption('카페', targetE);
+	}
+	
+	else if(val == '2'){
+		addOption('호텔', targetE);
+		addOption('리조트', targetE);
+		addOption('펜션', targetE);
+		addOption('민박', targetE);
+		addOption('게스트하우스', targetE);
 	}
 	
 }
 
+function addOption(value, e) {
+	var o = new Option(value);
+	try{
+		e.add(o);
+	}catch(ee){
+		e.add(o, null);
+	}
+}
+
+function removeAll(e) {
+	for(var i = 0, limit = e.options.length; i < limit - 1; i++){
+		e.remove(1);
+	}
+}
+
+
 // 업로드 이미지 미리보기
- /* var upload = document.getElementById("fileload"),
-    holder = document.getElementById('holder')
-    
-upload.onchange = function (e) {
-e.preventDefault();
-
-var file = upload.files[0],
-    reader = new FileReader();
-    
-reader.onload = function (event) {
-  var img = new Image();
-  img.src = event.target.result;
-  // note: no onload required since we've got the dataurl...I think! :)
-  if (img.width > 250) { // holder width
-    img.width = 250;
-  }
-  holder.innerHTML = '';     
-  holder.appendChild(img);
-};
-
-reader.readAsDataURL(file);
-
-return false; */
-
 function readInputFile(input) {
     if(input.files && input.files[0]) {
         var reader = new FileReader();
@@ -212,10 +190,20 @@ $("#fileload").on('change', function(){
     readInputFile(this);
 });
  
-$(".btn").click(function () {
-	alert("글이 작성됐습니다.")
+ // 여행지 등록 시 공백을 방지
+$(".btn").on("click", function(e) {
+    if ($('#category').val()=="" ||
+    	$('#theme').val()=="" ||
+    	$('#title').val()=="" ||
+        $('#phone').val()=="" ||
+        $('#homepage').val()=="" ||
+        $('#content').val()==""){
+        alert('모든 항목을 입력해주세요');
+//         e.preventDefault();                        
+    }else{
+    	parent.document.location.reload();
+    }
 });
-
 
 
 </script>

@@ -8,7 +8,7 @@
 </head>
 <body>
 <%
-response.sendRedirect("/project/adminControl?command=main");
+response.sendRedirect("/jejuya/adminControl?command=main");
 //response.sendRedirect("admin.jsp");
 %>
 </body>

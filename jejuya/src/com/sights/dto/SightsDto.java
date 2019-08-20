@@ -38,6 +38,29 @@ public class SightsDto implements Serializable {
 			this.readcount = readcount;
 		}
 		
+		/**admin controller에서 사용하는 생성자
+		 * @param title
+		 * @param category
+		 * @param theme
+		 * @param address
+		 * @param phone
+		 * @param homepage
+		 * @param content
+		 * @param filename
+		 */
+		public SightsDto(String title, int category, String theme, String address, String phone, String homepage,
+				String content, String filename) {
+			super();
+			this.title = title;
+			this.category = category;
+			this.theme = theme;
+			this.address = address;
+			this.phone = phone;
+			this.homepage = homepage;
+			this.content = content;
+			this.filename = filename;
+		}
+		
 		public SightsDto(String title, int seq, int category, String theme, String filename, String address,
 				String phone, String homepage, String content, int addSchedule, int del, int readcount) {
 			super();

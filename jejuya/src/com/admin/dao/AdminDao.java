@@ -9,7 +9,7 @@ public interface AdminDao {
 	
 	/* 회원 */
 	
-	public List<MemberDto> getMemberList();
+	public MemberDto getMember(int seq);
 	
 	public boolean MemberMultiDelete(String[] ids);
 	
@@ -22,7 +22,9 @@ public interface AdminDao {
 	
 	/* 게시판  */
 	
-	public List<SightsDto> getBbsList();
+	public SightsDto getBbs(int seq);
+	
+	public List<SightsDto> getBbsList(int page, String sel, String searchW);
 	
 	public int getAllBbs(String category, String sel, String searchW);
 	
@@ -31,5 +33,7 @@ public interface AdminDao {
 	public boolean addSight(SightsDto dto);
 	
 	public boolean BbsMultiDelete(String[] titles);
+	
+	public boolean bbsUpdate(int seq, SightsDto dto);
 
 }

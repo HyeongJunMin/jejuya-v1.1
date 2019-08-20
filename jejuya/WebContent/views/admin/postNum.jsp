@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,12 +24,12 @@
 </head>
 <body>
 
-<form action="/project/adminControl?command=addsights" method="post" enctype="multipart/form-data">
+<form action="/jejuya/adminControl?command=addsights" method="post" enctype="multipart/form-data">
 	<!-- <input type="hidden" name="command" value="addsights"> -->
 
 <input type="text" id="sample4_postcode" name="postcode" placeholder="우편번호" style="width: 12em; height: 2em;">
 <input type="button" class="btn_post" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
-<input type="text" id="sample4_roadAddress" name="roadAddress" placeholder="도로명주소" style="width: 20em; height: 2em;">
+<input type="text" id="sample4_roadAddress" name="roadAddress" placeholder="도로명주소" style="width: 20em; height: 2em;" >
 <!-- <input type="text" id="sample4_jibunAddress" name="jibunAddress" placeholder="지번주소"> -->
 <span id="guide" style="color:#999;display:none"></span>
 <input type="text" id="sample4_detailAddress" name="detailAddress" placeholder="상세주소" style="width: 12em; height: 2em;">
@@ -92,6 +93,10 @@
             }
         }).open();
     }
+    
+
+
+    
 </script>
 
 

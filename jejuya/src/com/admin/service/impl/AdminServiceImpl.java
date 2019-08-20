@@ -28,8 +28,8 @@ public class AdminServiceImpl implements AdminService {
 	/* 회원 */
 	
 	@Override
-	public List<MemberDto> getMemberList() {
-		return dao.getMemberList();
+	public MemberDto getMember(int seq) {
+		return dao.getMember(seq);
 	}
 
 	@Override
@@ -55,15 +55,23 @@ public class AdminServiceImpl implements AdminService {
 	
 	/* 게시판 */
 	
+
+	
 	@Override
-	public List<SightsDto> getBbsList() {
-		return dao.getBbsList();
+	public List<SightsDto> getBbsList(int page, String sel, String searchW) {
+		return dao.getBbsList(page, sel, searchW);
+	}
+
+	@Override
+	public SightsDto getBbs(int seq) {
+		return dao.getBbs(seq);
 	}
 
 	@Override
 	public int getAllBbs(String category, String sel, String searchW) {
 		return dao.getAllBbs(category, sel, searchW);
 	}
+
 
 	@Override
 	public List<SightsDto> getBbsListPaging(String category, int page, String sel, String searchW) {
@@ -81,13 +89,11 @@ public class AdminServiceImpl implements AdminService {
 	public boolean BbsMultiDelete(String[] titles) {
 		return dao.BbsMultiDelete(titles);
 	}
-	
-	
 
-	
-	
-
-	
+	@Override
+	public boolean bbsUpdate(int seq, SightsDto dto) {
+		return dao.bbsUpdate(seq, dto);
+	}
 	
 	
 	

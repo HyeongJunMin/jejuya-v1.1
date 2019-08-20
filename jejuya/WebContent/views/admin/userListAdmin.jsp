@@ -11,8 +11,8 @@
 	int allpage = (Integer)request.getAttribute("allpage");
 // 	System.out.println("allpage : " + allpage);
 	
-	int memberPage = allpage / 5;
-	if(allpage % 5 > 0){
+	int memberPage = allpage / 10;
+	if(allpage % 10 > 0){
 		memberPage = memberPage + 1;
 }
 %>
@@ -22,14 +22,12 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
-tr.listclick:hover{
-	border-collapse: collapse;
-	background-color: #abd;
-}
-select{
-	width: 90px;
-	padding: .4em .4em;
-    border: 1px solid #999;
+div.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
 }
 
 </style>
@@ -41,7 +39,6 @@ select{
 <body>
 
 	<h2>회원 List</h2>
-
 
 	<div class="list_main">
 		<form action="/jejuya/adminControl" method="post">
@@ -56,8 +53,7 @@ select{
 					<td class="table_border" height="1" bgcolor="#000" colspan="5"></td>
 				</tr>
 				<tr class="th_class">
-					<th><input type="checkbox" name="alldel"
-						onclick="deletechecks(this.checked)"></th>
+					<th><input type="checkbox" id="dlldel" name="alldel"></th>
 					<th>ID</th>
 					<th>Name</th>
 					<th>E-mail</th>
@@ -80,7 +76,7 @@ select{
 						for (MemberDto mem : list) {
 // 							System.out.println("mem list: "  + mem.toString());
 				%>
-				<tr class="listclick" id="list_click" bgcolor="f6f6f6">
+				<tr class="listclick" id="list_click" findseq=<%=mem.getSeq() %> bgcolor="f6f6f6">
 					<td align="center"><input type="checkbox" name="delck"
 						value="<%=mem.getId()%>"></td>
 					<td class="list"><%=mem.getId()%></td>
@@ -201,14 +197,57 @@ select{
 
 
 <script type="text/javascript">
-$(".list").click(function() {
-
+$(".listclick .list").click(function() {
+	var id;
+	var pw;
+	var name;
+	var email;
+	var birth;
+	
 	$(".modal").css("display", "block");
-		$("#id").text($(".listclick").children().eq(1).text());
+/* 		$("#id").text($(".listclick").children().eq(1).text());
 		$("#pw").text($(".listclick").children().eq(2).text());
 		$("#name").text($(".listclick").children().eq(3).text());
 		$("#email").text($(".listclick").children().eq(4).text());
-		$("#birth").text($(".listclick").children().eq(5).text());
+		$("#birth").text($(".listclick").children().eq(5).text()); */
+		
+		var findseq = $(this).parent().attr("findseq");
+// 		alert(findseq);
+
+	$.ajax({
+		url: "/jejuya/adminControl?command=userdetail",
+		data: {findseq:findseq},
+		type: "get",
+		datatape: "json",
+		success: function ( obj ) {
+			var jsonData = JSON.parse(obj);
+			
+			id = jsonData.id;
+			console.log(id);
+			$("#id").text(id);
+			
+			pw = jsonData.pw;
+			console.log(pw);
+			$("#pw").text(pw);
+			
+			name = jsonData.name;
+			console.log(name);
+			$("#name").text(name);
+			
+			email = jsonData.email;
+			console.log(pw);
+			$("#email").text(email);
+			
+			birth = jsonData.birth;
+			console.log(birth);
+			$("#birth").text(birth);
+		},
+		error: function () {
+			alert("error");
+		}
+				
+	});
+		
 
 });
 $(".close").on("click", function() {
@@ -217,13 +256,55 @@ $(".close").on("click", function() {
 
 $('td.list:nth-child(3)').hide(); // td의 세번째 열 데이터를 숨김
 
-function deletechecks(e) {
-	var arr = document.getElementsByName("delck");
 
-	for (i = 0; i < arr.length; i++) {
-		arr[i].checked = e;
+
+/* $("#submit_del").click(function() {
+	var checkLen = $("input:checkbox[name='delck']:checked").length;
+	
+	if(checkLen < 1){
+		alert('탈퇴시킬 회원을 선택하세요')
+		
+	} else {
+		 function deletechecks(e) {
+			var arr = document.getElementsByName("delck");
+		
+			for (i = 0; i < arr.length; i++) {
+				arr[i].checked = e;
+			}
+		}
 	}
-}
+});
+ */
+ 
+$(document).ready(function(){
+    //최상단 체크박스 클릭
+    $("#alldel").click(function(){
+        //클릭되었으면
+        if($("#alldel").prop("checked")){
+            //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 true로 정의
+            $("input[name=delck]").prop("checked",true);
+            //클릭이 안되있으면
+        }else{
+            //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 false로 정의
+            $("input[name=delck]").prop("checked",false);
+        }
+    });
+});
+
+
+$(".submit_del").click(function() {
+	// 체크 된 체크박스의 개수
+	var checkLen = $("input:checkbox[name='delck']:checked").length;
+
+	// 체크개수가 1 미만이면  submit(삭제) 실행X
+	if(checkLen < 1){
+		alert('탈퇴시킬 회원을 1명 이상 선택하세요');
+		return false;
+	}
+}); 
+
+ 
+ 
 
 </script>
 

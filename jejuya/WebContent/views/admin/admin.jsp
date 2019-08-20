@@ -4,7 +4,7 @@
 
 
 <%
-	String contextPath = request.getContextPath();	
+	String contextPath = request.getContextPath();
 
 	//isSearchedResult attr이 존재하면 회원관리 버튼을 선택하고 회원관리 검색결과를 보여주고 req에서 attr 제거
 	boolean isSearchedResult = false;
@@ -17,22 +17,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<!-- <link type="text/css" rel="stylesheet" href="resources/css/admin.css?after"> -->
 <link type="text/css" rel="stylesheet" href="/jejuya/resources/css/admin/admin.css">
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script type="text/javascript" src="/jejuya/resources/js/admin/admin.js"></script>
 <style type="text/css">
-iframe{
-	border: 0px;
-	margin-top: 40px;
-	margin-left: 70px;
-	align-content: center;
-}
-
-ul.tab-link{
-	font-size: 15px;
-	
-}
-
 
 </style>
 <title>admin.jsp</title>
@@ -63,7 +52,6 @@ ul.tab-link{
 				</ul>
 					<ul class="side_menu_sub_tabs_bbs">
 						<li class="tab-link" data-tab="tab-3">게시글 작성</li>
-<!-- 						<li class="tab-link" data-tab="tab-4">게시글 수정 및 삭제</li> -->
 					</ul>
 			</div>
 				<ul class="side_menu">
@@ -73,21 +61,15 @@ ul.tab-link{
 					<ul class="side_menu_sub_tabs_user">
 						<li class="tab-link" data-tab="tab-2">회원 정보 확인</li>
 					</ul>
-					
 				<!-- 공지 관련 내용 -->
-				<div>
-					<ul class="side_menu">
-						<li class="side_menu_main_notice">공지 관리</li>
-					</ul>
-					<ul class="side_menu_sub_tabs_notice">
-						<li class="tab-link" data-tab="tab-5">공지 목록</li>
-					</ul>
-				</div>
+				<ul class="side_menu">
+					<li class="side_menu_main_notice">공지 관리</li>
+				</ul>
+				<ul class="side_menu_sub_tabs_notice">
+					<li class="tab-link" data-tab="tab-5">공지 목록</li>
+				</ul>
 			</div> 
-			
-
-			
-			
+						
 		</div>
 
 		<div class="page_content_wrapper">
@@ -106,18 +88,14 @@ ul.tab-link{
 				</ul>
 				<div class="mainmenuBbs">
 					<div id="tab-1" class="tab-content current">
-						<iframe src="/jejuya/adminControl?command=bbslist" width="1000" height="800"></iframe>
+						<iframe src="/jejuya/adminControl?command=bbslist" width="1000" height="1500"></iframe>
 						
 					</div>
 					<div id="tab-2" class="tab-content">
-						<iframe src="/jejuya/adminControl?command=userlist" width="1000" height="800"></iframe>
+						<iframe src="/jejuya/adminControl?command=userlist" width="1000" height="1000"></iframe>
 					</div>
 					<div id="tab-3" class="tab-content">
-<!-- 						<iframe src="http://zum.com/#!/home"></iframe> -->
-						<iframe src="./views/admin/addSightsAdmin.jsp" width="1000" height="1500"></iframe>						
-					</div>
-					<div id="tab-4" class="tab-content">
-<!-- 						<iframe src="/project/adminControl?command=userlist" width="1000" height="800"></iframe> -->
+						<iframe src="./views/admin/addSightsAdmin.jsp" width="1000" height="1500"></iframe>
 					</div>
 					<!-- 공지 관련 내용 -->
 					<div id="tab-5" class="tab-content">
@@ -206,7 +184,8 @@ ul.tab-link{
 			});
 
 		});
-	</script>
+		
+</script>
 </body>
 </html>
 
