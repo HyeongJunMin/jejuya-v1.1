@@ -1,4 +1,4 @@
-
+<%@page import="com.member.dto.MemberDto"%>
 <%@page import="com.sights.dto.Paging"%>
 <%@page import="com.sights.dto.SightsDto"%>
 <%@page import="com.sights.dto.SightReviewDto"%>
@@ -6,9 +6,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
-  
+   
 <%
-//로그인한 멤버만 리뷰 쓰게하기
+//로그인한 멤버
+String currUserId = "guest";
+if( request.getSession().getAttribute("currUser") != null ){
+	currUserId = ( (MemberDto)request.getSession().getAttribute("currUser") ).getId();
+}
+System.out.println("currUserId=" + currUserId);
 
 // 리뷰평점변수
 int score = 0;
@@ -36,6 +41,14 @@ System.out.println("detailReview.jsp sorting:" + sorting);
 
 //페이징
 Paging paging = (Paging)request.getAttribute("paging");
+
+//이미지파일 경로설정
+String serverPath = request.getContextPath();
+System.out.println("serverPath=" + serverPath);
+
+//이미지 주소로 받을때랑 서버에서 받을때 두가지
+String filename = (dto.getFilename().trim().substring(0,4).equals("http")
+						?dto.getFilename():serverPath + "/upload/" + dto.getFilename());
 %>
      
 <!DOCTYPE html>
@@ -45,83 +58,25 @@ Paging paging = (Paging)request.getAttribute("paging");
 <title>Insert title here</title>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
-
 <!-- global conf include -->
 <jsp:include page="/views/templates/staticresources.jsp"></jsp:include>
 
 <!-- 만든 CSS 파일 -->
 <link rel="stylesheet" href="/jejuya/resources/css/sights/sightsdetail.css"/>
 
-<style type="text/css">
-
-/* 리뷰등록 */
-table.tb1{
-	width: 800px;
-	border-collapse: collapse;
-	border-top: 1px solid #ef6d00;
-}
-.td1{
-	padding: 10px;	
-}
-
-.btnD{
-	border-radius: 5px;
-    border : 0;
-    width: 146px;
-    height: 35px;
-    font-size: 14px;
-    color: #fff;
-    background: #ef6d00;	
-}
-.delBtn{
-	border-radius: 5px;
-    border : 0.5px solid #ef6d00;
-    background-color: white;
-    width: 50px;
-    height: 20px;
-    font-size: 14px;
-    color: #ef6d00;
-}
-
-.fileTd{
-	border: 1px solid #e5e5e5;
-	width: 266px;
-}
-.modal{
-	display: none;
-	position: fixed;
-	z-index: 1;		/* sit on top */
-	left: 200px;
-	top: 300px;
-	width: 100%;
-	height: 100%;
-	overflow: auto;		
-/* 	background-color: rgb(0,0,0);
-	background-color: rgba(0,0,0,0.4);  */
-}
-.modal-content{
-	background-color: #fff;
-	padding: 30px;	
-	border: 1px solid #ef6d00;
-	width: 45%;  
-}
-
-.closeModal:hover,
-.closeModal:focus{
-	color: #000;
-	text-decoration: none;
-	cursor: pointer;
-}
-</style>
 
 </head>
 <body>
+<!-- 현재 유저의 정보를 갖는 hidden 태그, 접속정보가 세션에 없으면 value는 guest -->
+<input type="hidden" value="guest" id="<%=currUserId %>">
+
 <!-- GNB include -->
 <jsp:include page="/views/templates/header.jsp"></jsp:include>
 
 <div align="center">
-	<img src="<%=request.getContextPath()%>\upload\<%=dto.getFilename() %>" style="width: 100%">
 	
+	<img class="mainImg" src="<%=filename%>">
+
 	<div class="containerD">	
 		<ul class="tabsD">			    
 		    <li id="basic" class="menu">기본정보</li>
@@ -147,15 +102,16 @@ table.tb1{
 					SightReviewDto review = list.get(i);
 					score = review.getScore();
 					writeDay = review.getWdate();
-//					System.out.println("writeDay=" + writeDay);
 					String wday = writeDay.substring(0, 10);
-//					System.out.println("wday=" + wday);
+					
+					String writeId = review.getId();
+					System.out.println("writeId=" + writeId);				
 				%>
 			<table class="tb1">
-			<col width="150"><col width="370"><col width="20">
+			<col width="150"><col width="380"><col width="15">
 				<tr>
-					<td class="td1" align="center">
-					<%=review.getId() %><br>
+					<td id="tdId" class="td1" align="center">
+					<%=writeId %><br>
 					<%=wday %><br>
 					<% if(score == 5){
 							%><font style='color:gold'>★★★★★</font><% 
@@ -175,10 +131,16 @@ table.tb1{
 					</td>
 					<td class="td1" colspan="3">
 						<%=review.getContent() %><br>												
-					</td>													
-					<td class="td1">	
-						<input type="button" id="delBtn<%=i %>" class="delBtn" value="삭제" seq=<%=review.getSeq() %> style="visibility: visible">
-					</td>				
+					</td>					
+						<%
+						if(currUserId.equals(writeId)){
+						%>
+						<td class="td1">	
+							<input type="button" id="delBtn<%=i %>" class="delBtn" value="삭제" seq=<%=review.getSeq() %> >
+						</td>	
+						<%
+						}
+						%>																					
 				</tr>
 				<tr>
 					<td colspan="3" align="center" class="td1">
@@ -186,12 +148,12 @@ table.tb1{
 						if(review.getFilename() != null){
 							String str = review.getFilename();
 				
-							String[] filename = str.split("/");
+							String[] reviewfile = str.split("/");
 				//			for(String file : filename){
 				//				System.out.println(file);
 				//			} 
 				
-							for(String file : filename){
+							for(String file : reviewfile){
 								%>							
 								<img class="reviewImg" src="<%=request.getContextPath()%>\review\<%=file %>" style="width: 130px; height: 80px">
 														
@@ -233,8 +195,8 @@ table.tb1{
 			</c:if>
 			<br><br>	
 								
-			<form action="/jejuya/SightsController?command=addReview" method="post" enctype="multipart/form-data">
-					 <input type="hidden" name="id" value="id">
+			<form id="frm" method="post" enctype="multipart/form-data">
+					 <input type="hidden" name="id" value="<%=currUserId%>">
 					 <input type="hidden" name="title" value=<%=title %>>
 				<!-- <input type="hidden" name="command" value="addReview"> -->
 				
@@ -249,9 +211,22 @@ table.tb1{
 						</td>
 					</tr>
 					<tr>
+						<%
+						if(currUserId.equals("guest")){
+						%>
+						<td colspan="3">
+							<textarea style="width: 800px" rows="5" name="content" placeholder="로그인한 사람만 쓸 수 있습니다" readonly="readonly"></textarea>
+						</td>		
+						<%
+						 }else{							 
+						%>
 						<td colspan="3">
 							<textarea style="width: 800px" rows="5" name="content" placeholder="리뷰를 입력해주세요"></textarea>
-						</td>			
+						</td>		
+						<%	 
+						 }
+						%>
+												
 					</tr>
 					<tr>
 						<td><input type="file" class="fileTd" id="fileload" name="fileload1"></td>
@@ -260,7 +235,7 @@ table.tb1{
 					</tr>	
 					<tr>
 						<td colspan="3" align="center" style="padding: 10px">
-							<input type="submit" value="등록" class="btnD">
+							<input type="button" value="등록" id="btnD" class="btnD">
 						</td>
 					</tr>
 				</table>
@@ -270,8 +245,15 @@ table.tb1{
 	</div>	
 </div>
 
+<div id="map" style="width: 100px; height: 100px"></div>
+
 <script type="text/javascript">
 var modal = document.getElementById("myModal");
+
+// 길찾기용 지도 감추기
+$(function () {
+	$("#map").hide();
+})
 
 //리뷰 사진 누르면 모달open
 $(function () {		
@@ -282,44 +264,39 @@ $(function () {
 		$(".modalImg").attr("src", src);				
 		$(".modal").css("display","block");											
 	});
-	
-/* 	$(".closeModal").click(function () {
-		$(".modal").css("display", "none");
-	}); */
-	
+
 	$(".modalImg").click(function () {
 		$(".modal").css("display", "none");
 	});
 	
-	// 리뷰테이블 회색으로 변하기
- 	$(".tb1").mouseover(function () {
-		$(this).css("background", "#e5e5e5");
-	}); 
-	$(".tb1").mouseout(function () {
-		$(this).css("background", "");
-	});  
+	// 리뷰테이블 회색으로 변하기	
+	$(".tb1").hover(function () {
+		$(this).css("background", "#f4f4f4");
+	}, function () {
+		$(this).css("background", "#ffffff");
+	});	
 	
 });
 
-window.onclick = function (event) {
-	if(event.target == modal){
-		modal.style.dispaly = "none";
-	}  
-}
-
-
-// 삭제버튼
 $(function () {
-	<%-- 	
-	if(<%=mem.getId().equals(dto.getId())%>){
-		$("#delBtn").css("visibility", "visible");  
-	}
-	 --%>
+	$("#btnD").click(function () {
+		if(<%=currUserId.equals("guest")%>){
+			alert("로그인 해주세요");
+			return;			
+		}else{
+			$("#frm").attr("action", "/jejuya/SightsController?command=addReview").submit();
+		}								
+	});	
+});
+
+
+/* //삭제버튼 */
+$(function () {		
   	$(".delBtn").click(function () {
 		var id = $(this).attr("id");
-		alert(id);		
+//		alert(id);		
 		var seq = $("#" + id).attr("seq");
-		alert(seq);	
+//		alert(seq);	
 		
 		location.href="/jejuya/SightsController?command=delReview&seq="+seq+"&title=<%=title%>";  	
 	});
@@ -341,17 +318,16 @@ $(function () {
 	/* $("#findroad").mousedown(function () {
 		location.href="";		
 	});  */
+
 	
 });
 
 
 
 
-
-
-
 </script>
 
+<jsp:include page="/views/sights/map.jsp"></jsp:include>
 
 <!-- include footer -->
 <jsp:include page="/views/templates/footer.jsp"></jsp:include>

@@ -1,7 +1,9 @@
 package com.sights.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,7 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import com.sights.dto.SightPagingDto;
 import com.sights.dto.SightSortCondition;
 import com.sights.dto.SightsDto;
+import com.sights.service.SightsDetailService;
 import com.sights.service.SightsListService;
+import com.sights.service.impl.SightsDetailServiceImpl;
 import com.sights.service.impl.SightsListServiceImpl;
 
 @WebServlet("/SightsListController")
@@ -30,6 +34,7 @@ public class SightsListController extends HttpServlet {
 		
 		
 		SightsListService service = SightsListServiceImpl.getInstance();
+		SightsDetailService sightsDetailService = SightsDetailServiceImpl.getInstance();
 		
 		// 사진 눌렀을때 command값 SightDetail 사진의 title값으로 Sights테이블 DTO 리턴
 		if(command.equals("SightDetail")) {
@@ -138,11 +143,15 @@ public class SightsListController extends HttpServlet {
 			//String sortSel = req.getParameter("_sort_sel");
 			String sortSel = nvlInCnt(req, "_sort_sel", "all");
 			
+			//서치 텍스트 
+			String searchStr = nvlInCnt(req, "searchStr", "all");
+			System.out.println("searchStr:" + searchStr);
+			
 			//페이지넘버 지정(pageNum)
 			String strpageNum = nvlInCnt(req, "pageNum", "1");
 			int pageNum = Integer.parseInt( strpageNum );
 						
-			SightSortCondition sortCon = new SightSortCondition(category, theme, sortSel);
+			SightSortCondition sortCon = new SightSortCondition(category, theme, sortSel, searchStr);
 			
 			//service에서 list 받아옴
 			//List<SightsDto> list = service.getScheduleSortSightlist( sortCon );
@@ -154,14 +163,30 @@ public class SightsListController extends HttpServlet {
 			SightsDto dto = service.getOneCategoryDto(category);
 			req.setAttribute("categorydto", dto);
 			
+			// title로 리뷰 갯수 보내기
+			String strtitle = dto.getTitle();
+			int reviewcount = sightsDetailService.reviewAllCount(strtitle);
+			
+			Map<String, Integer> reviewCountMap = new HashMap<String, Integer>();
+			for(SightsDto d : list) {
+				reviewCountMap.put(d.getTitle(), sightsDetailService.reviewAllCount(d.getTitle()));
+			}
+			//System.out.println("리뷰카운트 : " +  reviewCountMap.toString() + " 끝");
+			
+			req.setAttribute("reviewcount", reviewCountMap);
+			
 			//theme 설정(cafe, food 등)
 			List<String> themeList = service.getThemelist(category);
 			req.setAttribute("themelist", themeList);
 			
 			//페이지넘버카운트 
 			int pagecount = service.getPageNumCount(sortCon);
-			System.out.println(pagecount);
+			System.out.println("pagecount: " +pagecount);
 			req.setAttribute("pagecount", pagecount);
+			
+			
+			//검색 텍스트
+			req.setAttribute("searchStr", searchStr);
 			
 			//리뷰DTO 받기
 			

@@ -47,14 +47,15 @@
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="sightsSiteMapItem">
                 	<div class="titleSiteMapItem">
-                		<h3>제주도 추천 여행지</h3>
+                		<h2>제주도 추천 여행지</h2>
                     </div>
                     <%
                     	for(int i = 1 ; i < 7 ; i++ ){
                     		SightsDto dto = mainSiteMapList.get(i);
                     		%>
                     			<div class="cmp<%=i %>SiteMapItem">
-                    				<img alt="" src="<%=dto.getFilename() %>">
+                    				<%-- <img alt="" src="<%=dto.getFilename() %>"> --%>
+                    				<img alt="" src="/jejuya/upload/<%=dto.getFilename() %>">
                     				<div class="cmp<%=i %>InnerSiteMapItem innerSiteMapItem">
                     					<a href="/jejuya/SightsController?command=detailBasic&title=<%=dto.getTitle() %>">
                     						<h3><%=dto.getTitle() %></h3>
@@ -66,10 +67,11 @@
                     	}
                     %>     
                 </div>
-                <div role="tabpanel" class="tab-pane" id="announceSiteMapItem">
-                    
+                <div role="tabpanel" class="tab-pane" id="announceSiteMapItem">                    
                     <div class="cmp1AnnounceSiteMapItem">
-                    	<h2>JEJUYA 에서 알려 드립니다</h2>
+                    	<div class="titleSiteMapItem">
+	                    	<h2>JEJUYA 에서 알려 드립니다</h2>
+	                    </div>
                     	<table class="table table-hover" id="mainNoticeTbl">
                     		<tr class="mainNoticeTblHeader">
                     			<td>번호</td><td>제목</td><td>작성일</td>
@@ -113,12 +115,29 @@
                 </div>
                 <div role="tabpanel" class="tab-pane" id="shareScheSiteMapItem">
                     <div class="cmp1ShareSiteMapItem">
-                    	<h2>준비 중입니다.</h2>
+                    	<div class="titleSiteMapItem">
+                    		<h2>준비 중입니다.</h2>
+                    	</div>
                     </div>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="tranpSiteMapItem">
-                    <div class="cmp1TranspSiteMapItem">
-                    	<h2>준비 중입니다.</h2>
+                    <div class="cmp1TranspSiteMapItem" align="center">
+                  		<div class="titleSiteMapItem">
+                    		<h2>제주 여행 교통정보 안내</h2>
+                    	</div>                    	
+                    	<ul class="trafficIcons">
+                    	<%
+                    		for(int i = 1 ; i < 9 ; i++ ){
+                    			%>
+                    				<li class="trafficinfoItemInSiteMap">
+                    				<a class="traffic0<%=i%>" target="_blank">
+                    				<img alt="" src="/jejuya/upload/trafficinfo/traffic0<%=i%>.jpg">
+                    				</a>
+                    				</li>
+                    			<%
+                    		}
+                    	%>
+                    	</ul>
                     </div>                    
                 </div>
             </div>

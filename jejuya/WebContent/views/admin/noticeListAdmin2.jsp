@@ -207,7 +207,7 @@ select{
 <script type="text/javascript">
 $(".listclick").click(function() {
 	var seq = $(this).children().eq(0).children().eq(0).val();
-	alert(seq);
+	//alert(seq);
 
 	location.href="/jejuya/notice?command=noticeDetail&seq=" + seq;	
 	/* $(".modal").css("display", "block");

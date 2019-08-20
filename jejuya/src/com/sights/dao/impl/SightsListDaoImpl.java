@@ -681,9 +681,8 @@ public class SightsListDaoImpl implements SightsListDao, Serializable {
 						+ " FROM (  "
 						+ " SELECT ROWNUM AS RNUM, TITLE, SEQ, CATEGORY, THEME, FILENAME, ADDRESS, PHONE, HOMEPAGE, CONTENT, ADDSCHEDULE, DEL, READCOUNT "
 						+ " FROM ( SELECT TITLE, SEQ, CATEGORY, THEME, FILENAME, ADDRESS, PHONE, HOMEPAGE, CONTENT, ADDSCHEDULE, DEL, READCOUNT "
-						+ " FROM SIGHTS "
-						+ " " + sortCondition + " ) ) A , (SELECT TITLE, AVG(SCORE) AS SCORE FROM SIGHT_REVIEW GROUP BY TITLE) B "
-						+ "  WHERE A.TITLE = B.TITLE(+) AND ( (RNUM >= " + pageDto.getStartRnum() + " ) AND (RNUM <= " + pageDto.getEndRnum() + " ) ) ";
+						+ " FROM SIGHTS  ) ) A , (SELECT TITLE, AVG(SCORE) AS SCORE FROM SIGHT_REVIEW GROUP BY TITLE) B "
+						+ "  WHERE A.TITLE = B.TITLE(+) AND ( (RNUM >= 1 ) AND (RNUM <= 10 ) ) ";
 				
 				
 				Connection conn = null;

@@ -202,4 +202,23 @@ $(function(){
 	    $(".cmp6BorderSiteMapItem").fadeOut();
 	});
 
+	//교통정보 아이콘 링크 설정
+	var trafficIndex = 0;
+	//일반 버스
+	$(".trafficIcons").children().eq(trafficIndex++).children().eq(0).prop('href','https://www.visitjeju.net/kr/tourInfo/traffic?tap=three&menuId=DOM_000002000000000033#');
+	//관광지 순환 버스
+	$(".trafficIcons").children().eq(trafficIndex++).children().eq(0).prop('href','https://www.visitjeju.net/kr/tourInfo/traffic?tap=three&subTap=two&menuId=DOM_000002000000000033#');
+	//택시
+	$(".trafficIcons").children().eq(trafficIndex++).children().eq(0).prop('href','https://www.visitjeju.net/kr/tourInfo/traffic?tap=four&menuId=DOM_000002000000000034#');
+	//렌터카
+	$(".trafficIcons").children().eq(trafficIndex++).children().eq(0).prop('href','https://www.visitjeju.net/kr/tourInfo/traffic?tap=five&menuId=DOM_000001703002009000#');
+	//공항 리무진
+	$(".trafficIcons").children().eq(trafficIndex++).children().eq(0).prop('href','https://www.visitjeju.net/kr/tourInfo/traffic?tap=three&subTap=three&menuId=DOM_000002000000000033');
+	//전세버스
+	$(".trafficIcons").children().eq(trafficIndex++).children().eq(0).prop('href','https://www.visitjeju.net/kr/tourInfo/traffic?tap=three&subTap=four&menuId=DOM_000002000000000033#');
+	//항공
+	$(".trafficIcons").children().eq(trafficIndex++).children().eq(0).prop('href','https://www.visitjeju.net/kr/tourInfo/traffic?tap=one&menuId=DOM_000002000000000031#');
+	//여객선, 도항
+	$(".trafficIcons").children().eq(trafficIndex++).children().eq(0).prop('href','https://www.visitjeju.net/kr/tourInfo/traffic?tap=two&menuId=DOM_000002000000000032#');
+
 });

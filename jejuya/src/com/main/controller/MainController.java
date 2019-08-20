@@ -44,7 +44,7 @@ public class MainController extends HttpServlet{
 				
 		req.setAttribute("mainListAllCate", mainListAllCate);
 		req.setAttribute("mainSiteMapList", mainSiteMapList);
-		
+				
 		//공지사항 attr 추가
 		int totalNoticeSize = noticeService.getNoticeDBSize();
 		NoticePagingDto noticePagingDto = new NoticePagingDto(1, totalNoticeSize);

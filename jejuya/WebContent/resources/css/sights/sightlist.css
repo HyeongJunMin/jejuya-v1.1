@@ -48,14 +48,16 @@
 .recommend_tour .theme_list li {
 	display: table;
 	float: left;
-	width: 308px;
-	height: 42px;
+	position:relative;
+	right: 13px;
+	width: 316px;
+	height: 73px;
 	border-bottom: 1px solid #e5e5e5;
 	border-left: 1px solid #e5e5e5;
 	border-top: 1px solid #e5e5e5;
 	border-right: 1px solid #e5e5e5;
 	text-align: center;
-	background-color: #313131;
+	background-color: #a7a7a7;
 }
 
 .recommend_tour .theme_list li a{
@@ -69,13 +71,13 @@
     line-height: 24px;
     text-align: center;
     vertical-align: middle;
+    font-size: 21px;
 }
 
 .recommend_tour{
 	height: 145px;
 	padding-bottom: 10px;
-	
-
+	width: 1300;
 }
 .theme_list li a{
 	display:block;
@@ -90,27 +92,25 @@
 }
 
 .listcls{
-		display: block;
+	overflow:auto;
+	display: block;
     list-style-type: disc;
     margin-block-start: 1em;
     margin-block-end: 1em;
     margin-inline-start: 0px;
     margin-inline-end: 0px;
-    padding-inline-start: 40px;
+    
     
     content: "";
     
     clear: both;
     width: 100%;
-    height: 830px;
+    height: auto;
 }
 
 
 
 
-.listcls{
-	padding: 30px 0 0 0;
-}
 
 .util_area{
 	height: 50px;
@@ -144,7 +144,7 @@
 
 .paging .nowpage{
   text-decoration: none;
-  background-color: #313131;
+  background-color: #ef6d00;
   color: white;
   padding: 8px 16px;
   float: left;
@@ -152,6 +152,7 @@
 }
 
 .paging{
+	height: auto;
 	padding-top: 50px;
 	text-decorationalign: center;
 	text-align:center;
@@ -178,4 +179,38 @@
 
 .sort_sel{
 	height: 40px;
+	position: relative;
+	left: 6px;
+}
+
+.search_window{
+	display: inline-block;
+	width: 192px;
+	height: 40px;
+	border: 3px solid #ef6d00;
+	background-color: white;
+	position: relative;
+
+}
+
+.search_text{
+	width: 185px;
+	height: 34px;
+	border: 0;
+	outline: none;
+
+}
+
+.search_btn{
+ width: 50px;
+ height: 40px;
+ background: #ef6d00;
+
+ border:0;
+ color: white;
+ font-weight: bold;
+
+ padding: 0 0 0 0;
+
+
 }

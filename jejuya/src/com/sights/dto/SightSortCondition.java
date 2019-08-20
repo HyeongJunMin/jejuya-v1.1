@@ -6,6 +6,7 @@ public class SightSortCondition implements Serializable{
 	private int category;
 	private String theme;
 	private String sortSel;
+	private String searchStr;
 	
 	public SightSortCondition() {}
 
@@ -22,6 +23,14 @@ public class SightSortCondition implements Serializable{
 		this.sortSel = sortSel;
 	}
 
+	public SightSortCondition(int category, String theme, String sortSel, String searchStr) {
+		super();
+		this.category = category;
+		this.theme = theme;
+		this.sortSel = sortSel;
+		this.searchStr = searchStr;
+	}
+	
 	public int getCategory() {
 		return category;
 	}

@@ -132,7 +132,7 @@ $(function(){
 				$tblLineTd.prop('colspan', '5');
 				$tblLineTd.appendTo($tblLineTr);
 				$("#noticeListAdminTbl").append($tblLineTr);
-				alert('append done');
+				//alert('append done');
 				//json으로 받아온 값을 테이블에 입력
 				for( i = 0 ; i < str.length - 1 ; i++ ){
 					var $tempTr = $('<tr>');

@@ -1,7 +1,6 @@
 package com.admin.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -317,13 +316,13 @@ public class NoticeController extends HttpServlet{
 				return true;
 			}else {
 				//admin이 아닌 경우
-				resp.getWriter().print("<script>alert('관리자 계정으로 로그인해주세요.'); history.back();</script>");
+				resp.getWriter().print("<script>alert('관리자 계정으로 로그인해주세요.'); location.href='/jejuya/member';</script>");
 				resp.getWriter().flush();
 				resp.getWriter().close();
 			}
 		}else {
 			//로그인 페이지로 이동
-			resp.getWriter().print("<script>alert('로그인 정보가 없습니다. 관리자 계정으로 로그인해주세요.'); history.back();</script>");
+			resp.getWriter().print("<script>alert('로그인 정보가 없습니다. 관리자 계정으로 로그인해주세요.'); location.href='/jejuya/member';</script>");
 			resp.getWriter().flush();
 			resp.getWriter().close();
 		}

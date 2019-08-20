@@ -40,12 +40,16 @@ table{
 
 <table border="1">
 <tr>	
-	<td>여행지선택</td>
+	<td>여행지</td>
 	<td>
-		<select id="category" name="category" onchange="categorySel()">
+		<select id="category" name="category" onchange="categorySel(this, 'theme')">
+			<option value="default">여행지종류</option>
 			<option value="0">관광지</option>
 			<option value="1">음식점</option>
 			<option value="2">숙소</option>
+		</select>
+		<select name="theme" id="theme">
+			<option value="default">여행지테마</option>
 		</select>		
 	</td>	
 </tr>	
@@ -57,39 +61,6 @@ table{
 		<span id="titlecheck" class="msg"></span>	
 	</td>
 </tr>
-<tr>	
-	<td>테마선택</td>
-	<td id="_theme0">	
-		<select name="theme">
-			<option value="nature">자연</option>
-			<option value="tour">문화관광</option>
-			<option value="leisure">레저/체험</option>
-			<option value="walk">걷기</option>
-			<option value="photo">포토스팟</option>
-		</select>
-	</td>
-	
-	<td id="_theme1">	
-		<select name="theme">
-			<option value="traditional">전통음식</option>
-			<option value="korean">한식</option>
-			<option value="western">양식</option>
-			<option value="chinese">중식</option>
-			<option value="cafe">카페</option>
-		</select>
-	</td>
-	
-	<td id="_theme2">	
-		<select name="theme">
-			<option value="hotel">호텔</option>
-			<option value="resort">리조트</option>
-			<option value="pension">펜션</option>
-			<option value="inns">민박</option>
-			<option value="guest">게스트하우스</option>
-		</select>
-	</td>
-	
-</tr>	
 <tr>	
 	<td>주소</td>
 	<td>
@@ -136,23 +107,78 @@ table{
 
 <script type="text/javascript">
 $(function () {
-	$("#_theme0").show(); $("#_theme1").hide(); $("#_theme2").hide();
+	$("#_theme0").show(); $("#_theme1").hide(); $("#_theme2").hide();	
 })
 
-function categorySel() {
-	// 카테고리 선택이 바뀌면 그 값을 가져온다
-	var num = document.getElementById("category");
-	var valNum = num.options[num.selectedIndex].value;
-//	alert(valNum);
 
-	switch(valNum){
-	case '0': $("#_theme0").show(); $("#_theme1").hide(); $("#_theme2").hide(); break;
-	case '1': $("#_theme0").hide(); $("#_theme1").show(); $("#_theme2").hide(); break;
-	case '2': $("#_theme0").hide(); $("#_theme1").hide(); $("#_theme2").show(); break;
-	default : break;
+function categorySel(category, targetId) {
+	var val = category.options[category.selectedIndex].value;
+	var targetE = document.getElementById(targetId);
+//	alert(val);
+	removeAll(targetE);
+	
+	if(val == '0'){
+		addOption('자연', targetE);
+		addOption('문화관광', targetE);
+		addOption('레저/체험', targetE);
+		addOption('걷기', targetE);
+		addOption('포토스팟', targetE);
+	}
+	
+	else if(val == '1'){
+		addOption('전통음식', targetE);
+		addOption('한식', targetE);
+		addOption('양식', targetE);
+		addOption('중식', targetE);
+		addOption('카페', targetE);
+	}
+	
+	else if(val == '2'){
+		addOption('호텔', targetE);
+		addOption('리조트', targetE);
+		addOption('펜션', targetE);
+		addOption('민박', targetE);
+		addOption('게스트하우스', targetE);
 	}
 	
 }
+
+function addOption(value, e) {
+	var o = new Option(value);
+	try{
+		e.add(o);
+	}catch(ee){
+		e.add(o, null);
+	}
+}
+
+function removeAll(e) {
+	for(var i = 0, limit = e.options.length; i < limit - 1; i++){
+		e.remove(1);
+	}
+}
+
+/* function categorySel() {
+	// 카테고리 선택이 바뀌면 그 값을 가져온다
+	var num = document.getElementById("category");
+	valNum = num.options[num.selectedIndex].value;
+//	alert(valNum);
+
+	switch(valNum){
+	case '0': $("#_theme0").show(); $("#_theme1").hide(); $("#_theme2").hide(); break;			  
+	case '1': $("#_theme0").hide(); $("#_theme1").show(); $("#_theme2").hide(); break;
+	case '2': $("#_theme0").hide(); $("#_theme1").hide(); $("#_theme2").show(); break;
+	default : break;
+	}			
+}
+
+ function theme() {
+	var theme = document.getElementsByName("theme");
+	var themeName = theme.options[theme.selectedIndex].value;
+	alert(themeName);		
+			
+}  */
+
 
 // 업로드 이미지 미리보기
 var upload = document.getElementById("fileload"),

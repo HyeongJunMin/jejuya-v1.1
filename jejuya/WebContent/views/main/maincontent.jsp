@@ -44,13 +44,13 @@
 								<!-- 받아온 DB정보에서 seq번호로 디테일화면으로 넘어가기 -->
 								<a href="/jejuya/SightsController?command=detailBasic&title=<%=dto.getTitle() %> ">
 									<img height="130px" width="100%" alt="dto.getFilename()"
-									class="img-fluid" src="<%=dto.getFilename() %>">
+									class="img-fluid" src="/jejuya/upload/<%=dto.getFilename() %>">
 								</a>	
 								<table class="itemDescriptionTbl">
 									<tr><td><a class="mainItemReadcnt">조회수: <%=dto.getReadcount() %> </a></td></tr>
 									<tr><td><a class="mainItemAddsche">리뷰등록수: <%=dto.getAddSchedule() %> </a></td></tr>
 									<tr><td><a class="mainItemTheme">테마: <%=dto.getTheme() %> </a></td></tr>
-									<tr><td><a class="mainItemCont">정보: <%=dto.getContent() + "..." %></a>	</td></tr>
+									<tr><td><a class="mainItemCont"></a>	</td></tr>
 								</table>				
 																
 							</dt>
@@ -76,13 +76,13 @@
 										<!-- 받아온 DB정보에서 seq번호로 디테일화면으로 넘어가기 -->
 										<a href="/jejuya/SightsController?command=detailBasic&title=<%=dto.getTitle() %> ">
 											<img height="130px" width="100%" alt="dto.getFilename()"
-											class="img-fluid" src="<%=dto.getFilename() %>">
+											class="img-fluid" src="/jejuya/upload/<%=dto.getFilename() %>">
 										</a>					
 										<table class="itemDescriptionTbl">
 											<tr><td><a class="mainItemReadcnt">조회수: <%=dto.getReadcount() %> </a></td></tr>
 											<tr><td><a class="mainItemAddsche">리뷰등록수: <%=dto.getAddSchedule() %> </a></td></tr>
 											<tr><td><a class="mainItemTheme">테마: <%=dto.getTheme() %> </a></td></tr>
-											<tr><td><a class="mainItemCont">정보: <%=dto.getContent() + "..." %></a>	</td></tr>
+											<tr><td><a class="mainItemCont"></a>	</td></tr>
 										</table>							
 									</dt>
 								</dl>

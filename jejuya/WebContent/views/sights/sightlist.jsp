@@ -1,3 +1,4 @@
+<%@page import="java.util.HashMap"%>
 <%@page import="java.util.List"%>
 <%@page import="com.sights.dto.SightsDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -23,7 +24,7 @@
 	String currTheme = "all";
 	if( request.getParameter("theme") != null ){
 		currTheme = request.getParameter("theme");
-	}
+	} 
 	
 	int pageNum = 1;
 	if( request.getParameter("pageNum") != null ){
@@ -35,16 +36,20 @@
 		sortsel = request.getParameter("_sort_sel");
 	}
 	
-	
+	String searchStr = "all";
+	if ( request.getParameter("searchStr") != null){
+		searchStr = request.getParameter("searchStr");
+	}
 		
+	HashMap reviewcount = (HashMap)request.getAttribute("reviewcount");
 %>
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<!-- global conf include -->
+<title>SightsList</title>
+
 <jsp:include page="/views/templates/staticresources.jsp"></jsp:include>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -104,6 +109,7 @@
 %>
 </div>
 
+<hr>
 
 <!-- 테마텝: 테마이름을 활용해서 리스트를 보여줌 -->
 <div class="recommend_tour">
@@ -111,32 +117,52 @@
 	<input type="hidden" value="<%=currTheme %>" id="selectedThemeInRecommend_tour">
 	<input type="hidden" value="<%=pageNum %>" id="pageNum">
 	<input type="hidden" value="<%=sortsel %>" id="sortsel"> 
+	<input type="hidden" value="<%=searchStr %>" id="searchStr">
 	<ul class="theme_list">
 	
-		<li style="height: 126px; width: 200px;">
-		<a href="/jejuya/SightsListController?command=sortByConditionInSightlist&category=<%=categorydto.getCategory() %>">전체</a></li>
-		<!-- <li>
-		<a href="/jejuya/SightsListController?command=theme&theme=nature">자연</a>
-		</li> -->
-		
- 		<%
-		for(int i=0; i < themeList.size(); i++){
+	
+		<%	// 테마를 선택 안하고 전체일경우
+		if(currTheme.equals("all")){
 		%>
-			<li>
-			<a href="/jejuya/SightsListController?command=sortByConditionInSightlist&category=<%=categorydto.getCategory() %>&theme=<%=themeList.get(i) %>">
-			<%=themeList.get(i) %>
-			</a>
+		<li style="height: 146px; width: 200px; background-color: #ef6d00;">
+		<a href="/jejuya/SightsListController?command=sortByConditionInSightlist
+				&category=<%=categorydto.getCategory() %>">전체</a></li>
+		
+		<%
+		}else {
+		%>
+			<li style="height: 146px; width: 200px; ">
+		<a href="/jejuya/SightsListController?command=sortByConditionInSightlist
+				&category=<%=categorydto.getCategory() %>">전체</a></li>
+		<%
+		}
+		%>
+			
+				
+ 		<% // 카테고리별 테마들을 뿌려준다. 
+		for(int i=0; i < themeList.size(); i++){
+			if(themeList.get(i).equals(currTheme)){
+		%>
+			<li style="background-color: #ef6d00;">
+			<a href="/jejuya/SightsListController?command=sortByConditionInSightlist
+			&category=<%=categorydto.getCategory() %>
+			&theme=<%=themeList.get(i) %>"><%=themeList.get(i) %></a>
 			</li>
 		<%
+			}else {
+		%>
+			<li>
+			<a href="/jejuya/SightsListController?command=sortByConditionInSightlist
+			&category=<%=categorydto.getCategory() %>
+			&theme=<%=themeList.get(i) %>"><%=themeList.get(i) %></a>
+			</li>
+		<%
+			}
 		} 
 		%> 
 		
-		
-	
-		
-		
-		<%
-		for(int i = 0; i < 9-themeList.size(); i++){
+		<% // 칸 맞추기 위한 빈칸 리스트 
+		for(int i = 0; i < 6-themeList.size(); i++){
 		%>
 			<li></li>
 		<%
@@ -145,6 +171,8 @@
 		
 	</ul>
 </div>
+
+<hr>
 
 <!-- 카테고리값과 조회 or 일정등록 정보로 리스트로 보여줌  -->
 <div class="util_area">
@@ -162,15 +190,21 @@
 	<p style="font-weight: 700; font-size: 30px;"><%=category1 %></p>
 </div>
 <div id="select_type">
-
+	<span class="search_window">
+		<input type="text" class="search_text" id="_search_text">
+	</span>
+	<button type="button" class="search_btn" id="_search_btn">검색</button>
+	
 	<select id="_sort_sel" class="sort_sel">
 		<%-- <option value="<%=categorydto.getCategory() %>" id="_all_sel">전체보기</option> --%>
-		<option value="all" id="_all_sel">전체보기</option>
+		<option value="all" id="_all_sel">정렬선택</option>
 		<option value="addschedule">일정많은순</option>
 		<option value="readcount">조회순</option>
+		<option value="starcount">별점순</option>
 	</select>
 </div>
 </div>
+
 
 <div class="listcls">
 	<%
@@ -191,12 +225,22 @@
 					} else if (dto.getCategory() == 2) {
 						category = "숙소";
 					}
+			
+			
+			String serverPath = request.getContextPath();
+			
+			//이미지 주소로 받을때랑 서버에서 받을때 두가지
+			String filename = (dto.getFilename().trim().substring(0,4).equals("http")
+									?dto.getFilename():serverPath + "/upload/" + dto.getFilename());
+			System.out.println("filename: " + filename);
+			
 			%>
 			<span class="s_day"><%=category%></span> 
+			
 			<!-- 받아온 DB정보에서 seq번호로 디테일화면으로 넘어가기 -->
 			<a href="/jejuya/SightsController?command=detailBasic&title=<%=dto.getTitle() %>">
-				<img height="200px" width="100%" alt="<%=dto.getFilename()%>"
-				class="item_img" src="<%=dto.getFilename()%>">
+				<img height="210px" width="100%" alt="<%=filename%>"
+				class="item_img" src="<%=filename%>">
 				
 				<div class="starcount">
 					<%
@@ -205,7 +249,8 @@
 					%>
 					<p class="starcount2" >
 						<% if(star == 5){
-							%><font style='color:gold'>★★★★★</font><% 
+							%><font style='color:gold'>★★★★★</font>
+							<% 
 						}
 						else if(star == 4){
 							%><font style='color:gold'>★★★★☆</font>
@@ -227,21 +272,53 @@
 							  
 							<%
 						}else if(star == 0 ){
-							%><font style='color:gold'>☆☆☆☆☆</font><%
+							%><font style='color:gold'>☆☆☆☆☆</font>
+							<%
 						}%>
 					</p>
 				</div>
 				</a>
 			
 			
-			<p class="s_tit"><%=dto.getTitle()%></p>
-			<p class="s_theme">테마:<%=dto.getTheme()%></p>
-			<p class="s_readcount">조회수:<%=dto.getReadcount() %></p>
-			<p class="s_addSchedule">리뷰등록수:<%=dto.getAddSchedule() %></p>
+		<p class="s_tit" style="font-size: 21px;"><%=dto.getTitle()%></p>
+
 			
+		<dt style=" color: #ef6d00; font-size: 18px;" >
+		<%
+		if(dto.getCategory() == 0){
+		%>
+			<i class="fa fa-map-signs " style="padding-bottom: 10px;" ></i>
+		<%
+		}else if(dto.getCategory() == 1){
+		%>	
+			<i class="fa fa-coffee " style="padding-bottom: 10px;" ></i>
 			
-			
+		<%	
+		}else if(dto.getCategory() == 2){
+		%>	
+			<i class="fa fa-home " style="padding-bottom: 10px;"></i>
+		<%	
+		}
+		%>
+		
+		테마 :<%=dto.getTheme()%>
+		
 		</dt>
+		<dt style="float: left; width: 33%; padding: 25px 0 0 0; color: #a7a7a7; font-size: 15px;" >
+		<i class="fa fa-camera-retro " style="padding-bottom: 10px;"></i><br>
+		리뷰 :<%=reviewcount.get(dto.getTitle())  %><br>
+		</dt>
+		
+		<dt style="float: left; width: 33%; padding: 25px 0 0 0; color: #a7a7a7; font-size: 15px;" >
+		<i class="fa fa-user-plus " style="padding-bottom: 10px;"></i><br>
+		일정등록수 :<%=dto.getAddSchedule() %><br>
+		</dt>
+		
+		<dt style="float: left; width: 33%; padding: 25px 0 0 0; color: #a7a7a7; font-size: 15px;" >
+		<i class="fa fa-eye " style="padding-bottom: 10px;"></i><br>
+		조회수 : <%=dto.getReadcount() %>
+		</dt>
+		
 	</dl>
 </div>		
 	
@@ -273,7 +350,7 @@ int listpage = pagecount / 6;
 
 	<a class="gopage" href="/jejuya/SightsListController?command=sortByConditionInSightlist
 			&category=<%=categorydto.getCategory() %>&theme=<%=currTheme %>
-			&_sort_sel=<%=sortsel %>&pageNum=<%=i %>"><%=i %></a>
+			&_sort_sel=<%=sortsel %>&pageNum=<%=i %>&searchStr=<%=searchStr %>"><%=i %></a>
 <%
 	}
 }
@@ -294,47 +371,44 @@ $(function () {
 	var currCategory = $("#selectedCategoryInRecommend_tour").val();
 	var firstsel = $("#_all_sel").val();
 	var pageNum = $("#pageNum").val();
-	var currTheme = $("selectedThemeInRecommend_tour").val();
+	var currTheme = $("#selectedThemeInRecommend_tour").val();
 	var sortsel = $("#sortsel").val();
+	var searchStr = $("#searchStr").val();
 	
+	// 정렬기준 변경시 실행
 	$("#_sort_sel").change(function () {
 		var a = $("#_sort_sel option:selected").val();
 	
 		var seltext = $("#_sort_sel option:selected").text();
 	
 		var currTheme = $("#selectedThemeInRecommend_tour").val();
-		//var sortCondition = $("#")
 		
-		/* 
-		 if(seltext == "전체보기"){
-			location.href = "/jejuya/SightsListController?command=category&category=" + firstsel + "&theme=all";
-		}else if(seltext == "일정많은순"){
-			alert("일정많은순");
-			location.href = "/jejuya/SightsListController?command=addSchedule&category=" + firstsel + "&theme=";
-		}else if(seltext == "조회순"){
-			alert("조회순");			
-			location.href = "/jejuya/SightsListController?command=readcount&category=" + firstsel + "&theme=";
-		} 
-		 */
 
 		//컨트롤러로 설정값을 보냅니다. category(관.음.숙) theme(all, food, cafe) sort_sel(전체, 일정등록순, 조회순)
 		location.href = "/jejuya/SightsListController?command=sortByConditionInSightlist"
 					+ "&category=" + currCategory + "&theme=" + currTheme 
-					+ "&_sort_sel=" + a + "&pageNum=" + pageNum;
-	
-		/*
-		if(seltext == "전체보기"){
-		
-		}else if(seltext == "일정많은순"){
-		alert("일정많은순");
-		location.href = "/jejuya/SightsListController?command=sortByConditionInSightlist&category=" + firstsel + "&theme=" + currTheme;
-		}else if(seltext == "조회순"){
-		alert("조회순");			
-		location.href = "/jejuya/SightsListController?command=sortByConditionInSightlist&category=" + firstsel + "&theme=" + currTheme;
-		} 
-		 */
+					+ "&_sort_sel=" + a + "&pageNum=" + pageNum + "&searchStr=" + searchStr;
 		});
 	
+	// 검색 버튼 누를시 실행 
+	$("#_search_btn").click(function () {
+		var searchText = $("#_search_text").val();
+
+		location.href = "/jejuya/SightsListController?command=sortByConditionInSightlist"
+					+ "&category=" + currCategory + "&theme=" + currTheme 
+					+ "&_sort_sel=" + sortsel  + "&searchStr=" + searchText; 
+	});
+	
+	// 검색창에 엔터키 눌렀을때
+	$("#_search_text").keypress(function (e) {
+		if(e.which == 13){
+			var searchText = $("#_search_text").val();
+
+			location.href = "/jejuya/SightsListController?command=sortByConditionInSightlist"
+						+ "&category=" + currCategory + "&theme=" + currTheme 
+						+ "&_sort_sel=" + sortsel  + "&searchStr=" + searchText; 
+		}
+	});
 
 	
 

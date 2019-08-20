@@ -78,8 +78,9 @@ public class SightsDetailController extends HttpServlet {
 			
 			req.setAttribute("dto", dto);
 			req.setAttribute("count", count);
-						
+												
 			req.getRequestDispatcher("/views/sights/detailBasic.jsp").forward(req, resp);
+			//resp.sendRedirect( "/views/sights/detailBasic.jsp"); 
 			return;
 		}
 		
@@ -93,6 +94,7 @@ public class SightsDetailController extends HttpServlet {
 			
 			req.setAttribute("dto", dto);
 			req.getRequestDispatcher("/views/sights/detailContent.jsp").forward(req, resp);
+			return;
 		}
 		
 		else if(command.equals("reviewList")) {
@@ -111,13 +113,12 @@ public class SightsDetailController extends HttpServlet {
 				scoreSorting = req.getParameter("sorting");		
 			}
 			
-			System.out.println("reviewListContr scoreSorting: " + scoreSorting);
+//			System.out.println("reviewListContr scoreSorting: " + scoreSorting);
 			
 			int nowpage = 1;
 			
 			if(req.getParameter("page") != null){
-				nowpage = Integer.parseInt(req.getParameter("page"));
-				System.out.println("nowpage=" + nowpage);
+				nowpage = Integer.parseInt(req.getParameter("page"));				
 			}
 
 			Paging paging = new Paging();
@@ -144,14 +145,15 @@ public class SightsDetailController extends HttpServlet {
 		else if(command.equals("delReview")) {
 			System.out.println("delReview");
 			
-			String title = req.getAttribute("title") + "";			
+			String title = req.getAttribute("title") + "";	
+			
 			int seq = Integer.parseInt(req.getParameter("seq"));
 			System.out.println("seq=" + seq);
 			
 			boolean b = service.reviewDel(seq);	
 									
 			req.getRequestDispatcher("SightsController?command=reviewList").forward(req, resp);
-//			resp.sendRedirect("./views/sights/detailReview.jsp");	
+//			resp.sendRedirect("SightsController?command=reviewList");	
 		}
 		
 	}
@@ -177,7 +179,6 @@ public class SightsDetailController extends HttpServlet {
 			String theme = "";
 
 			String roadAddress = "";
-			String detailAddress = "";
 
 			String phone = "";
 			String homepage = "";
@@ -216,8 +217,6 @@ public class SightsDetailController extends HttpServlet {
 								theme = item.getString("utf-8");
 							} else if (item.getFieldName().equals("roadAddress")) {
 								roadAddress = item.getString("utf-8");
-							} else if (item.getFieldName().equals("detailAddress")) {
-								detailAddress = item.getString("utf-8");
 							} else if (item.getFieldName().equals("phone")) {
 								phone = item.getString("utf-8");
 							} else if (item.getFieldName().equals("homepage")) {
@@ -227,7 +226,8 @@ public class SightsDetailController extends HttpServlet {
 							}
 
 //							System.out.println("title:" + title);
-//							System.out.println(theme);
+//							System.out.println("category:" + category);
+//							System.out.println("theme= " + theme);
 //							System.out.println(roadAddress + detailAddress);
 //							System.out.println(phone);
 //							System.out.println(homepage);
@@ -247,13 +247,14 @@ public class SightsDetailController extends HttpServlet {
 			} else {
 				System.out.println("multipart 아님");
 			}
-
+			System.out.println("category:" + category);
+			System.out.println("theme= " + theme);
 			// DB
 			System.out.println(filename);
 //			String address = roadAddress + detailAddress;
 
 			boolean b = service.addSight(
-					new SightsDto(title, 0, category, theme, filename, roadAddress, phone, homepage, content, 0, 0, 0));
+					new SightsDto(title, 0, category, theme, filename, roadAddress, phone, homepage, content, 0, 0, 0, 0));
 //			req.setAttribute("b", b);
 			
 			// 관리자 페이지로 이동해야됨!!!!
@@ -311,7 +312,7 @@ public class SightsDetailController extends HttpServlet {
 							}
 
 //							System.out.println(title);
-//							System.out.println(id);
+							System.out.println(id);
 //							System.out.println(content);
 //							System.out.println(score);
 
