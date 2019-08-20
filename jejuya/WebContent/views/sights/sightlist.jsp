@@ -1,4 +1,5 @@
 <%@page import="java.util.HashMap"%>
+<%@page import="java.util.Map"%>
 <%@page import="java.util.List"%>
 <%@page import="com.sights.dto.SightsDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -40,8 +41,9 @@
 	if ( request.getParameter("searchStr") != null){
 		searchStr = request.getParameter("searchStr");
 	}
-		
+	
 	HashMap reviewcount = (HashMap)request.getAttribute("reviewcount");
+		
 %>
 
 <!DOCTYPE html>
@@ -56,6 +58,9 @@
 
 <!-- 재덕이가 만든 CSS 파일 -->
 <link rel="stylesheet" href="/jejuya/resources/css/sights/sightlist.css"/>
+
+<!-- 재덕이가 만든 js 파일 -->
+<!-- <script type="text/javascript" src="/jejuya/resources/js/sights/sightlist.js"></script> -->
 
 </head>
 <body>
@@ -212,6 +217,7 @@
 		for (int i = 0; i < list.size(); i++) {
 			SightsDto dto = list.get(i);
 			String category = "";
+			
 	%>
 
 <div class="item_list">
@@ -238,10 +244,11 @@
 			<span class="s_day"><%=category%></span> 
 			
 			<!-- 받아온 DB정보에서 seq번호로 디테일화면으로 넘어가기 -->
+			<div class="imgsightlistcls">
 			<a href="/jejuya/SightsController?command=detailBasic&title=<%=dto.getTitle() %>">
-				<img height="210px" width="100%" alt="<%=filename%>"
+				<img height="100%" width="100%" alt="<%=filename%>"
 				class="item_img" src="<%=filename%>">
-				
+			</div>
 				<div class="starcount">
 					<%
 						double star = Math.round( (dto.getScore()*10) )/10;
@@ -306,7 +313,8 @@
 		</dt>
 		<dt style="float: left; width: 33%; padding: 25px 0 0 0; color: #a7a7a7; font-size: 15px;" >
 		<i class="fa fa-camera-retro " style="padding-bottom: 10px;"></i><br>
-		리뷰 :<%=reviewcount.get(dto.getTitle())  %><br>
+		 리뷰 :<%=reviewcount.get(dto.getTitle())  %><br> 
+		<!-- 리뷰 :<a class="item_reviewCount"></a><br> -->
 		</dt>
 		
 		<dt style="float: left; width: 33%; padding: 25px 0 0 0; color: #a7a7a7; font-size: 15px;" >
