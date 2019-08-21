@@ -115,48 +115,42 @@ for( i = 1 ; i <= days ; i++){
 		$(".timelinetable").append(
 				"<tr class="+day+"><th>" + time + ":00"
 						+ "</th>" + "<td id="+day+":"+time+":00></td></tr>");
-	
+		console.log('append done');
 		$("." + day).hide();
-		
-		//day가 schedate[ppp]와 일치하고, time이 listtime[ppp]와 일치하면 체크박스추가, ppp+ 
-		if( ( day === schedate[ppp] ) && ( time === listtime[ppp] ) ){
-			var eleId = day+":"+time+":00";
-			
-			//console.log('포인터 : ' + ppp + ',  eleId : ' + eleId);
-			
-			var td = document.getElementById(day+":"+time+":00");
-			var checkbox = document.createElement("input");
-			
-			//checkbox.type="checkbox";
-            //checkbox.id="del[]";
-			//checkbox.name="del[]";
-			//checkbox.value=day+":"+time+":00";
-			checkbox.setAttribute('type', 'checkbox');
-			checkbox.setAttribute('class', 'timelinechkbox');
-			checkbox.setAttribute('name', 'chkBoxDel');
-			checkbox.setAttribute( 'value', (day + ':' + time + ':00') );
-			
-			//td에 관광지 타이틀 추가
-			document.getElementById( eleId ).append( dest[ppp] );
-			
-			//td에 체크박스 추가
-			document.getElementById( eleId ).append( checkbox );
-			
-			checkbox.onclick=function(){
-			    text=document.createTextNode("");
-			    var id=$(this).val();
-			    //alert(id);
-			    var result = confirm('일정을 삭제하시겠습니까?');
-			    if( result ){
-			    	document.getElementById(id).innerHTML="";	
-			    }			      
-			    //alert( document.getElementById('01:08:00').innerHTML.split('>')[1] );
-			}
-			//다음 순서를 가리키도록 ++
-			ppp++;
-		}
 	}
 }
+
+//controller에서 가져온 관광지, schedate, listtime을 timeline에 추가 
+for( i = 0 ; i < listsize ; i++ ){
+	
+	var eleId = schedate[i] + ":" + listtime[i] + ":00";
+	
+	//console.log('포인터 : ' + ppp + ',  eleId : ' + eleId);	
+	var td = document.getElementById(day+":"+time+":00");
+	var checkbox = document.createElement("input");
+
+	checkbox.setAttribute('type', 'checkbox');
+	checkbox.setAttribute('class', 'timelinechkbox');
+	checkbox.setAttribute('name', 'chkBoxDel');
+	checkbox.setAttribute( 'value', (schedate[i] + ':' + listtime[i] + ':00') );
+	
+	//td에 관광지 타이틀 추가
+	document.getElementById( eleId ).append( dest[i] );
+	
+	//td에 체크박스 추가
+	document.getElementById( eleId ).append( checkbox );
+	
+	checkbox.onclick=function(){
+	    text=document.createTextNode("");
+	    var id=$(this).val();
+	    //alert(id);
+	    var result = confirm('일정을 삭제하시겠습니까?');
+	    if( result ){
+	    	document.getElementById(id).innerHTML="";	
+	    }			      
+	}
+}
+	
 //1일차 show
 $(".01").show();
 //checkbox show

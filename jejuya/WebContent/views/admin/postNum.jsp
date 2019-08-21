@@ -31,7 +31,7 @@
 <input type="button" class="btn_post" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
 <input type="text" id="sample4_roadAddress" name="roadAddress" placeholder="도로명주소" style="width: 20em; height: 2em;" >
 <!-- <input type="text" id="sample4_jibunAddress" name="jibunAddress" placeholder="지번주소"> -->
-<span id="guide" style="color:#999;display:none"></span>
+<!-- <span id="guide" style="color:#999;display:none"></span> -->
 <input type="text" id="sample4_detailAddress" name="detailAddress" placeholder="상세주소" style="width: 12em; height: 2em;">
 <!-- <input type="text" id="sample4_extraAddress" name="extraAddress" placeholder="참고항목"> -->
 
@@ -75,7 +75,7 @@
                     document.getElementById("sample4_extraAddress").value = '';
                 } */
 
-                var guideTextBox = document.getElementById("guide");
+     /*            var guideTextBox = document.getElementById("guide");
                 // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
                 if(data.autoRoadAddress) {
                     var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
@@ -89,7 +89,7 @@
                 } else {
                     guideTextBox.innerHTML = '';
                     guideTextBox.style.display = 'none';
-                }
+                } */
             }
         }).open();
     }

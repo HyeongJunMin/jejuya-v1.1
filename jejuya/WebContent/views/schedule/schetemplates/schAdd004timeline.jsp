@@ -77,6 +77,7 @@ $("#addtrip").click(function () {
 	//alert("len:"+len);
 
 	var td="";
+	var timetitle="";
 	for(i=0; i < len ; i++){
 		
 		//모든 td를 한 번씩 선택해줘야함
@@ -89,10 +90,11 @@ $("#addtrip").click(function () {
 			//01:05:우도_01:07:일출봉_02:12:함덕해수욕장_01:12:함덕해수욕장_01:12:함덕해수욕장_01:12:함덕해수욕장_
 			//언더바(_)로 먼저 자르고 콜롱(:)으로 자르면 DB에 바로 저장 가능 schedate, stime, dest
 			//01:07:한라산_01:14:월정리해변_
+			
+			timetitle += $(".timelinetable td").eq(i).text() + "_";
+			// 타이틀값만 받아오기 위해서 -> 한라산_월정리해변_
 		}
 	}
-	
-	
 	//여행 총 일정에 대한 정보 submit -> controller와 ajax통신을 통해서 리턴이 true면 timeline submit
 	//ajax 통신을 이용하지 않는다면 timeline_box폼의 데이터가 날아감.
 	//$("#frm").submit();
@@ -118,7 +120,7 @@ $("#addtrip").click(function () {
 				$.ajax({
 					url:"/jejuya/ScheduleController?command=addtimelinebox",
 					type: "get",
-					data:{"timelinebox":timelinebox,"returnofcontroller":returnofcontroller,"totaldata":totaldata},
+					data:{"timelinebox":timelinebox,"returnofcontroller":returnofcontroller,"totaldata":totaldata,"timetitle":timetitle},
 			         success:function(dataInner,statusInner,xhrInner){	    	
 				    	
 				    	//alert("통신성공");
@@ -153,13 +155,6 @@ $("#addtrip").click(function () {
     $("#memberselec").attr("disabled",'true');
     $("#firstday").datepicker('option','disabled',true);
     $("#lastday").datepicker('option','disabled',true);
-	
-	
-	
-	
-	
-	
-	
 });
 
 
@@ -222,12 +217,9 @@ function addtrip(e) {
 								"<tr class="+day+"><th>" + time + ":00"
 										+ "</th>" + "<td id="+day+":"+time+":00></td></tr>");
 						$("." + day).hide();//모두 일단 숨김
-					}
-					
-					
+					}					
 					$(".01").show();
-					//day1빼고 모두 숨김
-					
+					//day1빼고 모두 숨김					
 				}
 		}
 

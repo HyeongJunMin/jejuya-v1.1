@@ -25,4 +25,5 @@ public interface ScheduleService {
 	public boolean deltrip(int seq);
 	public boolean delDetailtrip(int seq) ;
 	public List<ScheduleDto> getsearchSchedulelist(String title);
+	public void addSchedule(String addtitle);
 }

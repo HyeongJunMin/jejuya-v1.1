@@ -189,7 +189,9 @@ public class SightsDetailDaoImpl implements SightsDetailDao, Serializable {
 	public int reviewAllCount(String title) {
 		
 		String sql = " SELECT COUNT(*) AS COUNT FROM SIGHT_REVIEW "
-				+ " WHERE TITLE=? ";
+				+ " WHERE TITLE=? "
+				+ " GROUP BY TITLE ";
+				
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;

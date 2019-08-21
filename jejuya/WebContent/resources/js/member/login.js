@@ -15,7 +15,7 @@ $(function(){
 		if( $("#_rememberIdChk").is(":checked") ){
 			//체크이벤트 발생 시 7일 동안 쿠키 보관
 			setCookie("key", $("#inputIdInSignin").val(), 7);
-			alert('chk!');
+			//alert('chk!');
 		}else{
 			//체크해제 이벤트 발생 시 쿠키 삭제
 			deleteCookie("key");

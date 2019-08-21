@@ -64,10 +64,22 @@ public class MemberController extends HttpServlet{
 				if( req.getSession().getAttribute("currUser") != null){
 					req.getSession().removeAttribute("currUser");
 				}
+
+				//0821추가, 로그아웃 시 이전 작업했던 경로로
+				String uri = "/main";
+				if( req.getSession().getAttribute("latestURI") != null ) {
+					uri = "http://192.168.0.6:8090" + req.getSession().getAttribute("latestURI") + "";
+					//System.out.println("[MemberController]latestURI : " + uri);
+				}
 				
 				//String prevUrl = req.getParameter("currUrl");
 				//req.getRequestDispatcher(prevUrl).forward(req, resp);
-				req.getRequestDispatcher("/main").forward(req, resp);
+				//req.getRequestDispatcher("/main").forward(req, resp);
+				
+				//0821추가, 로그아웃 시 이전 작업했던 경로로
+				//req.getRequestDispatcher(uri).forward(req, resp);
+				resp.sendRedirect(uri);
+				return;
 			}
 		}
 	}
@@ -294,14 +306,22 @@ public class MemberController extends HttpServlet{
 				if( req.getSession().getAttribute("currUser") != null){
 					req.getSession().removeAttribute("currUser");
 				}
-				
-				req.getRequestDispatcher("/jejuya/member").forward(req, resp);
+
+				//0821추가, 로그아웃 시 이전 작업했던 경로로
+				String uri = "/main";
+				if( req.getSession().getAttribute("latestURI") != null ) {
+					uri = "http://192.168.0.6:8090" + req.getSession().getAttribute("latestURI") + "";
+					//System.out.println("[MemberController]latestURI : " + uri);
+				}
 				
 				//String prevUrl = req.getParameter("currUrl");
-				//System.out.println("다음 url로 이동합니다 : " + prevUrl);
 				//req.getRequestDispatcher(prevUrl).forward(req, resp);
-				//resp.sendRedirect(prevUrl);
-				//return;
+				//req.getRequestDispatcher("/main").forward(req, resp);
+				
+				//0821추가, 로그아웃 시 이전 작업했던 경로로
+				//req.getRequestDispatcher(uri).forward(req, resp);
+				resp.sendRedirect(uri);
+				return;
 			}
 		}
 	}

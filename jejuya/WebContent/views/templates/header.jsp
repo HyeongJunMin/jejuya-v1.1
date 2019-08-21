@@ -1,3 +1,4 @@
+<%@page import="java.util.Enumeration"%>
 <%@page import="com.member.dto.MemberDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -16,7 +17,26 @@
 		loginIdentifierInHeader = "로그아웃";
 		accountLinkUrl = "member?command=dologout";
 	}
+	request.setCharacterEncoding("UTF-8");
+
+	String contextPath = request.getAttribute("javax.servlet.forward.context_path") + "";
+	String servletPath = request.getAttribute("javax.servlet.forward.servlet_path") + "";
+	String uniCode = java.net.URLDecoder.decode( (request.getAttribute("javax.servlet.forward.query_string") + "" ) );
+	//System.out.println("최종 URL : " + contextPath + servletPath + uniCode );
+	String latestURI = contextPath + servletPath + "?" + uniCode;
+	request.getSession().setAttribute("latestURI", latestURI);
+	/* 
+	System.out.println("Servlet path : [" + request.getAttribute("javax.servlet.forward.request_uri") + "] !!!!!!!!!!!");
+	Enumeration enum_req = request.getAttributeNames();
+	System.out.print("enum : ");
+	while(enum_req.hasMoreElements() ){
+		String attr = enum_req.nextElement() + "";
+		System.out.print( " [" + attr + ":" + request.getAttribute(attr) + "]");
+	}
+	System.out.println(); 
+	*/
 %>
+
 <script type="text/javascript" src="/jejuya/resources/js/templates/header.js"></script>
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">

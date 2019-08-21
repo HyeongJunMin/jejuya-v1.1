@@ -85,28 +85,36 @@
 	}
 %>
 	<div class="total">
-		<div class="profile_wrap clear">
-			<div class="photo_zone">
+		
+		<div class="photo_zone">
+			<input type="hidden" id="city" value="Jeju, KR"></input>
+			<img id="weatherImg"></img>
+			<div id="showWeatherForcast">
 			</div>
+		</div>
+			
+		<div class="profile_wrap clear">	
+			<div class="weather_zone"></div>
 			<div class="name_zone">
 				<span class="user_name"><b><%=currMem.getName() %></b></span>
 				<span class="text_tit">님의 제주여행</span>
 			</div>
+		</div>
 		
-			</div>
+
 		<div>
 			<div class="wrap_tit_zone">
 				<p class="wrap_tit">
 					&nbsp;&nbsp;나의 여행일정 (<%=list.size()%>)
 				</p>
 			</div>
-			<div class="util_area">
+			<!-- <div class="util_area">
 				<b>최신순/</b>
 				<b>오래된순/</b>
 				><b>여행전/</b>
 				<b>여행완료</b>
 
-			</div>
+			</div> -->
 			<div class="util_area2">
 				<div class="order_type">
 					<select id="searchselecttitle">
@@ -153,7 +161,7 @@
 			}
 
 			System.out.println("pagedto" + pagedto.toString());
-			for (int i = pagedto.getStartnum(); i <= lastnum; i++) {
+			for (int i = pagedto.getStartnum() ; i <= lastnum; i++) {
 				ScheduleDto dto = list.get(i - 1);
 		%>
 		<div class="mylist">
@@ -162,8 +170,7 @@
 				
 				</dd>
 			</dl>
-			<a
-				href="/jejuya/ScheduleController?command=detail&seq=<%=dto.getSeq()%>">
+			<a href="/jejuya/ScheduleController?command=detail&seq=<%=dto.getSeq()%>">
 				<table id="addtablelist">
 					<col width="70">
 					<col width="100">
@@ -208,7 +215,67 @@
 
 	<jsp:include page="/views/templates//footer.jsp"></jsp:include>
 	<script type="text/javascript">
+	$(document).ready(function(){
+        var img=document.getElementById('weatherImg');
+		var atmos;
+
+		var city = $("#city").val();//입력한 도시정보 가져오는듯 - 단일 모드
+
+		var key = 'b525af562a68cd4a32cdb6fa717b05e4'; 
+
+		$.ajax({/* ajax는 새로고침할 필요없이 버튼을 클릭하면 자동으로 새로 기능이 수행하게끔 해준다. */
+
+		url: 'http://api.openweathermap.org/data/2.5/weather?lang={lkr}',//이미지
+
+		dataType: 'json',
+
+		type: 'GET',
+
+		data: {q:city, appid:key, units:'metric'},//도시 API키 단위법:섭씨, 키, 기간
+
+		success: function(data){//출력부
+
+		var wf = '';
+
+		var atmos = "";
+
+		$.each(data.weather, function(index, val){
+
+			atmos = val.main;//날씨를 변수로 지정
+			
+			
+			if(atmos == "Clear"){
+				atmos="맑음"
+				img.src ="/jejuya/resources/image/main/sun.png";
+
+				}else if(atmos == "Rain"){
+					atmos="비"
+				    img.src  ="/jejuya/resources/image/main/rain.png";
+				
+				}else if(atmos == "Clouds"){
+					atmos="구름많음"
+					img.src  ="/jejuya/resources/image/main/sun.png";
+
+				}	
+			
+			
+		wf += '<p><b>' +'제주도'+ ":"+
+
+		data.main.temp + '°C ' + ' | ' + atmos ;
+
 		
+
+
+
+		});//선택한 요소의 속성src의 이미지 값을 weatherImg에 줌
+
+		$("#showWeatherForcast").html(wf);
+
+		}
+
+		});
+
+		});
 
 	
 

@@ -221,4 +221,12 @@ $(function(){
 	//여객선, 도항
 	$(".trafficIcons").children().eq(trafficIndex++).children().eq(0).prop('href','https://www.visitjeju.net/kr/tourInfo/traffic?tap=two&menuId=DOM_000002000000000032#');
 
+	//공지테이블 2열 좌측정렬
+	var noticeTblLen = $("#mainNoticeTbl").children().eq(0).children().length;
+	//alert('notice len : ' + noticeTblLen);
+	for( i = 1 ; i < noticeTblLen - 1 ; i++ ){
+		//$("#mainNoticeTbl").children().eq(0).children().eq(i).children().eq(1).attr('style','text-align:left; padding-left: 150px;');
+	}
+	//$(".mainNoticeTblRow").children().eq(1).attr('style','text-align:left; padding-left: 50px;');
+	//$(".mainNoticeTblRow").children().eq(1).text('style');
 });

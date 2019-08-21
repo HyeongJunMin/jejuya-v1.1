@@ -146,12 +146,17 @@ public class ScheduleController extends HttpServlet{
 			int parentseq=Integer.parseInt(req.getParameter("returnofcontroller"));
 			System.out.println("addtimelinebox");
 			System.out.println("부모시퀀스"+parentseq);
-			
-			
+						
 			//타임라인일정
 			String totaldata=req.getParameter("totaldata");
 			System.out.println("totaldata "+totaldata );
 			
+			//가져온 title를 가져와서 스케쥴를 카운트 해준다.
+			String timetitle = req.getParameter("timetitle");
+			String arr[] = timetitle.split("_");
+			for(String addtitle : arr) {
+				service.addSchedule(addtitle);
+			}
 			
 			//타임라인 일정을 _로 자르기
 			String data[]=totaldata.split("_");

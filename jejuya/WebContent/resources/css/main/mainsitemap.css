@@ -266,9 +266,9 @@ ul.nav a.active {
 /* 첫 번째 탭 레이아웃 설정 끝 */
 
 /* 두 번째 탭 공지사항 테이블 레이아웃 및 디자인 설정 */
+/* 2열 좌측정렬내용은 자바스크립트파일 mainsitemap.js에 작성 */
 #mainNoticeTbl{
 	text-align:center;
-
 }
 
 .mainNoticeTblRow{

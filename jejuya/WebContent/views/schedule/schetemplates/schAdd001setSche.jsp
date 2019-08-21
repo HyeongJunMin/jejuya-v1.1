@@ -89,9 +89,9 @@
 			<!-- 	<button type="button" id="maketrip" >일정 만들기</button>
 				<button type="button" id="updatetrip" >일정 수정</button> -->
 			    <button type="button" class="btn btn-outline-warning" id="maketrip">일정만들기</button>
-			    <button type="button" class="btn btn-outline-warning" id="updatetrip">일정수정</button>
-			    
-			</div>
+			    <!-- <button type="button" class="btn btn-outline-warning" id="updatetrip">일정수정</button> -->
+			    <input type="hidden" value="0" id="addtripchange">		    
+			</div> 
 		</th>
 	</tr>
 </table>
@@ -139,12 +139,8 @@ $("#maketrip").click(function () {
    }else if( open  ){
 	   //수정!!!!!!!!!!!!!!!!!!!!!!!1
 	    $("#addtripchange").val('1');  
-      return true;      
+      return true;
   }
-
-
-
-    
 });
 
 

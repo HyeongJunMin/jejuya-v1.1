@@ -113,7 +113,7 @@ public pageDto page(int total, int pg) {
 //수정!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 function checkboxcheck(e){	
 	//수정!!!!!!!!!!!!!!!!!!!!!
-	var maketripcheck=document.getElementById("addtripchange").value;
+	var maketripcheck = document.getElementById("addtripchange").value;
 	if(maketripcheck==0){
 		alert("먼저 일정을 작성 해 주세요");
 		document.getElementById("addtripchange").focus();
@@ -266,7 +266,7 @@ function add() {
 		checkbox.value=checkRow;
 	
 		td.appendChild(checkbox);
-		 chk[i].checked=false;
+		chk[i].checked=false;
 		checkbox.onclick=function(){
 		    text=document.createTextNode("");
 		    td.innerHTML="";

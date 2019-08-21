@@ -60,15 +60,15 @@
 	margin-left: 580px;
 	position: absolute;
 }
-/* 수정버튼을 클릭하기 전 타임라인을 가리기 위한 부분 */
+
 #timelineDetailVeil{
-	position: absolute;
-	top: -10px;
+	background-color: rgb(0,0,0,0.4);
+	width:240px;
+	height:615px;
+	position:absolute;
+	top: 0px;
 	left: 155px;
-	width: 239px;
-	height: 627px;
-	background-color: rgba(0,0,0,0.4);
-	z-index: 100;
+	z-index: 30;
 }
 
 /* 관음숙 랭킹을 보여주는 부분 */
@@ -110,7 +110,7 @@
     width: 270px;
     height: 210px;
     margin-left: 27px;
-    background: #fff;
+    background: #fbfff1;
     -webkit-box-shadow: 3px 4px 5px 0 rgba(2,2,2,.2);
     box-shadow: 3px 4px 5px 0 rgba(2,2,2,.2);
     text-align: center
@@ -209,8 +209,8 @@ position: absolute;
 
 #pagingbtn{
 	position:absolute;
-	top:950px;
-	left:870px;
+	top:1060px;
+	left:890px;
 	margin:auto;
 	font-size:24px;
 }
@@ -284,9 +284,27 @@ d1{
     font-family: NanumSquare,Nanum Gothic,\\B098\B214\ACE0\B515,"\B9D1\C740 \ACE0\B515",Malgun Gothic,Open Sans,Dotum,\\B3CB\C6C0,arial,sans-serif;
 }
 .profile_wrap {
-    margin-top: 130px;
-    background: #f4f4f4;
-    border: 1px solid #e5e5e5;
+    margin-top: 50px;
+    background: #64a19d;
+    border: 1px solid #e9ecef;
+}
+
+.photo_zone{
+
+margin-top: 100px;	
+ background: #ffc107;
+height:50px;
+ background: #ffc107;
+ font-size:20px;
+}
+#showWeatherForcast{
+	padding:13px
+
+}
+
+#weatherImg{
+	float:left;
+	
 }
 .user_name{
 	margin:auto;

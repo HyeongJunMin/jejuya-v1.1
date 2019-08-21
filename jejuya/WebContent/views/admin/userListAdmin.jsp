@@ -29,6 +29,11 @@ div.modal-content {
   border: 1px solid #888;
   width: 80%;
 }
+select{ /* 190820 css수정 */
+	width: 7.5em;
+	padding: .55em .1em;
+    border: 1px solid #999;
+}
 
 </style>
 <link type="text/css" rel="stylesheet"
@@ -53,7 +58,7 @@ div.modal-content {
 					<td class="table_border" height="1" bgcolor="#000" colspan="5"></td>
 				</tr>
 				<tr class="th_class">
-					<th><input type="checkbox" id="dlldel" name="alldel"></th>
+					<th><input type="checkbox" id="dlldel" name="dlldel"></th>
 					<th>ID</th>
 					<th>Name</th>
 					<th>E-mail</th>
@@ -256,31 +261,12 @@ $(".close").on("click", function() {
 
 $('td.list:nth-child(3)').hide(); // td의 세번째 열 데이터를 숨김
 
-
-
-/* $("#submit_del").click(function() {
-	var checkLen = $("input:checkbox[name='delck']:checked").length;
-	
-	if(checkLen < 1){
-		alert('탈퇴시킬 회원을 선택하세요')
-		
-	} else {
-		 function deletechecks(e) {
-			var arr = document.getElementsByName("delck");
-		
-			for (i = 0; i < arr.length; i++) {
-				arr[i].checked = e;
-			}
-		}
-	}
-});
- */
- 
+//190820 멀티체크 오류 수정
 $(document).ready(function(){
     //최상단 체크박스 클릭
-    $("#alldel").click(function(){
+    $("#dlldel").click(function(){
         //클릭되었으면
-        if($("#alldel").prop("checked")){
+        if($("#dlldel").prop("checked")){
             //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 true로 정의
             $("input[name=delck]").prop("checked",true);
             //클릭이 안되있으면
@@ -290,7 +276,6 @@ $(document).ready(function(){
         }
     });
 });
-
 
 $(".submit_del").click(function() {
 	// 체크 된 체크박스의 개수
@@ -302,8 +287,6 @@ $(".submit_del").click(function() {
 		return false;
 	}
 }); 
-
- 
  
 
 </script>

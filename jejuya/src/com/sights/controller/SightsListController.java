@@ -28,6 +28,9 @@ public class SightsListController extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		//인코딩 세팅
+		req.setCharacterEncoding("UTF-8");
+		
 		
 		String command = req.getParameter("command");
 //		System.out.println(command + "왔음");
@@ -202,7 +205,8 @@ public class SightsListController extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
+		//인코딩 세팅
+		req.setCharacterEncoding("UTF-8");
 	}
 	
 	

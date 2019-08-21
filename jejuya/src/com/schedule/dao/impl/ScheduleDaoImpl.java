@@ -678,4 +678,29 @@ public List<ScheduledetailDto> getsheduleDetail(int seq) {
 		return result;
 
 	}
+	
+	/**DB에 addtitle에 해당하는 addschedule값을 ++
+	 *
+	 */
+	public void addSchedule(String addtitle) {
+		String sql = " UPDATE SIGHTS SET ADDSCHEDULE = ADDSCHEDULE+1 "
+					+ " WHERE TITLE=? ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		try {
+			
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, addtitle);
+			rs = psmt.executeQuery();
+	
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, psmt, rs);
+		}
+	}
 }

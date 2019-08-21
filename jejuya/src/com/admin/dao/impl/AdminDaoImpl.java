@@ -585,22 +585,20 @@ public class AdminDaoImpl implements AdminDao, Serializable {
 		String sqlword = "";
 		
 		if(category.equals("All") && sel.equals("TITLE")) {
-			sql += " AND TITLE LIKE ? ";
+			sql += " AND TITLE LIKE ? ) ";
 		}else {
 			if(category.equals("All")) {
-				sql += " AND TITLE LIKE ? ";
+				sql += " AND TITLE LIKE ? ) ";
 			} else if(category.equals("관광지")) {
-				sql += " AND CATEGORY LIKE ? AND TITLE LIKE ? ";
+				sql += " AND CATEGORY LIKE ? AND TITLE LIKE ? ) ";
 			} else if(category.equals("음식점")) {
-				sql += " AND CATEGORY LIKE ?  AND TITLE LIKE ? ";
+				sql += " AND CATEGORY LIKE ?  AND TITLE LIKE ? ) ";
 			} else if(category.equals("숙소")) {
-				sql += " AND CATEGORY LIKE ? AND TITLE LIKE ? ";
+				sql += " AND CATEGORY LIKE ? AND TITLE LIKE ? ) ";
 			}
 		
 		}
 
-		sql += sqlword;
-		sql += " ORDER BY ADDSCHEDULE DESC )";
 		sql += " WHERE RNUM >= ? AND RNUM <=? ";
 
 		System.out.println("getBbsListPaging sql :" + sql);

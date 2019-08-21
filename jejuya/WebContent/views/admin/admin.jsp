@@ -152,48 +152,7 @@
 				$("#" + tab_id).addClass('current');
 			});
 			
-
-			var i = 0;
-
-			$('.side_menu_sub_tabs_bbs').hide();
-			$('.side_menu_sub_tabs_user').hide();
-			/* 공지 관련 내용 */
-			$('.side_menu_sub_tabs_notice').hide();
-
-			$(".side_menu_main_bbs").click(function() { // 게시판 관리
-
-				if (i == 0) {
-					$('.side_menu_sub_tabs_bbs').show();
-					i = 1;
-				} else {
-					$('.side_menu_sub_tabs_bbs').hide();
-					i = 0;
-				}
-			});
-
-			$(".side_menu_main_user").click(function() { // 회원 관리
-
-				if (i == 0) {
-					$('.side_menu_sub_tabs_user').show();
-					i = 1;
-				} else {
-					$('.side_menu_sub_tabs_user').hide();
-					i = 0;
-				}
-			});
-			
-			/* 공지 관련 내용 */
-			$(".side_menu_main_notice").click(function() { // 공지 관리
-
-				if (i == 0) {
-					$('.side_menu_sub_tabs_notice').show();
-					i = 1;
-				} else {
-					$('.side_menu_sub_tabs_notice').hide();
-					i = 0;
-				}
-			});
-
+			//190820 사이드 메뉴 show & hide 삭제
 		});
 		
 </script>

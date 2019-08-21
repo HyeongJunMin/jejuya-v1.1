@@ -3,6 +3,8 @@
 <!DOCTYPE html>
 <html>
 
+<!-- 190820 길찾기 클릭시 오산으로 지정되는 오류 수정 -->
+
 <div id="div2">
 	<div class="map_wrap">
 		<div id="map"></div>
@@ -10,7 +12,7 @@
 			<div class="option">
 				<div>
 					<form onsubmit="searchPlaces(); return false;">
-						키워드 : <input type="text" value="제주도 맛집" id="keyword" size="15">
+						키워드 : <input type="text" value="맛집" id="keyword" size="15">
 						<button type="submit" class="btn btn-info" id="keywordbtn">검색하기</button>
 					 
 					</form>
@@ -46,24 +48,9 @@ $("#searchload").click(function () {
 	var location=document.getElementById("keyword").value;
 	
 	 //window.location.href ="http://map.daum.net/?sX=523953&sY=1014010&sName=제주공항&eX=523953&eY=1084098&eName="+location;
-	 window.open("http://map.daum.net/?sX=523953&sY=1014010&sName=제주공항&eX=523953&eY=1084098&eName="+location);
+	 //190820 유림
+	 window.open("http://map.daum.net/?sName=제주국제공항&eName=제주도"+location);
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	
 // 마커를 담을 배열입니다
 var markers = [];

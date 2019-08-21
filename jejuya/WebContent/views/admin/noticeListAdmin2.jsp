@@ -32,9 +32,9 @@ tr.listclick:hover{
 	border-collapse: collapse;
 	background-color: #abd;
 }
-select{
-	width: 90px;
-	padding: .4em .4em;
+select{ /* 190820 css수정 */
+	width: 7.5em;
+	padding: .55em .1em;
     border: 1px solid #999;
 }
 
@@ -51,8 +51,8 @@ select{
 		<form action="/jejuya/notice" method="post">
 			<input type="hidden" name="command" value="notice_muldel">
 			<table class="user_list_table">
-				<col width="70">
-				<col width="70">
+				<col width="90">
+				<col width="90">
 				<col width="450">
 				<col width="300">
 				<col width="200">
@@ -107,9 +107,10 @@ select{
 												
 // 						System.out.println("list sel : " + sel);
 // 						System.out.println("list searchW : " + searchW);
+						/* 	 190820 페이징 CSS 수정  */
 						for (int i = 1; i <= noticePagingDto.getPageSize(); i++) {
 								%>
-								 <a href="/jejuya/notice?command=showlistAdmin&pageNum=<%=i %>">[<%=i%>]</a>
+								 <a href="/jejuya/notice?command=showlistAdmin&pageNum=<%=i %>" style="font-size: 15pt; color: #5d5d5d; ">[<%=i%>]</a>
 								<%	
 // 							}else {
 
@@ -118,7 +119,7 @@ select{
 				</td>
 				</tr>
 				<tr class="delete_member">
-				<td class="tablesubmit" colspan="5"><input type="button" id="writeNewNoticeBtn" name="writeNewNoticeBtn" value="새 공지사항 작성" style="width: 9em; height: 2.5em;" onclick="location.href='/jejuya/notice?command=writeNewNotice'"></td>
+				<td class="tablesubmit" colspan="4"><input type="button" id="writeNewNoticeBtn" name="writeNewNoticeBtn" value="새 공지사항 작성" style="width: 9em; height: 2.5em;" onclick="location.href='/jejuya/notice?command=writeNewNotice'"></td>
 					<td class="tablesubmit" colspan="5"><input type="submit" class="submit_del" name="submit_del" value="공지 삭제" style="width: 9em; height: 2.5em;"></td>
 				</tr>
 			</table>
@@ -133,9 +134,7 @@ select{
 		<table>
 			<tr>
 				<td><select name="choice">
-						<option value="ID" selected="selected">ID</option>
-						<option value="NAME">NAME</option>
-						<option value="EMAIL">EMAIL</option>
+						<option value="TITLE" selected="selected">TITLE</option>
 				</select></td>
 				<td><input type="text" id="search" name="searchWord" style="width: 10em; height: 2em;">
 				</td>
@@ -205,18 +204,13 @@ select{
 
 
 <script type="text/javascript">
-$(".listclick").click(function() {
-	var seq = $(this).children().eq(0).children().eq(0).val();
+//190820 체크박스 눌렀을 때 글로 들어가는 현상 수정
+$(".listclick .list").click(function() {
+	var seq = $(this).parent().children().eq(0).children().eq(0).val();
 	//alert(seq);
 
 	location.href="/jejuya/notice?command=noticeDetail&seq=" + seq;	
-	/* $(".modal").css("display", "block");
-		$("#id").text($(".listclick").children().eq(1).text());
-		$("#pw").text($(".listclick").children().eq(2).text());
-		$("#name").text($(".listclick").children().eq(3).text());
-		$("#email").text($(".listclick").children().eq(4).text());
-		$("#birth").text($(".listclick").children().eq(5).text());
- */
+
 });
 /* $(".close").on("click", function() {
 	$(".modal").css("display", "none");
@@ -232,6 +226,17 @@ function deletechecks(e) {
 	}
 }
 
+//190820 선택을 안한채로 삭제됐을 때 오류 방지
+$(".submit_del").click(function() {
+	// 체크 된 체크박스의 개수
+	var checkLen = $("input:checkbox[name='delck']:checked").length;
+
+	// 체크개수가 1 미만이면  submit(삭제) 실행X
+	if(checkLen < 1){
+		alert('삭제할 공지를 1개 이상 선택하세요');
+		return false;
+	}
+}); 
 </script>
 
 </body>
